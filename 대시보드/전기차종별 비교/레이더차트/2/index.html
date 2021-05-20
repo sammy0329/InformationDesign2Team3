@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+body {
+  background-color: #F1F3F3    
+}
+.axis {
+	font: 15px sans-serif;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #D4D8DA;
+  stroke-width: 2px;
+  shape-rendering: crispEdges;
+}
+#chart {
+	position: absolute;
+	top: 50px;
+	left: 100px;
+}
+</style>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="RadarChart.js"></script>
+
+<div id="chart"></div>
+
+<p>차종을 선택하세요.</p>
+
+<div>
+  <input type="radio" id="1" name="car" value="1"
+         checked>
+  <label for="1">코나(기본형, PTC, 모던)</label>
+</div>
+
+<div>
+  <input type="radio" id="2" name="car" value="2">
+  <label for="2">아이오닉(HP)</label>
+</div>
+
+<div>
+  <input type="radio" id="3" name="car" value="3">
+  <label for="3">아이오닉5(롱레인지 RWD, 2WD 프레스티지)</label>
+</div>
+
+<div>
+  <input type="radio" id="4" name="car" value="4">
+  <label for="4">니로EV(HP, 프레스티지)</label>
+</div>
+
+<div>
+  <input type="radio" id="5" name="car" value="5">
+  <label for="5">쏘울(기본형, 프레스티지)</label>
+</div>
+
+<script>
+var width = 300,
+    height = 300;
+
+// Config for the Radar chart
+var config = {
+    w: width,
+    h: height,
+    maxValue: 100,
+    levels: 5,
+    ExtraWidthX: 500
+}
+
+//Call function to draw the Radar chart
+d3.json("data.json", function(error, data) {
+    if (error) throw error;
+    RadarChart.draw("#chart", data, config);
+});
+
+var svg = d3.select('body')
+	.selectAll('svg')
+	.append('svg')
+	.attr("width", width)
+	.attr("height", height);
+</script>

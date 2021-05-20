@@ -1,0 +1,18 @@
+group, axis, value, description
+코나, 최고속도, 1,
+코나, 주행거리, 2,
+코나, 연비, 5,
+코나, 가격, 21,
+bbbb, 최고속도, 13,
+bbbb, 주행거리, 20,
+bbbb, 연비, 15,
+bbbb, 가격, 13,
+cccc, 최고속도, 11,
+cccc, 주행거리, 29,
+cccc, 연비, 53,
+cccc, 가격, 21,
+dddd, 최고속도, 10,
+dddd, 주행거리, 8,
+dddd, 연비, 15,
+dddd, 가격, 41
+
