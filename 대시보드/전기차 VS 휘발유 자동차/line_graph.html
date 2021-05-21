@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8" />
     <title>전기차 VS 휘발유 자동차_꺾은선 그래프</title>
-    
-</head>
-<body>
-    <div></div>
-    <script src="https://d3js.org/d3.v6.min.js"></script>
-    <script src = "line_graph.js" type="text/javascript"></script>
-    
-</body>
+    <style>
+      line {
+        shape-rendering: crispEdges;
+        stroke: #000000;
+      }
+
+      line.minor {
+        stroke: #777777;
+        stroke-dasharray: 2, 2;
+      }
+
+      path.domain {
+        fill: none;
+        stroke: black;
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="700px" height="700px"></svg>
+    <script src="/대시보드/d3.v3.min.js" type="text/JavaScript"></script>
+    <script src="line_graph.js" type="text/javascript"></script>
+  </body>
 </html>
