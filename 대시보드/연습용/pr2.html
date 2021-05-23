@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+svg {
+    border: 1px solid;
+}
+.bar {
+    fill: skyblue;
+}
+
+.bar:hover {
+    fill: blue;
+}
+
+.text {
+    fill: white;
+    font-weight:bold;
+}
+</style>
+<svg width="800" height="300"></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+// Json 데이터
+d3.json("Compared_ev.json",function(error,data){
+var dataset = data.cars;
+
+var svg = d3.select("svg");
+var width  = parseInt(svg.style("width"), 10)-30;
+var height = parseInt(svg.style("height"), 10)-90;
+var svgG = svg.append("g")                                              
+    .attr("transform", "translate(30, 0)");
+
+var xScale = d3.scaleBand()                                        
+    .domain(dataset.map(function(d) { return d.차종별;} ))
+    .range([0, width-30]).padding(0.3);
+
+var yScale = d3.scaleLinear()                                            
+    .domain([0, d3.max(dataset, function(d){ return d.승차인원; })])
+    .range([height, 30]);  
+
+  
+svgG.selectAll("rect")
+    .data(dataset)
+    .enter().append("rect")
+        .attr("class", "bar")
+        .attr("height", function(d, i) {return height-yScale(d.승차인원)})
+        
+        .attr("width", xScale.bandwidth())
+        .attr("x", function(d, i) {return xScale(d.차종별)})
+        .attr("y", function(d, i) {return yScale(d.승차인원)});
+// svgG.selectAll("text")
+//     .data(dataset)
+//     .enter().append("text")
+//     .text(function(d) {return d.승차인원})
+//         .attr("class", "text")
+//         .attr("x", function(d, i) {return xScale(d.x)+xScale.bandwidth()/2})
+//         .style("text-anchor", "middle")
+//         .attr("y", function(d, i) {return yScale(d.y) + 15});
+
+svg.append("g")                                                       
+    .attr("transform", "translate(30," + (height) + ")")
+    .call(d3.axisBottom(xScale))
+    .selectAll("text")
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-65)" );
+
+   
+svgG.append("g")                                                        
+    .call(d3.axisLeft(yScale).ticks(5));
+
+});
+           
+</script>
