@@ -13,9 +13,9 @@ function chageLangSelect(){
 
 d3.csv("EC.csv",function(error,data){
     var dataset=[];
-    dataset.push((km/data[selectValue].Fueleconomy)*71.3);
-    dataset.push((km/data[selectValue].Fueleconomy)*255.7);
-    dataset.push((km/data[selectValue].Fueleconomy));
+    dataset.push((km/data[selectValue].Fueleconomy)*0.1);
+    dataset.push((km/data[selectValue].Fueleconomy)*0.2);
+    dataset.push((km/data[selectValue].Fueleconomy)*0.3);
     d3.select("#myGraph")
         .selectAll("rect")
         .data(dataset)
