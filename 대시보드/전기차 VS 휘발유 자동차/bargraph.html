@@ -3,21 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script src="d3.v3.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
 </head>
 
 <style>
     svg {
-      height: 500px;
-      width: 500px;
+      height: 200px;
+      width: 1000px;
       border: 1px solid gray;
+    }
+
+    #myGraph rect{
+        stroke: rgb(255, 255, 255);
+        stroke-width: 1px;
+        fill: rgb(34, 130, 255);
+    }
+
+    .barName{
+        font-size: 9pt;
+        text-anchor: middle;
+    }
+
+    .axis text{
+        font-family: sans-serif;
+        font-size: 11px;
+    }
+    .axis path,
+    .axis line{
+        fill: none;
+        stroke: black;
     }
   </style>
 <body>
     <table>
         <tr>
         <td valgn="top">
-            <select name="items1">
+            <select id="name" name="option" onchange="chageLangSelect()">
                 <option value="0">코나</option>
                 <option value="1" >아이오닉</option>
                 <option value="2">아이오닉5</option>
@@ -36,45 +57,7 @@
         </td>
         </tr>
     </table>
-    <script>
-        var d=[];
-        d3.csv("EC.csv", function (data) {
-            console.log(data);
-            for(let i=0; i<data.length; i++){
-            console.log(data[i]);
-            d[i]=data[i];
-            }
-            d3.select("body")
-            .selectAll("div.car")
-            .data(data)
-            .enter()
-            .append("div")
-            .attr("class", "car")
-        });
-    </script>
-    <div>
-        <svg></svg>
-    </div>
-    
-    <footer>
-        <script>
-            d3.select("svg")
-            .selectAll("rect")
-            .data([15, 50, 22, 8, 100, 10])
-            .enter()
-            .append("rect")
-            .attr("width", 20) //조절
-            .attr("height", function (d) {
-            return d *3; //조절
-            })
-            .style("fill", "blue")
-            .style("stroke", "red")
-            .style("stroke-width", "1px")
-            .style("opacity", 0.25)
-            .attr("x", function (d, i) {
-            return i * 30; //조절
-            });
-        </script>
-</footer>
+    <svg id="myGraph"></svg>
+    <script src="bar.js"></script>
 </body>
 </html>
