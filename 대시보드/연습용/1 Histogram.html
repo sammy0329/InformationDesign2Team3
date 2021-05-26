@@ -1,117 +1,113 @@
-<html>
-  <head>
-    <title>정보디자인 11-01. Histogram</title>
-    <meta charset="utf-8" />
-    <script src="d3.v3.min.js" type="text/JavaScript"></script>
-  </head>
-  <style>
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <h1>전기차종별 비교 그래프</h1>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+
+<style>
     svg {
-      height: 500px;
+      height:600px;
       width: 500px;
-      border: 1px solid gray;
+      border: 1px solid rgba(12, 12, 12, 0.829);
     }
 
-    rect {
-      fill: lightgray;
-      stroke: black;
-      stroke-width: 1px;
-    }
 
-    line {
-      shape-rendering: crispEdges;
-      stroke: #000000;
-    }
+    .bar {
+    fill: skyblue;  
+}
 
-    line.minor {
-      stroke: #777777;
-      stroke-dasharray: 2, 2;
-    }
+.bar:hover {
+    fill: blue;
+}
 
-    path.domain {
-      fill: none;
-      stroke: black;
-    }
+.x.axis path {
+  display: none;
+}
+.toolTip {
+    position: absolute;
+    border: 0 none;
+    border-radius: 4px 4px 4px 4px;
+    background-color: rgb(253, 253, 253);
+    padding: 5px;
+    text-align: center;
+    font-size: 15px;
+}
+/* div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 70px;
+  height: 15px;
+  padding: 2px;
+  font: 15px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+} */
+
   </style>
+<body>
+    <table>
+        <tr>
+            <select id="name" name="option" onchange="changeLangSelect()">
+                <option value="0">코나</option>
+                <option value="1" >아이오닉</option>
+                <option value="2">아이오닉5</option>
+                <option value="3">니로EV</option>
+                <option value="4">쏘울</option>
+                <option value="5">ZOE ZEN</option>
+                <option value="6">i3 120Ah Lux</option>
+                <option value="7">BOLT EV LT</option>
+                <option value="8">Model 3</option>
+                <option value="9">Model Y</option>
+                <option value="10">Peugeot e-208 Allure</option>
+                <option value="11">Peugeot e-2008 SUV Allure</option>
+                <option value="12">DS3 E-tense So Chic</option>  
+                <option value="13">SMART EV Z</option>                 
+            </select>
+        </td>
+        </tr>
+    </table>
+ 
+          <select id="condition" name="option" onchange="changeConditionSelect()">
+            <!-- <option value="">조건선택</option>   -->
+            <option value="0">가격</option>
+            <option value="1" >최고속도</option>
+            <option value="2">주행거리</option>
+            <option value="3">연비</option>
+            <option value="4">승차인원</option> 
+            <option value="5">보조금</option>
+          </select>
+     
+  <select id="region" onchange=" categoryChange(this)">
+    <option>지역을 선택해주세요</option>
+    <option value="a">강원</option>
+    <option value="b">경기</option>
+    <option value="c">경남</option>
+    <option value="d">경북</option>
+    <option value="e">광주</option>
+    <option value="f">대구</option>
+    <option value="g">대전</option>
+    <option value="h">부산</option>
+    <option value="i">서울</option>
+    <option value="j">세종</option>
+    <option value="k">울산</option>
+    <option value="l">인천</option>
+    <option value="m">전남</option>
+    <option value="n">전북</option>
+    <option value="o">제주</option>
+    <option value="p">충남</option>
+    <option value="q">충북</option>
+  </select>
+   
+  <select id="city" onchange="changeCitySelect()";>
+  <option>세부지역 선택해 주세요</option>
+  </select>
 
-  <body>
-    <div id="viz">
-      <svg></svg>
-    </div>
-    <div id="controls" />
-  </body>
-  <footer>
-    <script>
-      d3.json("tweets.json", function (error, data) {
-        histogram1(data.tweets);
-      });
-
-      function histogram1(tweetsData) {
-        xScale = d3.scale.linear().domain([0, 5]).range([0, 500]);
-        yScale = d3.scale.linear().domain([0, 10]).range([400, 0]);
-
-        xAxis = d3.svg.axis().scale(xScale).ticks(5).orient("bottom");
-
-        // layout 함수를 생성한다.
-        histoChart = d3.layout.histogram();
-
-        // histogram 이 분류할 값을 결정한다.
-        histoChart.bins([0, 1, 2, 3, 4, 5]).value(function (d) {
-          return d.favorites.length;
-        });
-
-        // 데이터 포맷팅!
-        histoData = histoChart(tweetsData);
-        
-
-        d3.select("svg")
-          .selectAll("rect")
-          .data(histoData)
-          .enter()
-          .append("rect")
-          .attr("x", function (d) {
-            return xScale(d.x);
-          })
-          .attr("y", function (d) {
-            return yScale(d.y);
-          })
-          .attr("width", xScale(histoData[0].dx) -2)
-          .attr("height", function (d) {
-            return 400 - yScale(d.y);
-          })
-          .on("click", retweets); // click 하면 retweets 실행
-
-        d3.select("svg")
-          .append("g")
-          .attr("class", "x axis")
-          .attr("transform", "translate(0,400)")
-          .call(xAxis);
-
-        // 막대 아래 x축 중앙 (dx 50%)
-        d3.select("g.axis").selectAll("text").attr("dx", 50);
-        function retweets() {
-          histoChart.value(function (d) {
-            return d.retweets.length;
-          });
-
-          // 새롭게 포맷팅
-          histoData = histoChart(tweetsData);
-
-          // 새롭게 그린다.
-          d3.selectAll("rect")
-            .data(histoData)
-            .transition()
-            .duration(2000)
-            .attr("x", function (d) {
-              return xScale(d.x);
-            })
-            .attr("y", function (d) {
-              return yScale(d.y);
-            })
-            .attr("height", function (d) {
-              return 400 - yScale(d.y);
-            });
-        }
-      }
-    </script>
-  </footer>
+    <div id="my_dataviz"></div>
+    <script src="pr5.js"></script>
+</body>
 </html>
