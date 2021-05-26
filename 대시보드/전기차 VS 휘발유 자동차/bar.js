@@ -1,6 +1,41 @@
-var selectValue=0 //자동차 인덱스 전역변수
-var selectText="코나" //자동차 모델명 전역변수
-var km=10000
+var selectValue=0; //자동차 인덱스 전역변수
+var selectText='코나'; //자동차 모델명 전역변수
+var km=100000;
+
+// 상하좌우 여백 수치. 하단에는 축이 그려져야 하니까 여백을 많이.
+var LEFT = 50;
+var RIGHT = 20;
+var TOP = 00;
+var BOTTOM = 30;
+
+// 데이터가 그려질 영역의 크기
+var width =1000 - LEFT - RIGHT;
+var height = 200 - TOP - BOTTOM;
+
+// body 요소 밑에 svg 요소를 추가하고 그 결과를 svg 변수에 저장
+var body = d3.select("body");
+var svg = body.append("svg");
+
+// svg 요소의 너비와 높이가 화면을 꽉 채우도록 수정
+svg.attr("width", window.innerWidth);
+svg.attr("height", window.innerHeight);
+
+// svg 요소에 g 요소를 추가하고 axisGroup 변수에 저장
+var axisGroup = svg.append("g");
+// axisGroup에 "axis" 클래스를 부여하고 하단으로 이동
+axisGroup
+  .attr("class", "axis")
+  .style("transform", "translate(" + LEFT + "px, " + (TOP + height) + "px)");
+
+// svg 요소에 g 요소를 추가하고 barGroup 변수에 저장
+var barGroup = svg.append("g");
+// barGroup에 "bar" 클래스를 부여하고 좌상단 여백만큼 이동
+barGroup
+  .attr("class", "bar")
+  .style("transform", "translate(" + LEFT + "px, " + TOP + "px)");
+
+
+//if(now - lastUpdate < 2000) return;
 
 function chageLangSelect(){ 
     var langSelect = document.getElementById("name"); 
@@ -11,54 +46,89 @@ function chageLangSelect(){
     console.log(selectText,selectValue);
 }
 
+var lastUpdate = 0;
+
+function bar(){
+    chageLangSelect();
+    window.requestAnimationFrame(bar);
+    var now = Date.now();
+    if(now - lastUpdate < 0.10) return;
+    lastUpdate = now;
+    
+
+    
 d3.csv("EC.csv",function(error,data){
+
     var dataset=[];
-    dataset.push((km/data[selectValue].Fueleconomy)*0.1);
-    dataset.push((km/data[selectValue].Fueleconomy)*0.2);
-    dataset.push((km/data[selectValue].Fueleconomy)*0.3);
-    d3.select("#myGraph")
-        .selectAll("rect")
-        .data(dataset)
-        .enter()
-        .append("rect")
-        .attr("x",70)
-        .attr("y",function(d,i){
-            return i*25+20;
-        })
-        .attr("width","0px")
-        .attr("height","20px")
-        .transition()
-        .duration(2500)
-        .attr("width",function(d,i){
-            return d+"px";
-        })
-
-        var xScale=d3.scale.linear()
-            .domain([0,150000])
-            .range([0,500])
-        d3.select("#myGraph")
-           .append("g")
-           .attr("class","axis")
-           .attr("transform","translate(70, "+((1+dataset.length)*20+20)+")")
-           .call(d3.svg.axis().scale(xScale).orient("bottom"))
-        
-        d3.select("#myGraph").append("text").attr("y",35).attr("x",30).text("완속")
-        d3.select("#myGraph").append("text").attr("y",60).attr("x",30).text("급속")
-        d3.select("#myGraph").append("text").attr("y",85).attr("x",15).text("휘발유")
-
-    //버튼 클릭 시
-    d3.select("#name")
-    .on("change",function(){
-        dataset=[];
-        dataset.push((km/data[selectValue].Fueleconomy)*0.2);
-        dataset.push((km/data[selectValue].Fueleconomy)*0.3);
-        dataset.push((km/data[selectValue].Fueleconomy)*0.4);
-        d3.select("#myGraph")
-        .selectAll("rect")
-        .data(dataset)
-        .transition().duration(1000)
-        .attr("width",function(d,i){
-            return d+"px";
-        })
-    })
-})
+        dataset.push((km/data[selectValue].Fueleconomy)*71.3);
+        dataset.push((km/data[selectValue].Fueleconomy)*255.7);
+        dataset.push((km/data[selectValue].Fueleconomy)*1000);
+    
+    // X축 스케일 정의하기
+    var xScale = d3.scaleLinear();
+    xScale.domain([0, d3.max(dataset)]).range([0, width]);
+    
+    // Y축 스케일 정의하기
+    var yScale = d3.scaleBand();
+    yScale.domain(d3.range(3)).padding(0.1).rangeRound([0, height]);
+    
+    // X축 그리기
+    var xAxis = d3.axisBottom();
+    xAxis.scale(xScale);
+    axisGroup
+      // 애니메이션 효과를 주며 X축을 갱신
+      .transition()
+      .duration(0)
+      .call(xAxis);
+    
+    // 막대 그리기
+    var barUpdate = barGroup.selectAll("rect").data(dataset);
+    // 1. 업데이트 셀렉션(데이터도 있고 대응되는 SVG 요소도 있는 경우).
+    //    너비만 갱신
+    barUpdate
+      // 애니메이션을 통해 현재의 너비를 갱신
+      .transition()
+      .duration(100)
+      .attr("width", function (d, i) {
+        return xScale(d);
+      })
+      .attr("height", yScale.bandwidth())
+      .attr("y", function (d, i) {
+        return yScale(i);
+      });
+    
+    // 2. 엔터 셀렉션(데이터는 있지만 대응되는 SVG 요소는 없는 경우).
+    //    rect 요소를 생성하고 높이, y좌표, 너비를 모두 설정
+    var barEnter = barUpdate.enter();
+    barEnter
+      .append("rect")
+      .attr("height", yScale.bandwidth())
+      .attr("y", function (d, i) {
+        return yScale(i);
+      })
+      // 일단 너비 0에서 시작한 후...
+      .attr("width", 0)
+      // ...원래 크기로 늘어나는 애니메이션
+      .transition()
+      .duration(250)
+      .attr("width", function (d, i) {
+        return xScale(d);
+      });
+    
+    // 3. 엑시트 셀렉션(데이터는 없고 대응되는 SVG 요소만 있는 경우).
+    //    rect 요소 제거하기
+    var barExit = barUpdate.exit();
+    barExit
+      // 너비를 0으로 줄이는 애니메이션을 보여준 후...
+      .transition()
+      .duration(2500)
+      .attr("width", 0)
+      // ...막대를 제거하기
+      .remove();
+    
+      d3.select("#myGraph").append("text").attr("y",35).attr("x",30).text("완속")
+      d3.select("#myGraph").append("text").attr("y",60).attr("x",30).text("급속")
+      d3.select("#myGraph").append("text").attr("y",85).attr("x",15).text("휘발유")
+    });
+}
+bar();
