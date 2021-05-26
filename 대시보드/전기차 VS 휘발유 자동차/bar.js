@@ -1,9 +1,10 @@
 var selectValue=0; //자동차 인덱스 전역변수
 var selectText='코나'; //자동차 모델명 전역변수
-var km=100000;
+var km=10000;
+var value;
 
 // 상하좌우 여백 수치. 하단에는 축이 그려져야 하니까 여백을 많이.
-var LEFT = 50;
+var LEFT = 80;
 var RIGHT = 20;
 var TOP = 00;
 var BOTTOM = 30;
@@ -44,33 +45,31 @@ function chageLangSelect(){
     // select element에서 선택된 option의 text가 저장된다. 
     selectText = langSelect.options[langSelect.selectedIndex].text; 
     console.log(selectText,selectValue);
+    bar();
 }
 
-var lastUpdate = 0;
+var slider = d3.select('#km');
+slider.on('change', function() {
+  km=this.value;
+  bar();
+});
 
 function bar(){
-    chageLangSelect();
-    window.requestAnimationFrame(bar);
-    var now = Date.now();
-    if(now - lastUpdate < 0.10) return;
-    lastUpdate = now;
-    
-
-    
 d3.csv("EC.csv",function(error,data){
-
     var dataset=[];
         dataset.push((km/data[selectValue].Fueleconomy)*71.3);
         dataset.push((km/data[selectValue].Fueleconomy)*255.7);
-        dataset.push((km/data[selectValue].Fueleconomy)*1000);
+        dataset.push((km/14.5)*1500);
+        dataset.push((km/14.5)*1500-(km/data[selectValue].Fueleconomy)*71.3)
+        console.log(dataset)
     
     // X축 스케일 정의하기
     var xScale = d3.scaleLinear();
-    xScale.domain([0, d3.max(dataset)]).range([0, width]);
+    xScale.domain([0, 2100000]).range([0, width]);
     
     // Y축 스케일 정의하기
     var yScale = d3.scaleBand();
-    yScale.domain(d3.range(3)).padding(0.1).rangeRound([0, height]);
+    yScale.domain(d3.range(4)).padding(0.1).rangeRound([0, height]);
     
     // X축 그리기
     var xAxis = d3.axisBottom();
@@ -88,7 +87,7 @@ d3.csv("EC.csv",function(error,data){
     barUpdate
       // 애니메이션을 통해 현재의 너비를 갱신
       .transition()
-      .duration(100)
+      .duration(150)
       .attr("width", function (d, i) {
         return xScale(d);
       })
@@ -110,25 +109,13 @@ d3.csv("EC.csv",function(error,data){
       .attr("width", 0)
       // ...원래 크기로 늘어나는 애니메이션
       .transition()
-      .duration(250)
+      .duration(150)
       .attr("width", function (d, i) {
         return xScale(d);
       });
-    
-    // 3. 엑시트 셀렉션(데이터는 없고 대응되는 SVG 요소만 있는 경우).
-    //    rect 요소 제거하기
-    var barExit = barUpdate.exit();
-    barExit
-      // 너비를 0으로 줄이는 애니메이션을 보여준 후...
-      .transition()
-      .duration(2500)
-      .attr("width", 0)
-      // ...막대를 제거하기
-      .remove();
-    
-      d3.select("#myGraph").append("text").attr("y",35).attr("x",30).text("완속")
-      d3.select("#myGraph").append("text").attr("y",60).attr("x",30).text("급속")
-      d3.select("#myGraph").append("text").attr("y",85).attr("x",15).text("휘발유")
     });
 }
+
+
 bar();
+

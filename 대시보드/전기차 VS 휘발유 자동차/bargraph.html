@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="bar.js"></script>
     <style>
         #name{
@@ -29,13 +30,19 @@
         }
 
         .bar rect {
-            fill: #444444;
+            fill: #A9C9F7;
         }
+
+        .slider{
+            width: 800px;
+        }
+
+        
     </style>
 </head>
 
 <body>
-    <select id="name" name="option" onchange="bar()">
+    <select id="name" name="option" onchange="chageLangSelect()">
         <option value="0">코나</option>
         <option value="1">아이오닉</option>
         <option value="2">아이오닉5</option>
@@ -51,6 +58,12 @@
         <option value="12">DS3 E-tense So Chic</option>
         <option value="13">SMART EV Z</option>
     </select>
+    <div>
+        <label> Km 변경 </label>
+        <input class="slider" id="km" type="range" name="points" min="0" max="20000" step="1000" value="10000" oninput="document.getElementById('value1').innerHTML=this.value;" >
+        <span id="value1">10000</span>
+    </div>
+
     <script src="bar.js"></script>
 </body>
 
