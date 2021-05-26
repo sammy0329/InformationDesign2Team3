@@ -201,7 +201,7 @@ Cost.prototype.draw = function(){
     .append("g")
     .attr("class", "axis axis--y")
     .call(this.yAxis)
-    .attr("transform", "translate(20 ,0 )");
+    .attr("transform", "translate(0 ,0 )");
 
   focus.append("path")
       .datum(this.ev_cost_data)
