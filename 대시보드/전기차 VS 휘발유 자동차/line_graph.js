@@ -1,13 +1,43 @@
 Ev = [];
+Ice = [];
 low_1kwh = 71.3;
 fast_1kwh = 255.7;
 ice_1L = 1534.8;
-Cost = function (svg, car_data, select,color) {
-  this.svg = svg;
-  this.cost_data = this.cost_of_maintenance(car_data, select);
-  this.color = color;
+var ev_select = document.getElementById("ev_car");
+var selectValue = ev_select.options[ev_select.selectedIndex].value;
+var selectValue_ice = 1;
 
-  console.log(this.cost_data)
+// window.onresize = function(event){
+//   redraw();
+// }
+
+Cost = function (svg, ev_car_data,ice_car_data, select, color) {
+  
+  this.svg = svg;
+  
+  this.ev_car_data = ev_car_data;
+  this.ice_car_data = ice_car_data;
+
+  this.ev_cost_data = this.cost_of_maintenance(ev_car_data, select);
+  this.ice_cost_data = this.cost_of_maintenance(ice_car_data, ice_1L);
+
+  this.color = color;
+  
+  //xScale,xScale2,xAxis,xAxis2,yScale,yScale2,yAxis
+  this.xScale = this.axis()[0];
+  this.xScale2 = this.axis()[1];
+  this.xAxis = this.axis()[2];
+  this.xAxis2 = this.axis()[3];
+  this.yScale = this.axis()[4];
+  this.yScale2 = this.axis()[5];
+  this.yAxis = this.axis()[6];
+
+  this.line = this.returnLine();
+  this.line2 = this.returnLine2();
+  
+  
+  // this.focus = this.focusLine();
+  // this.context = this.contextLine(); 
 };
 
 Cost.prototype = Object.create(Cost.prototype);
@@ -21,136 +51,421 @@ Cost.prototype.cost_of_maintenance = function (d, select) {
 
     data.push({ mileage: x * i, cost: c });
   }
-  
+
   return data;
 };
 
-Cost.prototype.axis = function () {
+Cost.prototype.axis = function (){
+  if (this.ev_cost_data[0].cost > this.ice_cost_data[0].cost)
+    domain_min = this.ice_cost_data[0].cost;
+  else domain_min = this.ev_cost_data[0].cost;
+
+  if (this.ev_cost_data[this.ev_cost_data.length - 1].cost >this.ice_cost_data[this.ice_cost_data.length - 1].cost)
+    domain_max = this.ev_cost_data[this.ev_cost_data.length - 1].cost;
+  else domain_max = this.ice_cost_data[this.ice_cost_data.length - 1].cost;
+
+  
   // x축
-  let xScale = d3.scale
-    .linear()
+  let xScale = d3
+    .scaleLinear()
     .domain([
-      this.cost_data[0].mileage,
-      this.cost_data[this.cost_data.length - 1].mileage,
+      this.ev_cost_data[0].mileage,
+      this.ev_cost_data[this.ev_cost_data.length - 1].mileage,
     ])
-    .range([0, line_width - 90]);
+    .range([0, width - 40]);
+
+  let xScale2 = d3
+    .scaleLinear()
+    .domain([
+      this.ev_cost_data[0].mileage,
+      this.ev_cost_data[this.ev_cost_data.length - 1].mileage,
+    ])
+    .range([0, width - 40]);
+
+  let xAxis = d3.axisBottom(this.xScale).ticks(10).tickSize(-height);
+  let xAxis2 = d3.axisBottom(this.xScale2).ticks(10);
+
   // y축
-  let yScale = d3.scale
-    .linear()
-    .domain([
-      this.cost_data[0].cost,
-      this.cost_data[this.cost_data.length - 1].cost,
-    ])
-    .range([line_height - 10, 40]);
+  let yScale = d3.scaleLinear().domain([domain_min, domain_max]).range([height, 0]);
+  let yScale2 = d3.scaleLinear().domain([domain_min, domain_max]).range([height2, 0]);
+  let yAxis = d3.axisLeft(this.yScale).tickSize(-width);
 
-  let xAxis = d3.svg
-    .axis() //축에 scale정보를 넣어줌
-    .scale(xScale)
-    .orient("bottom");
 
-  svg.append("g").attr("id", "xAxisG").call(xAxis);
-
-  let yAxis = d3.svg
-    .axis()
-    .scale(yScale)
-    .orient("right")
-    .ticks(8)
-    .tickSize(510)
-    .tickSubdivide(true);
-
-  d3.select("svg").append("g").attr("id", "yAxisG").call(yAxis);
+  
  
-  return [xScale,yScale]
+  return[xScale,xScale2,xAxis,xAxis2,yScale,yScale2,yAxis]
 }
 
-Cost.prototype.line = function (scale) {
- 
-  let xScale = scale[0]
-  let yScale = scale[1]
-  var myline = d3.svg
+
+
+Cost.prototype.returnLine = function(){
+  
+  let xScale = this.xScale;
+  let yScale = this.yScale;
+
+  line = d3
+  .line()
+  .x(function (d) {
+    return xScale(d.mileage);
+  }) // apply the x scale to the x data
+  .y(function (d) {
+    return yScale(d.cost);
+  }); // apply the y scale to the y data
+
+  return line;
+}
+
+Cost.prototype.returnLine2 = function(){
+  let xScale2 = this.xScale2;
+  let yScale2 = this.yScale2;
+
+  line2 = d3
     .line()
     .x(function (d) {
-      return xScale(d.mileage);
+      return xScale2(d.mileage);
     }) // apply the x scale to the x data
     .y(function (d) {
-      return yScale(d.cost);
+      return yScale2(d.cost);
     }); // apply the y scale to the y data
 
-  // console.log(myline(this.cost_data))
-  this.svg
-    .append("path")
-    .attr("class", "line") // attributes given one at a time
-    .attr("d", myline(this.cost_data)) // use the value of myline(xy) as the data, 'd'
-    .style("fill", "none")
-    .style("stroke", this.color)
-    .style("stroke-width", 2);
-
-
+  return line2;
 }
 
+// Cost.prototype.focusLine = function () {
+  
+  
+//   return focus;
+
+// };
+
+
+// Cost.prototype.contextLine = function (scale) {
+//   // this.svg.append("defs").append("clipPath").attr("id", "clip").append("rect").attr("width", width).attr("height", height)
+  
+  
+  
+ 
+  
+//   return context;
+// };
+
+Cost.prototype.draw = function(){
+  
+  let svg = this.svg;
+  svg
+    .append("text")
+    .text("유지비")
+    .attr("x", 0 - height / 2 - 20)
+    .attr("y", 0)
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .attr("transform", "rotate(-90)");
+  
+  svg
+    .append("text")
+    .text("주행거리")
+    .attr("x", width / 2 + 90)
+    .attr("y", height + margin.bottom-55)
+    .style("text-anchor", "middle");
+
+  let focus = svg
+    .append("g")
+    .attr("class", "focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+  let context = svg
+    .append("g")
+    .attr("class", "context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
+
+  let focus_x = x + margin.left + 20;
+  let focus_y = y + margin.top;
+
+  let context_x = x + margin2.left;
+  let context_y = y + margin2.top;
+
+  let line = this.line;
+  let line2 = this.line2;
+  svg.append("defs").append("clipPath").attr("id", "clip").append("rect").attr("width", width).attr("height", height);
+
+
+  focus
+    .append("g")
+    .attr("class", "axis axis--x")
+    .attr("transform", "translate(20," + height + ")")
+    .call(this.xAxis);
+  
+  focus
+    .append("g")
+    .attr("class", "axis axis--y")
+    .call(this.yAxis)
+    .attr("transform", "translate(20 ,0 )");
+
+  focus.append("path")
+      .datum(this.ev_cost_data)
+      .attr("class", "ev_line")
+      .attr("d", line)
+      .style("stroke", this.color)
+      .attr("transform", "translate(20,0)");
+
+
+  focus.append("path")
+      .datum(this.ice_cost_data)
+      .attr("class", "ice_line")
+      .attr("d", line)
+      .style("stroke", "black")
+      .attr("transform", "translate(20,0)");
+  
+  let return_focus = focus
+
+  // function transition(path) {
+  //   path.transition()
+  //       .duration(2000)
+  //       .attrTween("stroke-dasharray", tweenDash);
+  // }
+  // function tweenDash() {
+  //   var l = this.getTotalLength(),
+  //       i = d3.interpolateString("0," + l, l + "," + l);
+  //   return function (t) { return i(t); };
+  // }
+  // focus.select("path.ev_line")
+  //   .datum(this.ev_cost_data)
+  //   .attr("d", line)
+  //   .call(transition);
+  
+  // focus.select("path.ice_line")
+  //   .datum(this.ice_cost_data)
+  //   .attr("d", line)
+  //   .call(transition);
+
+  context.append("path")
+      .datum(this.ev_cost_data)
+      .attr("class", "ev_line_2")
+      .attr("d", line2)
+      .style("stroke", this.color);
+  
+  context.append("path")
+      .datum(this.ice_cost_data)
+      .attr("class", "ice_line_2")
+      .attr("d", line2)
+      .style("stroke", "black");
+     
+
+  context
+  .append("g")
+  .attr("class", "axis axis--x")
+  .attr("transform", "translate(0," + height2 + ")")
+  .call(this.xAxis2);
+
+  
+
+  context.attr("transform", "translate(" + context_x + "," + context_y + ")");
+  
+ return [line,line2,svg,return_focus,context]
+}
+
+
+
+/*----------------------------------------------------------------------------------------------------------------*/
 // 올뉴 아반떼
-ice = { name: "올뉴 아반떼", price: 15700000, fuel: 14.5 };
+// ice = { name: "올뉴 아반떼", price: 15700000, fuel: 14.5 };
 
 line_width = document.getElementById("line").width.animVal.value;
 line_height = document.getElementById("line").height.animVal.value;
 
-fuelTextBox = document.querySelector('#fuel');
-applyBtn = document.querySelector('input[type="button"]');
-ev_lowBtn = document.querySelectorAll('#ev_low');
+// var margin	= {top: 20, right: 30, bottom: 100, left: 20},
+//     width	= line_width - margin.left - margin.right,
+//     height	= line_height - margin.top - margin.bottom;
 
-d3.json("/대시보드/json/Compared_ev.json", lineChart);
-function lineChart(data) {
+// var margin_context = {top: 320, right: 30, bottom: 20, left: 20},
+//     height_context = line_height - margin_context.top - margin_context.bottom;
+
+fuelTextBox = document.querySelector("#fuel");
+applyBtn = document.querySelector('input[type="button"]');
+
+ice_text = document.getElementById("ice_text");
+
+x = 0;
+y = 0;
+// margin = { top: 20, right: 20, bottom: 50, left: 90 };
+// width = 700 - margin.left - margin.right;
+// height = 400 - margin.top - margin.bottom;
+
+var svg = d3.select("svg"),
+  margin = { top: 20, right: 20, bottom: 110, left: 40 },
+  margin2 = { top: 430, right: 20, bottom: 30, left: 80 },
+  width = +svg.attr("width") - margin.left - margin.right,
+  height = +svg.attr("height") - margin.top - margin.bottom,
+  height2 = +svg.attr("height") - margin2.top - margin2.bottom;
+
+// ev_lowBtn = document.getElementById('ev_low');
+// ev_fastBtn = document.getElementById('ev_fast');
+// iceBtn = document.getElementById('ice');
+
+/*----------------------------------------------------------------------------------------------------------------*/
+
+d3.json("/대시보드/json/ControlGroup_ice.json",  function (error,data) {iceData(error,data)});
+d3.json("/대시보드/json/Compared_ev.json", function (error,data) {evData(error,data)});
+
+
+function iceData(error,data) {
+  if (error) throw error;
+  
+  data.forEach((element) => {
+    Ice.push([
+      {
+        name: element.차종별,
+        price: element.가격,
+        fuel: element.연비,
+        grade: element.차급,
+      },
+    ]);
+  });
+}
+
+function evData(error,data){
+  if (error) throw error;
+
   data.forEach((element) => {
     Ev.push([
-      { name: element.차종별, price: element.가격, fuel: element.연비 },
+      {
+        name: element.차종별,
+        price: element.가격,
+        fuel: element.연비,
+        grade: element.차급,
+      },
     ]);
   });
 
-  svg = d3.select("svg");
+  main()
+ 
+}
 
-  ev_low_line = new Cost(svg, Ev[0][0], low_1kwh,"blue");
-  let ev_fast_line = new Cost(svg, Ev[0][0], fast_1kwh,"red");
-  let ice_line = new Cost(svg,ice, ice_1L,"black");
+function main(){
+  
+  if (document.getElementById("ev_low").checked) declaredLine("ev_low");
+  else if (document.getElementById("ev_fast").checked) declaredLine("ev_fast");
 
-
-  scale = ev_low_line.axis();
-  ev_low_line.line(scale);
-
-  // scale = ev_fast_line.axis();
-  // ev_fast_line.line(scale);
-
-  applyBtn.addEventListener('click', function() {
-    ice.fuel = fuelTextBox.value
+  applyBtn.addEventListener("click", function () {
+    ice.fuel = fuelTextBox.value;
+    ice.fuel = fuelTextBox.value;
 
     d3.selectAll("svg > *").remove();
-    ice_line = new Cost(svg,ice, ice_1L,"black");
+    ice_line = new Cost(svg, ice, ice_1L, "black");
     scale = ice_line.axis();
     ice_line.line(scale);
   });
-
 }
 
-function changeLine(event){
+function changeLine(event) {
+  if (event.target.id == "ev_low") {
+    declaredLine("ev_low");
+  } else if (event.target.id == "ev_fast") {
+    declaredLine("ev_fast");
+  }
+}
 
-  if( event.target.id == "ev_low"){
-    d3.selectAll("svg > *").remove();
-    ice_line =  new Cost(svg, Ev[0][0], low_1kwh,"blue");
-    scale = ev_low_line.axis();
-    ev_low_line.line(scale);
-  }
-  else if( event.target.id == "ev_fast"){
-    d3.selectAll("svg > *").remove();
-    ev_fast_line = new Cost(svg, Ev[0][0], fast_1kwh,"red");
-    scale = ev_fast_line.axis();
-    ev_fast_line.line(scale);
-  }
-  else if( event.target.id == "ice"){
-    d3.selectAll("svg > *").remove();
-    ice_line = new Cost(svg,ice, ice_1L,"black");
-    scale = ice_line.axis();
-    ice_line.line(scale);
-  }
+function evSelect() {
+  selectValue = ev_select.options[ev_select.selectedIndex].value;
+
+  // document.getElementById('ev_fast').setAttribute('checked', false);
+  document.getElementById("ev_low").setAttribute("checked", false);
+
   
+  Ice.forEach(function (element, index) {
+    if (Ev[selectValue][0].grade == element[0].grade) {
+      selectValue_ice = index;
+      ice_text.innerText = element[0].name;
+    }
+  });
+
+  if (document.getElementById("ev_low").checked) declaredLine("ev_low");
+  else if (document.getElementById("ev_fast").checked) declaredLine("ev_fast");
 }
 
+function declaredLine(line) {
+  //svg, ev_car_data,ice_car_data, select, color
+  let ev_low_line = new Cost(svg, Ev[selectValue][0],Ice[selectValue_ice][0], low_1kwh, "blue");
+  let ev_fast_line = new Cost(svg, Ev[selectValue][0],Ice[selectValue_ice][0], fast_1kwh, "red");
+  
+  
+
+  if (line == "ev_low") {
+    
+    makeLine(ev_low_line)
+
+  } else if (line == "ev_fast") {
+    makeLine(ev_fast_line)
+  }
+}
+
+function makeLine(Object){
+  d3.selectAll("svg > *").remove();
+    
+    //line,line2,svg,focus,context
+    let graph = Object.draw();
+    
+    let line = graph[0];
+    let svg = graph[2];
+    let focus = graph[3];
+    let context = graph[4];
+  
+
+    
+    let xScale =  Object.xScale;
+    let xScale2 = Object.xScale2
+    let xAxis = Object.xAxis;
+   
+
+    console.log(svg)
+
+    brushed = function (Object) {
+      if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
+        var s = d3.event.selection || xScale2.range();
+        xScale.domain(s.map(xScale2.invert, xScale2));
+        focus.select(".ev_line").attr("d", line);
+        focus.select(".ice_line").attr("d", line);
+        focus.select(".axis--x").call(xAxis);
+      
+      svg
+        .select(".zoom")
+        .call(
+          zoom.transform,
+          d3.zoomIdentity.scale(width / (s[1] - s[0])).translate(-s[0], 0)
+        );
+    }
+    let brush = d3.brushX().extent([[0, 0],[width, height2],]).on("brush end", brushed);
+    zoomed = function () {
+      if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
+      let t = d3.event.transform;
+      xScale.domain(t.rescaleX(xScale2).domain());
+      focus.select(".ev_line").attr("d", line);
+      focus.select(".ice_line").attr("d", line);
+      focus.select(".axis--x").call(xAxis);
+      context.select(".brush") .call(brush.move, xScale.range().map(t.invertX, t));
+    }
+    let zoom = d3.zoom().scaleExtent([1, Infinity]).translateExtent([[0, 0],[width, height]]).extent([[0, 0],[width, height]]).on("zoom",zoomed);  
+    
+    
+    context
+    .append("g")
+    .attr("class", "brush")
+    .call(brush)
+    .call(brush.move, xScale.range());
+
+    svg
+    .append("rect")
+    .attr("class", "zoom")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    .call(zoom);
+
+    
+    
+    
+
+}
 
