@@ -57,10 +57,10 @@ slider.on('change', function() {
 function bar(){
 d3.csv("EC.csv",function(error,data){
     var dataset=[];
-        dataset.push((km/data[selectValue].Fueleconomy)*71.3);
-        dataset.push((km/data[selectValue].Fueleconomy)*255.7);
-        dataset.push((km/14.5)*1500);
-        dataset.push((km/14.5)*1500-(km/data[selectValue].Fueleconomy)*71.3)
+        dataset.push(((km/data[selectValue].Fueleconomy)*71.3));
+        dataset.push(((km/data[selectValue].Fueleconomy)*255.7));
+        dataset.push(((km/14.5)*1500));
+        dataset.push(((km/14.5)*1500-(km/data[selectValue].Fueleconomy)*71.3))
         console.log(dataset)
     
     // X축 스케일 정의하기
@@ -85,7 +85,7 @@ d3.csv("EC.csv",function(error,data){
     // 1. 업데이트 셀렉션(데이터도 있고 대응되는 SVG 요소도 있는 경우).
     //    너비만 갱신
     barUpdate
-      // 애니메이션을 통해 현재의 너비를 갱신
+      // 애니메이션을 통해 현재의 너비를 갱신\
       .transition()
       .duration(150)
       .attr("width", function (d, i) {
@@ -101,19 +101,34 @@ d3.csv("EC.csv",function(error,data){
     var barEnter = barUpdate.enter();
     barEnter
       .append("rect")
-      .attr("height", yScale.bandwidth())
-      .attr("y", function (d, i) {
-        return yScale(i);
+      
+    var bartext = barGroup.data(dataset);
+    bartext
+      .append("text")
+      .attr("x",function (d, i) {
+        return xScale(d)+10;
       })
-      // 일단 너비 0에서 시작한 후...
-      .attr("width", 0)
-      // ...원래 크기로 늘어나는 애니메이션
-      .transition()
-      .duration(150)
-      .attr("width", function (d, i) {
-        return xScale(d);
-      });
+      .attr("y", function (d, i) {
+        return yScale(i)+23;
+      })
+      .text(function(d){
+        return d;
+      })
+    
+    var lable = barUpdate.enter();
+    lable
+      .append("text")
+      .attr("x",-10)
+      .attr("y", function (d, i) {
+        return yScale(i)+25;
+      })
+      .text(function(d,i){
+        return ["완속","급속","휘발유","절감"][i];
+      })
+      .attr("text-anchor", "end")
+      .attr("font-size","18px")
     });
+
 }
 
 
