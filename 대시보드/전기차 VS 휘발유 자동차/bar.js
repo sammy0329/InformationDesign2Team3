@@ -1,7 +1,12 @@
-var selectValue=0; //자동차 인덱스 전역변수
-var selectText='코나'; //자동차 모델명 전역변수
-var km=10000;
+var selectValue = 0; //자동차 인덱스 전역변수
+var selectText = "코나"; //자동차 모델명 전역변수
+var km = 10000;
 var value;
+var radio = "ev_low";
+Ev = [];
+Ice = [];
+
+
 
 // 상하좌우 여백 수치. 하단에는 축이 그려져야 하니까 여백을 많이.
 var LEFT = 80;
@@ -10,7 +15,7 @@ var TOP = 00;
 var BOTTOM = 30;
 
 // 데이터가 그려질 영역의 크기
-var width =1000 - LEFT - RIGHT;
+var width = 800 - LEFT - RIGHT;
 var height = 200 - TOP - BOTTOM;
 
 // body 요소 밑에 svg 요소를 추가하고 그 결과를 svg 변수에 저장
@@ -35,57 +40,92 @@ barGroup
   .attr("class", "bar")
   .style("transform", "translate(" + LEFT + "px, " + TOP + "px)");
 
-
 //if(now - lastUpdate < 2000) return;
 
-function chageLangSelect(){ 
-    var langSelect = document.getElementById("name"); 
-    // select element에서 선택된 option의 value가 저장된다. 
-    selectValue = langSelect.options[langSelect.selectedIndex].value; 
-    // select element에서 선택된 option의 text가 저장된다. 
-    selectText = langSelect.options[langSelect.selectedIndex].text; 
-    console.log(selectText,selectValue);
-    bar();
+function chageLangSelect() {
+  var langSelect = document.getElementById("name");
+  // select element에서 선택된 option의 value가 저장된다.
+  selectValue = langSelect.options[langSelect.selectedIndex].value;
+  // select element에서 선택된 option의 text가 저장된다.
+  selectText = langSelect.options[langSelect.selectedIndex].text;
+  console.log(selectText, selectValue);
+  bar();
 }
 
-var slider = d3.select('#km');
-slider.on('change', function() {
-  km=this.value;
+// 슬라이더 실행 함수
+var slider = d3.select("#km");
+slider.on("change", function () {
+  km = this.value;
   bar();
 });
 
-function bar(){
-d3.csv("EC.csv",function(error,data){
-    var dataset=[];
-        dataset.push(((km/data[selectValue].Fueleconomy)*71.3));
-        dataset.push(((km/data[selectValue].Fueleconomy)*255.7));
-        dataset.push(((km/14.5)*1500));
-        dataset.push(((km/14.5)*1500-(km/data[selectValue].Fueleconomy)*71.3))
-        console.log(dataset)
-    
+// 라디오 버튼 실행 함수
+function changeLine(event) {
+  if (event.target.id == "ev_low") {
+    document.getElementById("ev_low").checked = true;
+    document.getElementById("ev_fast").checked = false;
+    radio = "ev_low";
+    bar();
+  } else if (event.target.id == "ev_fast") {
+    document.getElementById("ev_low").checked = false;
+    document.getElementById("ev_fast").checked = true;
+    radio = "ev_fast";
+    bar();
+  }
+}
+
+//막대그래프 실행 함수
+function bar() {
+  d3.csv("EC.csv", function (error, data) {
+    var dataset = [];
+    if (radio == "ev_low") {
+      dataset.push((km / data[selectValue].Fueleconomy) * 71.3);
+      dataset.push((km / 14.5) * 1500);
+      dataset.push(
+        (km / 14.5) * 1500 - (km / data[selectValue].Fueleconomy) * 71.3
+      );
+    } else if (radio == "ev_fast") {
+      dataset.push((km / data[selectValue].Fueleconomy) * 255.7);
+      dataset.push((km / 14.5) * 1500);
+      dataset.push(
+        (km / 14.5) * 1500 - (km / data[selectValue].Fueleconomy) * 255.7
+      );
+    }
+    console.log(dataset);
+
     // X축 스케일 정의하기
     var xScale = d3.scaleLinear();
     xScale.domain([0, 2100000]).range([0, width]);
-    
+
     // Y축 스케일 정의하기
     var yScale = d3.scaleBand();
-    yScale.domain(d3.range(4)).padding(0.1).rangeRound([0, height]);
-    
+    yScale
+      .domain(d3.range(dataset.length))
+      .padding(0.1)
+      .rangeRound([0, height]);
+
     // X축 그리기
     var xAxis = d3.axisBottom();
     xAxis.scale(xScale);
-    axisGroup
-      // 애니메이션 효과를 주며 X축을 갱신
-      .transition()
-      .duration(0)
-      .call(xAxis);
-    
+    axisGroup.call(xAxis);
+
     // 막대 그리기
     var barUpdate = barGroup.selectAll("rect").data(dataset);
-    // 1. 업데이트 셀렉션(데이터도 있고 대응되는 SVG 요소도 있는 경우).
-    //    너비만 갱신
     barUpdate
-      // 애니메이션을 통해 현재의 너비를 갱신\
+      .style("fill", function (d, i) {
+        if (i === 1) {
+          return "#CFCFCF";
+        } else if (i === 2) {
+          return "#B0E0BF";
+        } else {
+          if (radio == "ev_fast") {
+            return "#F4A8A8";
+          }
+        }
+      })
+      .attr("y", function (d, i) {
+        return yScale(i);
+      })
       .transition()
       .duration(150)
       .attr("width", function (d, i) {
@@ -95,42 +135,58 @@ d3.csv("EC.csv",function(error,data){
       .attr("y", function (d, i) {
         return yScale(i);
       });
-    
-    // 2. 엔터 셀렉션(데이터는 있지만 대응되는 SVG 요소는 없는 경우).
-    //    rect 요소를 생성하고 높이, y좌표, 너비를 모두 설정
+
     var barEnter = barUpdate.enter();
-    barEnter
-      .append("rect")
-      
-    var bartext = barGroup.data(dataset);
+    barEnter.append("rect");
+
+    // text 그리기
+    var bartext = svg.selectAll(".myLabels").data(dataset);
     bartext
+      .enter()
       .append("text")
-      .attr("x",function (d, i) {
-        return xScale(d)+10;
+      .attr("class", "myLabels")
+      .attr("x", function (d, i) {
+        return 90;
       })
       .attr("y", function (d, i) {
-        return yScale(i)+23;
+        return yScale(i) + 30;
+      });
+    bartext
+      .transition()
+      .duration(150)
+      .attr("x", function (d, i) {
+        return xScale(d) + 90;
       })
-      .text(function(d){
-        return d;
+      .attr("y", function (d, i) {
+        return yScale(i) + 30;
       })
-    
-    var lable = barUpdate.enter();
+      .text(function (d) {
+        return (
+          Math.floor(d)
+            .toString()
+            .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "원"
+        );
+      });
+
+    var lable = svg.selectAll(".Label").data(dataset);
+    lable.enter().append("text").attr("class", "Label");
     lable
-      .append("text")
-      .attr("x",-10)
+      .transition()
+      .duration(0)
+      .attr("x", 70)
       .attr("y", function (d, i) {
-        return yScale(i)+25;
+        return yScale(i) + 30;
       })
-      .text(function(d,i){
-        return ["완속","급속","휘발유","절감"][i];
+      .text(function (d, i) {
+        if (radio == "ev_low") {
+          return ["완속", "휘발유", "절감"][i];
+        } else if (radio == "ev_fast") {
+          return ["급속", "휘발유", "절감"][i];
+        }
       })
       .attr("text-anchor", "end")
-      .attr("font-size","18px")
-    });
-
+      .attr("font-size", "18px");
+  });
 }
 
-
 bar();
-
