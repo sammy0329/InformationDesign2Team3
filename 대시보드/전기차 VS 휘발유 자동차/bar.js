@@ -1,13 +1,57 @@
 var selectValue = 0; //자동차 인덱스 전역변수
 var selectText = "코나"; //자동차 모델명 전역변수
-var km = 10000;
+var km = 100000;
 var value;
 var radio = "ev_low";
+var Ice_fuel=14.5;
+var low_1kwh = 71.3;
+var fast_1kwh = 255.7;
+var ice_1L = 1534.8;
+
+bar();
+
 Ev = [];
 Ice = [];
 
+// d3.json("file://json/ControlGroup_ice.json",  function (error,data) {iceData(error,data)});
+// d3.json("file://C:/Users/최은영/Desktop/Compared_ev.json", function (error,data) {evData(error,data)});
 
 
+//----- 전기차 vs 휘발유차 ----
+var canvas = document.getElementById("Canvas");
+var ctx = canvas.getContext("2d"); // 캔버스 객체 생성
+
+var rectX = 30;
+var rectY = 30;
+var rectWidth = 10;
+var rectHeight = 40;
+var cornerRadius = 10;
+
+// Set faux rounded corners
+ctx.lineJoin = "round";
+ctx.lineWidth = cornerRadius;
+
+ctx.beginPath();
+// 색 설정
+ctx.strokeStyle = '#A9C9F7'; // 선 색
+ctx.fillStyle = '#333333'; // 채운 사각형 색
+
+// 그리기
+ctx.strokeRect(rectX+(cornerRadius/2), rectY+(cornerRadius/2), rectWidth-cornerRadius, rectHeight-cornerRadius);
+ctx.fillRect(rectX+(cornerRadius/2), rectY+(cornerRadius/2), rectWidth-cornerRadius, rectHeight-cornerRadius);
+ctx.font = '30px Arial';
+ctx.fillText('전기차 vs 휘발유 자동차', rectX+15, rectY+30);
+ctx.font = '15px Arial';
+ctx.fillText('연료값', rectX+15, rectY+75);
+ctx.fillText('완속 : 1kWh', rectX+15, rectY+110);
+ctx.fillText('급속 : 1kWh', rectX+15, rectY+140);
+var img = new Image();
+            img.src = "images/testimage.jpg";
+            img.onload = function(){
+                draw.drawImage(img, 50,50, 250,300);
+            }
+
+//---- 막대 그래프 ----
 // 상하좌우 여백 수치. 하단에는 축이 그려져야 하니까 여백을 많이.
 var LEFT = 80;
 var RIGHT = 20;
@@ -15,7 +59,7 @@ var TOP = 00;
 var BOTTOM = 30;
 
 // 데이터가 그려질 영역의 크기
-var width = 800 - LEFT - RIGHT;
+var width =800 - LEFT - RIGHT;
 var height = 200 - TOP - BOTTOM;
 
 // body 요소 밑에 svg 요소를 추가하고 그 결과를 svg 변수에 저장
@@ -79,23 +123,23 @@ function bar() {
   d3.csv("EC.csv", function (error, data) {
     var dataset = [];
     if (radio == "ev_low") {
-      dataset.push((km / data[selectValue].Fueleconomy) * 71.3);
-      dataset.push((km / 14.5) * 1500);
+      dataset.push((km / data[selectValue].Fueleconomy) * low_1kwh);
+      dataset.push((km / Ice_fuel) * ice_1L);
       dataset.push(
-        (km / 14.5) * 1500 - (km / data[selectValue].Fueleconomy) * 71.3
+        (km / Ice_fuel) * ice_1L - (km / data[selectValue].Fueleconomy) * low_1kwh
       );
     } else if (radio == "ev_fast") {
-      dataset.push((km / data[selectValue].Fueleconomy) * 255.7);
-      dataset.push((km / 14.5) * 1500);
+      dataset.push((km / data[selectValue].Fueleconomy) * fast_1kwh);
+      dataset.push((km / Ice_fuel) * ice_1L);
       dataset.push(
-        (km / 14.5) * 1500 - (km / data[selectValue].Fueleconomy) * 255.7
+        (km / Ice_fuel) * ice_1L - (km / data[selectValue].Fueleconomy) *fast_1kwh
       );
     }
     console.log(dataset);
 
     // X축 스케일 정의하기
     var xScale = d3.scaleLinear();
-    xScale.domain([0, 2100000]).range([0, width]);
+    xScale.domain([0, 25000000]).range([0, width]);
 
     // Y축 스케일 정의하기
     var yScale = d3.scaleBand();
@@ -188,5 +232,3 @@ function bar() {
       .attr("font-size", "18px");
   });
 }
-
-bar();

@@ -19,7 +19,7 @@
 
         .axis text {
             fill: #888;
-            font-size: 15px;
+            font-size: 11px;
         }
 
         .axis line {
@@ -43,6 +43,10 @@
 </head>
 
 <body>
+    <div>
+        <canvas id="Canvas" width="1500" height="500"> </canvas>
+    </div>
+
     <select id="name" name="option" onchange="chageLangSelect()">
         <option value="0">코나</option>
         <option value="1">아이오닉</option>
@@ -82,8 +86,8 @@
       </span>
     <div>
         <label> Km 변경 </label>
-        <input class="slider" id="km" type="range" name="points" min="0" max="20000" value="10000" oninput="document.getElementById('value1').innerHTML=this.value;" >
-        <span id="value1">10000</span>
+        <input class="slider" id="km" type="range" name="points" min="0" max="200000" value="100000" oninput="document.getElementById('value1').innerHTML=this.value;" >
+        <span id="value1">100000</span>
     </div>
 
 
