@@ -72,7 +72,7 @@ Cost.prototype.axis = function (){
       this.ev_cost_data[0].mileage,
       this.ev_cost_data[this.ev_cost_data.length - 1].mileage,
     ])
-    .range([0, width - 40]);
+    .range([0, width]);
 
   let xScale2 = d3
     .scaleLinear()
@@ -80,7 +80,7 @@ Cost.prototype.axis = function (){
       this.ev_cost_data[0].mileage,
       this.ev_cost_data[this.ev_cost_data.length - 1].mileage,
     ])
-    .range([0, width - 40]);
+    .range([0, width]);
 
   let xAxis = d3.axisBottom(this.xScale).ticks(10).tickSize(-height);
   let xAxis2 = d3.axisBottom(this.xScale2).ticks(10);
@@ -152,6 +152,21 @@ Cost.prototype.returnLine2 = function(){
 Cost.prototype.draw = function(){
   
   let svg = this.svg;
+
+  svg.append("defs").append("svg:clipPath")
+  .attr("id", "clip")
+  .append("svg:rect")
+  .attr("width", width)
+  .attr("height", height)
+  .attr("x", 20)
+  .attr("y", 0); 
+
+
+var Line_chart = svg.append("g")
+  .attr("class", "focus")
+  .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+  .attr("clip-path", "url(#clip)");
+
   svg
     .append("text")
     .text("유지비")
@@ -188,8 +203,7 @@ Cost.prototype.draw = function(){
 
   let line = this.line;
   let line2 = this.line2;
-  svg.append("defs").append("clipPath").attr("id", "clip").append("rect").attr("width", width).attr("height", height);
-
+  
 
   focus
     .append("g")
@@ -202,8 +216,13 @@ Cost.prototype.draw = function(){
     .attr("class", "axis axis--y")
     .call(this.yAxis)
     .attr("transform", "translate(0 ,0 )");
+  
+  // Line_chart.append("path")
+  //       .datum(data)
+  //       .attr("class", "line")
+  //       .attr("d", line);
 
-  focus.append("path")
+  Line_chart.append("path")
       .datum(this.ev_cost_data)
       .attr("class", "ev_line")
       .attr("d", line)
@@ -211,34 +230,31 @@ Cost.prototype.draw = function(){
       .attr("transform", "translate(20,0)");
 
 
-  focus.append("path")
+  Line_chart.append("path")
       .datum(this.ice_cost_data)
       .attr("class", "ice_line")
       .attr("d", line)
       .style("stroke", "black")
       .attr("transform", "translate(20,0)");
   
-  let return_focus = focus
-
-  // function transition(path) {
-  //   path.transition()
-  //       .duration(2000)
-  //       .attrTween("stroke-dasharray", tweenDash);
-  // }
-  // function tweenDash() {
-  //   var l = this.getTotalLength(),
-  //       i = d3.interpolateString("0," + l, l + "," + l);
-  //   return function (t) { return i(t); };
-  // }
-  // focus.select("path.ev_line")
-  //   .datum(this.ev_cost_data)
-  //   .attr("d", line)
-  //   .call(transition);
-  
-  // focus.select("path.ice_line")
-  //   .datum(this.ice_cost_data)
-  //   .attr("d", line)
-  //   .call(transition);
+       
+    // function transition(path) {
+    //   path.transition()
+    //       .duration(2000)
+    //       .attrTween("stroke-dasharray", tweenDash);
+    // }
+    // function tweenDash() {
+    //   var l = this.getTotalLength(),
+    //       i = d3.interpolateString("0," + l, l + "," + l);
+    //   return function (t) { return i(t); };
+    // }
+    
+    // Line_chart.select("path.ev_line")
+    //   .call(transition);
+    
+    // Line_chart.select("path.ice_line")
+    //   .call(transition);
+ 
 
   context.append("path")
       .datum(this.ev_cost_data)
@@ -252,7 +268,6 @@ Cost.prototype.draw = function(){
       .attr("d", line2)
       .style("stroke", "black");
      
-
   context
   .append("g")
   .attr("class", "axis axis--x")
@@ -263,7 +278,7 @@ Cost.prototype.draw = function(){
 
   context.attr("transform", "translate(" + context_x + "," + context_y + ")");
   
- return [line,line2,svg,return_focus,context]
+ return [line,svg,focus,context,Line_chart]
 }
 
 
@@ -294,8 +309,8 @@ y = 0;
 // height = 400 - margin.top - margin.bottom;
 
 var svg = d3.select("svg"),
-  margin = { top: 20, right: 20, bottom: 110, left: 40 },
-  margin2 = { top: 430, right: 20, bottom: 30, left: 80 },
+  margin = { top: 20, right: 40, bottom: 110, left: 80 },
+  margin2 = { top: 430, right: 40, bottom: 30, left: 80 },
   width = +svg.attr("width") - margin.left - margin.right,
   height = +svg.attr("height") - margin.top - margin.bottom,
   height2 = +svg.attr("height") - margin2.top - margin2.bottom;
@@ -404,13 +419,14 @@ function declaredLine(line) {
 function makeLine(Object){
   d3.selectAll("svg > *").remove();
     
-    //line,line2,svg,focus,context
+    //line,svg,focus,context,Line_chart
     let graph = Object.draw();
     
     let line = graph[0];
-    let svg = graph[2];
-    let focus = graph[3];
-    let context = graph[4];
+    let svg = graph[1];
+    let focus = graph[2];
+    let context = graph[3];
+    let Line_chart = graph[4];
   
 
     
@@ -418,19 +434,22 @@ function makeLine(Object){
     let xScale2 = Object.xScale2
     let xAxis = Object.xAxis;
    
+    const tooltip = d3.select('#tooltip');
+    const tooltipLine = svg.append('line');
 
     console.log(svg)
 
-    brushed = function (Object) {
+ 
+
+    brushed = function () {
       if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
         var s = d3.event.selection || xScale2.range();
         xScale.domain(s.map(xScale2.invert, xScale2));
-        focus.select(".ev_line").attr("d", line);
-        focus.select(".ice_line").attr("d", line);
+        Line_chart.select(".ev_line").attr("d", line);
+        Line_chart.select(".ice_line").attr("d", line);
         focus.select(".axis--x").call(xAxis);
       
-      svg
-        .select(".zoom")
+      svg.select(".zoom")
         .call(
           zoom.transform,
           d3.zoomIdentity.scale(width / (s[1] - s[0])).translate(-s[0], 0)
@@ -441,8 +460,8 @@ function makeLine(Object){
       if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
       let t = d3.event.transform;
       xScale.domain(t.rescaleX(xScale2).domain());
-      focus.select(".ev_line").attr("d", line);
-      focus.select(".ice_line").attr("d", line);
+      Line_chart.select(".ev_line").attr("d", line);
+      Line_chart.select(".ice_line").attr("d", line);
       focus.select(".axis--x").call(xAxis);
       context.select(".brush") .call(brush.move, xScale.range().map(t.invertX, t));
     }
@@ -455,17 +474,53 @@ function makeLine(Object){
     .call(brush)
     .call(brush.move, xScale.range());
 
-    svg
+    tipBox = svg
     .append("rect")
     .attr("class", "zoom")
-    .attr("width", width)
+    .attr("width", width-20)
     .attr("height", height)
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-    .call(zoom);
+    .call(zoom)
+    .on('mousemove', drawTooltip)
+    .on('mouseout', removeTooltip);
 
+
+  //   tipBox = svg.append('rect')
+  //   .attr('width', width)
+  //   .attr('height', height)
+  //   .attr('opacity', 0)
+  //  ;
+
+    function removeTooltip() {
+      if (tooltip) tooltip.style('display', 'none');
+      if (tooltipLine) tooltipLine.attr('stroke', 'none');
+    }
     
+  function drawTooltip() {
+    const kilometer = Math.floor((xScale.invert(d3.mouse(tipBox.node())[0]) + 5) / 10) * 10;
+    const cost =
     
+    states.sort((a, b) => {
+      return b.history.find(h => h.year == year).population - a.history.find(h => h.year == year).population;
+    })  
+      
+    tooltipLine.attr('stroke', 'black')
+      .attr('x1', xScale(kilometer))
+      .attr('x2', xScale(kilometer))
+      .attr('y1', 0)
+      .attr('y2', height)
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
+    tooltip.html("주행거리: " + kilometer + "")
+      .style('display', 'block')
+      .style('left',(d3.event.pageX + 5) + "px")
+      .style('top', (d3.event.pageY - 28) + "px")
+      .data(states).enter()
+      .append('div')
+      .style('color', d => d.color)
+      .html(d => d.name + ': ' + d.history.find(h => h.year == year).population)
+      
+  
+  }
 
 }
-
