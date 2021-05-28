@@ -260,6 +260,16 @@ let Unit;
         Unit=" 명"
     }
 
+    const handleClickRect = (d, i) => {
+        svg.selectAll('rect').each(function(d, j) {
+            if(j==1){
+                 carText=d.차종별
+                 update_color();}
+        //   if(j === i) d3.select(this).style('fill', pointColor);
+        //   else d3.select(this).style('fill', baseColor);
+        });
+      };
+
     svg.selectAll("myRect")
         .data(dataset)
         .enter()
@@ -278,6 +288,7 @@ let Unit;
             tooltip.style("top", (d3.event.pageY - 10) + "px");
             tooltip.text(String(d[ConditionText])+Unit);
         })
+        .on("click",handleClickRect)
         // .on("click",function(point, event) {
         //     if(event.length <= 0) return;
   
@@ -292,5 +303,7 @@ let Unit;
         .style("display", "none");
     update_color();  
     
+//     svg.node();
+// handleClickRect(null, data.length - 1);
 });}
 }
