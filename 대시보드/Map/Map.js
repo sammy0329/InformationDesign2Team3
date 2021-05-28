@@ -1,9 +1,12 @@
+
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
     mapOption = {
         center: new kakao.maps.LatLng(37.61972782200497, 127.06089191076839), // 지도의 중심좌표 
         level: 3 // 지도의 확대 레벨 
     };
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+var Selectinfo = "" //현재 선택된 카테고리 정보
 
 readTextFile1('json/fast.json')
 readTextFile2('json/slow.json')
@@ -199,7 +202,7 @@ function makeOutListener(infowindow) {
 
 // 카테고리를 클릭했을 때 type에 따라 카테고리의 스타일과 지도에 표시되는 마커를 변경합니다
 function changeMarker(type) {
-
+    Selectinfo = type;
     var fastMenu = document.getElementById('fastMenu');
     var slowMenu = document.getElementById('slowMenu');
     var bothMenu = document.getElementById('bothMenu');
@@ -242,5 +245,20 @@ function changeMarker(type) {
         setfastMarkers(null);
         setslowMarkers(null);
         setbothMarkers(map);
+    }
+}
+
+function wheelEvent()
+{
+    var level = map.getLevel();
+    if(level>9)
+    {
+        setfastMarkers(null);
+        setslowMarkers(null);
+        setbothMarkers(null);
+    }
+    else
+    {
+        changeMarker(Selectinfo);
     }
 }
