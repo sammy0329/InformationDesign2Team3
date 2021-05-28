@@ -4,20 +4,21 @@
     <meta charset="utf-8">
     <title>전기차</title>
     <style>
-        /* #region 지도 관련 스타일 */
-        #mapwrap {
+        /* #region 지도 관련 스타일 */ 
+        
+        .mapcss #mapwrap {
             position: relative;
             overflow: hidden;
         }
 
-        .category,
-        .category * {
+        .mapcss .category,
+        .mapcss .category * {
             margin: 0;
             padding: 0;
             color: #000;
         }
 
-        .category {
+        .mapcss .category {
             position: absolute;
             overflow: hidden;
             top: 10px;
@@ -32,7 +33,7 @@
             background-color: #fff;
         }
 
-        .category .menu_selected {
+        .mapcss .category .menu_selected {
             background: #FF5F4A;
             color: #fff;
             border-left: 1px solid #915B2F;
@@ -42,7 +43,7 @@
             margin: 0 -1px;
         }
 
-        .category li {
+        .mapcss .category li {
             list-style: none;
             float: left;
             width: 50px;
@@ -51,7 +52,7 @@
             cursor: pointer;
         }
 
-        .category .ico_comm {
+        .mapcss .category .ico_comm {
             display: block;
             margin: 0 auto 2px;
             width: 35px;
@@ -59,15 +60,15 @@
             background: url('image/category.png') no-repeat;
         }
 
-        .category .ico_fast {
+        .mapcss .category .ico_fast {
             background-position: -1px 0;
         }
 
-        .category .ico_slow {
+        .mapcss .category .ico_slow {
             background-position: -1px -36px;
         }
 
-        .category .ico_both {
+        .mapcss .category .ico_both {
             background-position: -1px -72px;
         }
 
@@ -82,7 +83,7 @@
 
 <body>
     <!--#region 지도관련  -->
-    <div id="Map_Part">
+    <div id="Map_Part" class="mapcss">
         <div id="mapwrap" style="width:500px;height:500px;" onmousewheel="wheelEvent()">
             <!-- 지도가 표시될 div -->
             <div id="map" style="width:500px;height:500px;"></div>
