@@ -253,7 +253,7 @@ function changeMarker(type) {
 function wheelEvent()
 {
     var level = map.getLevel();
-    if(level>10)
+    if(level>13)
     {
         setfastMarkers(null);
         setslowMarkers(null);
