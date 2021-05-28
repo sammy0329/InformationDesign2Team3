@@ -3,4 +3,29 @@ html, body, #container {
     height: 100%;
     margin: 0;
     padding: 0;
-  }
+}
+head{
+  position: relative;
+}
+#select_box{
+  display: flex;
+  margin-bottom: 10px;
+  width: 170px;
+  height: 30px;
+  font-size: 15px;
+}
+button{
+  width: 82px;
+  height: 30px;
+  font-size: 15px;
+}
+form{
+  position: absolute;
+  z-index: 9999;
+  left: 20%;
+  top: 20%;
+}
+tspan{
+  /* font-size: 14px; */
+  font-weight: bold;
+}

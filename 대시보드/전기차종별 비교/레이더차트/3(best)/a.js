@@ -258,9 +258,9 @@ function MakeChart() {
     chart.area(data13).name('DS3 E-tense So Chic').markers(true).fill("#009432", 0.3).stroke("#009432")
   }
 
-  chart.title("전기차종별 레이더차트")
+  chart.title("전기차종별 레이더차트");
     // set legend
-    .legend(true);
+  chart.legend(true);
 
   // set container id for the chart
   chart.container('container');
