@@ -1,4 +1,3 @@
-
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
     mapOption = {
         center: new kakao.maps.LatLng(37.61972782200497, 127.06089191076839), // 지도의 중심좌표 
@@ -89,7 +88,7 @@ function createfastMarkers(data) {
             };
 
         var infowindow = new kakao.maps.InfoWindow({
-            content: '<div>' + element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow + '<div>', // 인포윈도우에 표시할 내용
+            content: '<div style="padding:10px;text-align:center;width:auto;height:auto;white-space:nowrap;">'+ element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow +'</div>', // 인포윈도우에 표시할 내용
         });
 
         var latloninfo = new kakao.maps.LatLng(element.Lat, element.Lon);
@@ -127,7 +126,8 @@ function createslowMarkers(data) {
             };
 
         var infowindow = new kakao.maps.InfoWindow({
-            content: '<div>' + element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow + '<div>', // 인포윈도우에 표시할 내용
+            //content: '<span class="info-title">'+ element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow +'</span>', // 인포윈도우에 표시할 내용
+            content: '<div style="padding:10px;text-align:center;width:auto;height:auto;white-space: nowrap;">'+ element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow +'</div>', // 인포윈도우에 표시할 내용
         });
 
         var latloninfo = new kakao.maps.LatLng(element.Lat, element.Lon);
@@ -162,7 +162,8 @@ function createbothMarkers(data) {
             };
 
         var infowindow = new kakao.maps.InfoWindow({
-            content: '<div>' + element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow + '<div>', // 인포윈도우에 표시할 내용
+            //content: '<span class="info-title">'+ element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow +'</span>' // 인포윈도우에 표시할 내용
+            content: '<div style="padding:10px;text-align:center;width:auto;height:auto;white-space: nowrap;">'+ element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow +'</div>', // 인포윈도우에 표시할 내용
         });
 
         var latloninfo = new kakao.maps.LatLng(element.Lat, element.Lon);
@@ -246,12 +247,13 @@ function changeMarker(type) {
         setslowMarkers(null);
         setbothMarkers(map);
     }
+
 }
 
 function wheelEvent()
 {
     var level = map.getLevel();
-    if(level>9)
+    if(level>10)
     {
         setfastMarkers(null);
         setslowMarkers(null);
