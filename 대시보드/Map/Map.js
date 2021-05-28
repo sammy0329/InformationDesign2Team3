@@ -10,7 +10,7 @@ readTextFile2('json/slow.json')
 readTextFile3('json/EV_Charging_Station_Information.json')
 
 
-var markerImageSrc = 'image/category_icon1.png';  // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
+var markerImageSrc = 'image/category_icon2.png';  // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
 fastMarkers = [], // 급속 마커 객체를 가지고 있을 배열입니다
     slowMarkers = [], // 완속 마커 객체를 가지고 있을 배열입니다
     bothMarkers = []; // 혼합 마커 객체를 가지고 있을 배열입니다
