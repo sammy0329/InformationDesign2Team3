@@ -13,7 +13,7 @@ bar();
 Ev = [];
 Ice = [];
 
-d3.json("/대시보드/json/ControlGroup_ice.json",  function (error,data) {iceData(error,data)});
+d3.json("json/ControlGroup_ice.json",  function (error,data) {iceData(error,data)});
 
 
 //----- 전기차 vs 휘발유차 ----
