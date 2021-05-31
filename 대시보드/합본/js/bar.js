@@ -96,7 +96,7 @@ var svg = body.append("svg");
 
 // svg 요소의 너비와 높이가 화면을 꽉 채우도록 수정
 svg.attr("width", window.innerWidth);
-svg.attr("height", window.innerHeight);
+svg.attr("height", "300px");
 
 // svg 요소에 g 요소를 추가하고 axisGroup 변수에 저장
 var axisGroup = svg.append("g");
