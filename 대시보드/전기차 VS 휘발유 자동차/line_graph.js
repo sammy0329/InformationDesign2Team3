@@ -255,8 +255,24 @@ var Line_chart = svg.append("g")
       .attr("stroke-width", "2px")
       .style("stroke", "lightgray");
   
-      
- 
+
+  // function transition(path) {
+  //   path.transition()
+  //       .duration(2000)
+  //       .attrTween("stroke-dasharray", tweenDash);
+  // }
+  // function tweenDash() {
+  //   var l = this.getTotalLength(),
+  //       i = d3.interpolateString("0," + l, l + "," + l);
+  //   return function (t) { return i(t); };
+  // }
+  
+  // Line_chart.select("path.ev_line")
+  //   .call(transition);
+  
+  // Line_chart.select("path.ice_line")
+  //   .call(transition);
+
 
   context.append("path")
       .datum(this.ev_cost_data)
@@ -280,7 +296,7 @@ var Line_chart = svg.append("g")
 
   context.attr("transform", "translate(" + context_x + "," + context_y + ")");
   
-  
+ 
 
   
  return [line,svg,focus,context,Line_chart]
@@ -504,22 +520,7 @@ function makeLine(Object){
           .attr('stroke','gray')
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
       
-          // function transition(path) {
-          //   path.transition()
-          //       .duration(2000)
-          //       .attrTween("stroke-dasharray", tweenDash);
-          // }
-          // function tweenDash() {
-          //   var l = getTotalLength(),
-          //       i = d3.interpolateString("0," + l, l + "," + l);
-          //   return function (t) { return i(t); };
-          // }
-          
-          // Line_chart.select("path.ev_line")
-          //   .call(transition);
-          
-          // Line_chart.select("path.ice_line")
-          //   .call(transition);
+         
       svg.select(".zoom")
         .call(
           zoom.transform,
@@ -546,23 +547,7 @@ function makeLine(Object){
           .attr('stroke','gray')
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        
-      // function transition(path) {
-      //   path.transition()
-      //       .duration(2000)
-      //       .attrTween("stroke-dasharray", tweenDash);
-      // }
-      // function tweenDash() {
-      //   var l = getTotalLength(),
-      //       i = d3.interpolateString("0," + l, l + "," + l);
-      //   return function (t) { return i(t); };
-      // }
-      
-      // Line_chart.select("path.ev_line")
-      //   .call(transition);
-      
-      // Line_chart.select("path.ice_line")
-      //   .call(transition);
+     
         
     }
     let zoom = d3.zoom().scaleExtent([1, Infinity]).translateExtent([[0, 0],[width, height]]).extent([[0, 0],[width, height]]).on("zoom",zoomed);  
