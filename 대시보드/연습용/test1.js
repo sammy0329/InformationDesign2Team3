@@ -1,26 +1,65 @@
 CarValue=0 //자동차 인덱스 전역변수
 CarText="코나" //자동차 모델명 전역변수
-ConditionValue=0
+ConditionValue=1
 ConditionText="가격"
 CityText=""
+RegionText=""
+
 EV = []
+Subsidy =[]
+// set the dimensions and margins of the graph
+margin = {top: 40, right: 20, bottom: 40, left: 140},
+width = 460 - margin.left - margin.right,
+height = 550 - margin.top - margin.bottom;
+
 // selectValue = ev_select.options[ev_select.selectedIndex].value;
 
 
-Chart = function(data,){
+Chart = function(data){
+    this.chart = d3.select("#my_dataviz")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")");
+        
     this.data = data
-    this.xScale = this.axis[0]
-    this.yScale = this.axis[1]
+    this.avg = this.avg()
+    this.xScale = this.axis()[0]
+    this.yScale = this.axis()[1]
+
     
+ 
 }
 Chart.prototype = Object.create(Chart.prototype);
 Chart.prototype.axis = function(){
+    
     //x axis 조절
     let xScale = d3.scaleLinear()
     .domain([0,this.data[0].value])
     .range([ 0, width]);
+    
+   
 
-    chart.append("g")
+    // Y axis 조절
+    let yScale = d3.scaleBand()
+    .range([ 0, height ])
+    .domain(this.data.map(function(d) { return d.key; }))
+    .padding(.3);
+
+    
+    
+    //  console.log(this.xScale)
+    return[xScale,yScale]
+}
+
+Chart.prototype.line = function(){
+    
+    let xScale = this.xScale;
+    let yScale = this.yScale;
+
+    this.chart.append("g")
     .attr("transform", "translate(0," + height + ")")
     .attr("class", "grid")
 
@@ -30,42 +69,73 @@ Chart.prototype.axis = function(){
     .attr("transform", "translate(-10,0)rotate(-45)")
     .style("text-anchor", "end");
 
-    // Y axis 조절
-    let yScale = d3.scaleBand()
-    .range([ 0, height ])
-    .domain(this.data.map(function(d) { return d.key; }))
-    .padding(.3);
-
-    chart.append("g")
-    .call(d3.axisLeft(yScale))
-
-    return[xScale,yScale]
-}
-Chart.prototype.line = function(){
     
-    const barGroups = chart.selectAll()
+
+    this.chart.append("g")
+    .call(d3.axisLeft(yScale))
+    
+    const barGroups = this.chart.selectAll()
     .data(this.data)
     .enter()
     .append('g')
 
+    console.log(yScale)
     // chart.selectAll("myRect")
     barGroups
         .append("rect")
         .attr("class", "bar")
         .attr("x", xScale(0) )
-        .attr("y", function(d) { return this.yScale(d.key); })     
+        .attr("y", function(d) { return yScale(d.key); })     
         // .transition()
         // .duration(2000)
-        .attr("width", function(d) { return this.xScale(d.value); })
-        .attr("height", this.yScale.bandwidth() )
+        .attr("width", function(d) { return xScale(d.value); })
+        .attr("height", yScale.bandwidth() )
          
-    update_color();  
+       
+    update_color();
+    
+    if(ConditionText!="승차인원"){
+        
+        barGroups.append('line').attr('stroke', 'black')
+        .attr('x1', xScale(this.avg))
+        .attr('x2', xScale(this.avg))
+        .attr('y1', 0)
+        .attr('y2', height)
+        .attr('stroke','red');
+    }
+    
 
     return barGroups
 }
 
-//처음화면에 가격 부터 띄워줌
-Make_Ev_Compared_Chart();
+Chart.prototype.avg = function(){
+    let sum = 0
+    this.data.forEach(function(data){
+        sum+=data.value
+    })
+    
+    let avg=sum/this.data.length
+    console.log(avg)
+    return avg
+   
+}
+
+
+function test(num){
+    let d = []
+    EV.forEach(function(value){
+        d.push({key : value[0].name, value : value[0][Object.keys(value[0])[num]]})
+       
+    })
+    d.sort(function(b, a) {
+             return a.value - b.value;
+           });
+    return d
+}  
+
+
+// //처음화면에 가격 부터 띄워줌
+// Make_Ev_Compared_Chart();
 
 //차량 선택에 따른 value 값 및 text 저장 함수
 function changeLangSelect(){ 
@@ -78,6 +148,16 @@ function changeLangSelect(){
      update_color();
 }
 
+//내가 선택한 차종 색 변경
+function update_color(){
+    d3.selectAll(".bar")
+    .style("fill",function(d,i){
+        if(d.key===CarText){
+            return "orange";
+        }
+       
+    })  
+}
 //조건 선택에 따른 value 값 및 text 저장 함수
 function changeConditionSelect(){ 
     let ConditionSelect = document.getElementById("condition"); 
@@ -85,26 +165,98 @@ function changeConditionSelect(){
      ConditionValue = ConditionSelect.options[ConditionSelect.selectedIndex].value;
     // select element에서 선택된 option의 text가 저장된다. 
      ConditionText = ConditionSelect.options[ConditionSelect.selectedIndex].text;
+     
      if(ConditionText==="보조금"){
         document.all.region.style.visibility="visible";
         document.all.city.style.visibility="visible";
+        
+        //div 삭제 후 다시 만들어주면서 그래프 갱신
+        const Olddiv = document.getElementById("my_dataviz");
+        Olddiv.remove();
+        const NewDiv = document.createElement('div');
+        NewDiv.setAttribute("id", "my_dataviz");
+        document.body.appendChild(NewDiv);
+       
      }else{
         document.all.region.style.visibility="hidden";
         document.all.city.style.visibility="hidden";
-     }
-     Make_Ev_Compared_Chart(); 
-   }
+        // //div 삭제 후 다시 만들어주면서 그래프 갱신
+        const Olddiv = document.getElementById("my_dataviz");
+        Olddiv.remove();
+        const NewDiv = document.createElement('div');
+        NewDiv.setAttribute("id", "my_dataviz");
+        document.body.appendChild(NewDiv);
+        
+        drawChart(ConditionValue);
+     }    
+}
 
+// function changeRegionSelect(){ 
+    
+    
+// }
+      
+//Object.keys(value[0])[1] -> city 다 ~
 //city 값을 저장하는 함수
 function changeCitySelect(){ 
+    
+    let RegionSelect = document.getElementById("region"); 
+    // select element에서 선택된 option의 text가 저장된다. 
+     RegionText = RegionSelect.options[RegionSelect.selectedIndex].text;
+    //   if(ConditionText==="보조금") drawChart();
     let CitySelect = document.getElementById("city"); 
     // select element에서 선택된 option의 text가 저장된다. 
      CityText = CitySelect.options[CitySelect.selectedIndex].text;
-      if(ConditionText==="보조금") Make_Ev_Compared_Chart(); 
-    console.log(CityText)
+    //   if(ConditionText==="보조금") 
+        // drawChart(); 
+    // console.log(Subsidy)
+    // console.log(Object.keys(Subsidy.city[0]))
+
+    
+
+    console.log(RegionText)
+    var num = [];
+    Subsidy.forEach(function(value,index){
+        // d.push({key : value[0].name, value : value[0][Object.keys(value[0])[3]]})
+        // console.log(Object.keys(value[0])[1]) ** city로 출력
+        // console.log(Object.keys(value[0])[1])
+        // console.log(value[0].city)
+        
+        if(CityText == value[0].city && RegionText==value[0].region){
+            // console.log(value[0][index]);
+            // console.log(value[0].cost)
+            num.push({key : value[0].car, value : value[0].cost });
+            console.log(value[0])
+        }
+
+    }) 
+    num.sort(function(b, a) {
+                return a.value - b.value;
+            });
+
+    console.log(num)
+  
+
+        //div 삭제 후 다시 만들어주면서 그래프 갱신
+        const Olddiv = document.getElementById("my_dataviz");
+        Olddiv.remove();
+        const NewDiv = document.createElement('div');
+        NewDiv.setAttribute("id", "my_dataviz");
+        document.body.appendChild(NewDiv);
+
+        drawChart(num)
+    // let d = []
+    // Subsidy.forEach(function(value){
+    //     d.push({key : value[0].name, value : value[0][Object.keys(value[0])[3]]})
+    // })
+    // d.sort(function(b, a) {
+    //         return a.value - b.value;
+    //     });
+    // return d
+   
+
 }
 
-//지역 선택시 세부내역인 구? 선택 사항 변경 함수
 function categoryChange(e) {
     let city_a = ["세부지역을 선택해주세요","강릉시", "고성군", "동해시", "삼척시","속초시","양구군","양양군","영월군","원주시","인제군","정선군","철원군","춘천시","태백시","평창군","홍천군","화천군","횡성군"];
     let city_b = ["세부지역을 선택해주세요","가평군", "고양시", "과천시", "광명시","광주시","구리시","군포시","김포시","남양주시","동두천시","부천시","성남시","수원시","시흥시","안산시","안성시","안양시","양주시","양평군","여주시","연천군","오산시","용인시","의왕시","의정부시","이천시","파주시","평택시","포천시","하남시","화성시"];
@@ -151,45 +303,41 @@ function categoryChange(e) {
         opt.value = d[x];
         opt.innerHTML = d[x];
         target.appendChild(opt);
-        }    
-      }
-      
-//내가 선택한 차종 색 변경
-function update_color(){
-    d3.selectAll(".bar")
-    .style("fill",function(d,i){
-        if(d.차종별===CarText)
-            return "orange";
-    })  
+    }    
 }
+      
 
-//Ev 차종별 조건에 맞는 비교 chart 만들기 함수
-function Make_Ev_Compared_Chart(){
 
-// set the dimensions and margins of the graph
-let margin = {top: 40, right: 20, bottom: 40, left: 140},
-width = 460 - margin.left - margin.right,
-height = 550 - margin.top - margin.bottom;
 
-//div 삭제 후 다시 만들어주면서 그래프 갱신
-const Olddiv = document.getElementById("my_dataviz");
-Olddiv.remove();
-const NewDiv = document.createElement('div');
-NewDiv.setAttribute("id", "my_dataviz");
-document.body.appendChild(NewDiv);
-
-// append the svg object to the body of the page
-let chart = d3.select("#my_dataviz")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
   
 d3.json("Compared_ev.json",function(error,data){readEV(error,data)});
+d3.json("Subsidy2.json",function(error,data){readCost(error,data)});
    
-   
+
+function readCost(error,data){
+    if (error) throw error;
+
+    data.Subsidy.forEach((element) => {
+        Subsidy.push([
+            {
+            region: element.시도,
+            city: element.지역구분,
+            car : element.차종별,
+            cost : element.보조금
+            },
+        ]);
+    });
+
+    //filter로 지역에 해당하는 값만 추출
+    let result = Subsidy.filter(x=>{
+        return x.지역구분===CityText
+    });
+
+
+    console.log(Subsidy)
+}
+
+
 function readEV(error,data){   
 
     //sorting
@@ -199,180 +347,62 @@ function readEV(error,data){
         EV.push([
             {
             name: element.차종별,
-            passenger: element.승차인원,
+            price: element.가격,
             speed : element.최고속도,
             mileage : element.주행거리,
             fuel: element.연비,
-            price: element.가격
+            passenger: element.승차인원
             },
         ]);
     });
 
-
-    main()
+    drawChart(ConditionValue)
     
 }
 
-function main(){
-    
-    let n = test(3)
-    console.log(n)
+function drawChart(value){
 
-    testV = new Chart(test(3));
-    testV.line();
-}
-
-
-function test(num){
-    let d = []
-    EV.forEach(function(value){
-        d.push({key : value[0].name, value : value[0][Object.keys(value[0])[num]]})
-    })
-    d.sort(function(b, a) {
-             return a.value - b.value;
-           });
-    return d
-}  
-
-    
-
-//x axis 조절
-    let x
-    if(ConditionText==="승차인원"){
-    xScale = d3.scaleLinear()
-        .domain([0, d3.max(dataset, function(d){ return d[ConditionText];})])
-        .range([ 0, width]);
-    
-        chart.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .attr("class", "grid")
-        .call(d3.axisBottom(xScale).ticks(5).tickSize(-height))
-       
-
-    }else if(ConditionText==="가격"){
-        xScale = d3.scaleLinear()
-      .domain([0, d3.max(dataset, function(d){ return d[ConditionText];})])
-      .range([ 0, width]);
-
-      chart.append("g")
-        .attr("class", "grid")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(xScale).ticks(5).tickSize(-height))
-        .selectAll("text")
-        .attr("transform", "translate(-10,0)rotate(-45)")
-        .style("text-anchor", "end");
-        
-       
-        // let y =100
-        // svg.append('line')
-        // .attr('x1', 0)
-        // .attr('y1', y)
-        // .attr('x2', width)
-        // .attr('y2', y)
-        // .attr('stroke', 'red')
-        
-    }else{
-        xScale = d3.scaleLinear()
-      .domain([0, d3.max(dataset, function(d){ return d[ConditionText];})])
-      .range([ 0, width]);
-
-      chart.append("g")
-        .attr("class", "grid")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(xScale).ticks(5).tickSize(-height))
-          
-
+    if(ConditionText === "보조금"){
+        testV = new Chart(value);
     }
-
-// Y axis 조절
-    let yScale = d3.scaleBand()
-        .range([ 0, height ])
-        .domain(dataset.map(function(d) { return d.차종별; }))
-        .padding(.3);
-        
-        const makeXLines = () => d3.axisLeft()
-        .scale(xScale)
-
-        chart.append("g")
-        .call(d3.axisLeft(yScale))
-    
-     
-        
-let Unit;
-//단위 만들어서 합쳐보고 싶었는데...
-    if(ConditionText==="가격"){
-        Unit =" 원"
-    }else if(ConditionText==="최고속도" || ConditionText==="주행거리"){
-        Unit=" Km"
-    }else if(ConditionText==="연비"){
-        Unit=" kWh/km"
-    }else if(ConditionText==="승차인원"){
-        Unit=" 명"
+    else{
+        testV = new Chart(test(value));
     }
+    bargraph = testV.line();
 
-    const barGroups = chart.selectAll()
-    .data(dataset)
-    .enter()
-    .append('g')
+    let tooltip = d3.select("body").append("div")
+        .attr("class", "toolTip")
+        .style("display", "none"); 
+    
+        let Unit;
+        //단위 만들어서 합쳐보고 싶었는데...
+            if(ConditionText==="가격"){
+                Unit =" 원"
+            }else if(ConditionText==="최고속도" || ConditionText==="주행거리"){
+                Unit=" Km"
+            }else if(ConditionText==="연비"){
+                Unit=" kWh/km"
+            }else if(ConditionText==="승차인원"){
+                Unit=" 명"
+            }else Unit=" 원"
 
-    // chart.selectAll("myRect")
-    barGroups
-        .append("rect")
-        .attr("class", "bar")
-        .attr("x", xScale(0) )
-        .attr("y", function(d) { return yScale(d.차종별); })     
-        // .transition()
-        // .duration(2000)
-        .attr("width", function(d) { return xScale(d[ConditionText]); })
-        .attr("height", yScale.bandwidth() )   
+        bargraph
         .on("mouseover", function() { tooltip.style("display", null); })
         .on("mouseout",  function() { tooltip.style("display", "none"); })
         .on("mousemove", function(d) {
             tooltip.style("left", (d3.event.pageX + 10) + "px");
             tooltip.style("top", (d3.event.pageY - 10) + "px");
-            tooltip.text(String(d[ConditionText])+Unit)
+            tooltip.text(String(d.value)+Unit)
         })
-    
-  
-        
         .on("click",function(point, event) {
+            console.log(point);
             if(event.length <= 0) return;
-                CarText =point.차종별
-                $('#name').val(CarText).prop("selected",true);
-                update_color();  
-            });
-
-            // function pickValue(ev_car_data,ice_car_data,select){
-            //     let kilometer = 0
-            //     while(true){
-            //       let ev_cost = cost(kilometer,ev_car_data.fuel,select, ev_car_data.price);
-            //       let ice_cost = cost(kilometer,ice_car_data.fuel,ice_1L,ice_car_data.price);
-            //       if(ice_cost > ev_cost){
-            //         return kilometer;
-            //       }
-            //       kilometer++;
-            //     }              
-            //   }
-         
-            //   pickValue();
-            // let diverseLine = svg.append('line')
-            // diverseLine.attr('stroke', 'black')
-            //   .attr("class", "diverseLine")
-            //   .attr('x1', xScale(Object.pickValue))
-            //   .attr('x2', xScale(Object.pickValue))
-            //   .attr('y1', 0)
-            //   .attr('y2', height)
-            //   .attr('stroke','gray')
-            //   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            CarText =point.key
+            
+            $('#name').val(CarText).prop("selected",true);
+            update_color();  
+        });
 
 
 
-        var tooltip = d3.select("body").append("div")
-        .attr("class", "toolTip")
-        .style("display", "none");
-    update_color(); 
-
-  
-
-}
 }

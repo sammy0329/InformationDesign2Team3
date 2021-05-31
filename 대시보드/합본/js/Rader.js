@@ -96,63 +96,6 @@ var data14 = [
   { x: "가격", value: 25 },
 ];
 
-// anychart.onDocumentReady(function () {
-
-//   // // our data from bulbapedia
-//   // // create radar chart
-//   // var chart = anychart.radar();
-
-//   // // set chart yScale settings
-//   // chart.yScale()
-//   //   .minimum(0)
-//   //   .maximum(25)
-//   //   .ticks({'interval':5});
-
-//   // // color alternating cells
-//   // chart.yGrid().palette(["gray 0.1", "gray 0.2"]);
-
-//   // // create first series
-//   // chart.area(data1).name('코나(기본형, PTC, 모던)').markers(true).fill("#E55934", 0.3).stroke("#E55934") 
-//   // // create second series
-//   // chart.area(data2).name('아이오닉(HP)').markers(true).fill("#9BC53D", 0.3).stroke("#9BC53D")
-//   // // create third series
-//   // chart.area(data3).name('아이오닉5').markers(true).fill("#5BC0EB", 0.3).stroke("#5BC0EB")//(롱레인지 RWD, 2WD 프레스티지)
-
-//   // chart.area(data4).name('니로EV').markers(true).fill("#FFC312", 0.3).stroke("#FFC312") //(HP, 프레스티지)
-
-//   // chart.area(data5).name('쏘울').markers(true).fill("#FDA7DF", 0.3).stroke("#FDA7DF") //(기본형, 프레스티지)
-
-//   // chart.area(data6).name('ZOE ZEN').markers(true).fill("#6F1E51", 0.3).stroke("#6F1E51")
-
-//   // chart.area(data7).name('i3 120Ah Lux').markers(true).fill("#1e272e", 0.3).stroke("#1e272e")
-
-//   // chart.area(data8).name('BOLT EV LT').markers(true).fill("#00d8d6", 0.3).stroke("#00d8d6")
-
-//   // chart.area(data9).name('Model 3(SRP RWD)').markers(true).fill("#fad390", 0.3).stroke("#fad390")
-
-//   // chart.area(data10).name('Model Y(Long Range)').markers(true).fill("#0be881", 0.3).stroke("#0be881")
-
-//   // chart.area(data11).name('Peugeot e-208 Allure').markers(true).fill("#EA2027", 0.3).stroke("#EA2027")
-
-//   // chart.area(data12).name('Peugeot e-2008 SUV Allure').markers(true).fill("#9980FA", 0.3).stroke("#9980FA")
-
-//   // chart.area(data13).name('DS3 E-tense So Chic').markers(true).fill("#009432", 0.3).stroke("#009432")
-
-//   // chart.area(data14).name('SMART EV Z').markers(true).fill("#6a89cc", 0.3).stroke("#6a89cc")
-
-
-//   // // set chart title
-//   // chart.title("전기차종별 레이더차트")
-//   // // set legend
-//   // .legend(true);
-
-//   // // set container id for the chart
-//   // chart.container('container');
-//   // // initiate chart drawing
-//   // chart.draw();
-
-// });
-
 var SelectData = [];
 
 function handleOnChange(e) {
