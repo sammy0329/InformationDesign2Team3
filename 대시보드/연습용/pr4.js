@@ -215,10 +215,10 @@ document.body.appendChild(NewDiv);
 
 // append the svg object to the body of the page
 let svg = d3.select("#my_dataviz")
-  .append("svg")
+    .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-  .append("g")
+    .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
@@ -323,7 +323,8 @@ let Unit;
             tooltip.style("top", (d3.event.pageY - 10) + "px");
             tooltip.text(String(d[ConditionText])+Unit)
         })
-        
+    
+          
         .on("click",function(point, event) {
             if(event.length <= 0) return;
                 CarText =point.차종별
@@ -356,7 +357,29 @@ let Unit;
         var tooltip = d3.select("body").append("div")
         .attr("class", "toolTip")
         .style("display", "none");
-    update_color();  
+    update_color(); 
+
+    // svg.append('text')
+    //   .attr('class', 'label')
+    //   .attr('x', width / 2 + margin)
+    //   .attr('y', height + margin * 1.7)
+    //   .attr('text-anchor', 'middle')
+    //   .text('Languages')
+
+    // svg.append('text')
+    //   .attr('class', 'title')
+    //   .attr('x', width / 2 + margin)
+    //   .attr('y', 40)
+    //   .attr('text-anchor', 'middle')
+    //   .text('Most loved programming languages in 2018')
+
+    // svg.append('text')
+    //   .attr('class', 'source')
+    //   .attr('x', width - margin / 2)
+    //   .attr('y', height + margin * 1.7)
+    //   .attr('text-anchor', 'start')
+    //   .text('Source: Stack Overflow, 2018')
+  
 
 });}
 }
