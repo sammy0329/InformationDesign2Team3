@@ -124,17 +124,15 @@
 
         width: 800px;
     }
-    .radercss{
+
+    #container {
         position: absolute;
-        width: 1000px;
-        height: 1000px;
-        top: 0%;
-    }
-    .radercss #container {
-        width: 100%;
-        height: 100%;
+        width: 50%;
+        height: 50%;
         margin: 0;
         padding: 0;
+        top: 70%;
+        left: 30%;
     }
     head{
       position: relative;
