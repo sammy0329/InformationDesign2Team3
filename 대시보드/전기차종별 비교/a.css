@@ -8,43 +8,46 @@ head{
   position: relative;
 }
 /* --------------------------- */
-td, th{
+.radar td, th{
   border: 1px solid black;
-  width: 120px;
-  height: 40px;
+  width: 180px;
+  height: 60px;
 }
-td{
+.radar td{
   display: flex;
   align-items: center;
   justify-content: center;
 }
-table{
+.radar table{
   border: 1px solid black;
   position: absolute;
   top: 20%;
-  left: 10%;
+  left: 3%;
   z-index: 9999;
+  font-size: 20px;
 }
 /* --------------------------- */
-#select_box{
+.radar #select_box{
   display: flex;
   margin-bottom: 10px;
-  width: 170px;
-  height: 30px;
-  font-size: 15px;
+  width: 220px;
+  height: 40px;
+  font-size: 20px;
 }
-button{
-  width: 82px;
-  height: 30px;
-  font-size: 15px;
+.radar button{
+  width: 105px;
+  height: 40px;
+  font-size: 20px;
 }
-form{
+.radar form{
   position: absolute;
   z-index: 9999;
-  left: 25%;
+  left: 24%;
   top: 20%;
+  padding: 10px;
+  border: 4px double black;
 }
-tspan{
+.radar tspan{
   /* font-size: 14px; */
   font-weight: bold;
 }
