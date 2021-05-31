@@ -47,7 +47,7 @@ Chart.prototype.axis = function () {
     )
     .padding(0.3);
 
-  //  //console.log(this.xScale)
+  //  console.log(this.xScale)
   return [xScale, yScale];
 };
 
@@ -70,11 +70,12 @@ Chart.prototype.line = function () {
 
   const barGroups = this.chart.selectAll().data(this.data).enter().append("g");
 
-  //console.log(yScale)
+  console.log(yScale);
   // chart.selectAll("myRect")
   barGroups
     .append("rect")
-    .attr("class", ".carscss .bar")
+    .attr("class", "carscss")
+    .attr("class", "bar")
     .attr("x", xScale(0))
     .attr("y", function (d) {
       return yScale(d.key);
@@ -109,7 +110,7 @@ Chart.prototype.avg = function () {
   });
 
   let avg = sum / this.data.length;
-  //console.log(avg)
+  console.log(avg);
   return avg;
 };
 
@@ -134,7 +135,7 @@ function changeLangSelect() {
   CarValue = CarSelect.options[CarSelect.selectedIndex].value;
   // select element에서 선택된 option의 text가 저장된다.
   CarText = CarSelect.options[CarSelect.selectedIndex].text;
-  //console.log(CarValue,CarText);
+  console.log(CarValue, CarText);
   update_color();
 }
 
@@ -159,20 +160,23 @@ function changeConditionSelect() {
     document.all.city.style.visibility = "visible";
 
     //div 삭제 후 다시 만들어주면서 그래프 갱신
-    const Olddiv = document.getElementById("my_dataviz");
-    Olddiv.remove();
-    const NewDiv = document.createElement("div");
-    NewDiv.setAttribute("id", "my_dataviz");
-    document.body.appendChild(NewDiv);
+    // const Olddiv = document.getElementById("my_dataviz");
+    // Olddiv.remove();
+    // const NewDiv = document.createElement("div");
+    // NewDiv.setAttribute("id", "my_dataviz");
+    // document.body.appendChild(NewDiv);
+    $("#my_dataviz").empty();
   } else {
     document.all.region.style.visibility = "hidden";
     document.all.city.style.visibility = "hidden";
     // //div 삭제 후 다시 만들어주면서 그래프 갱신
-    const Olddiv = document.getElementById("my_dataviz");
-    Olddiv.remove();
-    const NewDiv = document.createElement("div");
-    NewDiv.setAttribute("id", "my_dataviz");
-    document.body.appendChild(NewDiv);
+    // const Olddiv = document.getElementById("my_dataviz");
+    // Olddiv.remove();
+    // const NewDiv = document.createElement("div");
+    // NewDiv.setAttribute("id", "my_dataviz");
+    // document.body.appendChild(NewDiv);
+
+    $("#my_dataviz").empty();
 
     drawChart(ConditionValue);
   }
@@ -194,36 +198,38 @@ function changeCitySelect() {
   CityText = CitySelect.options[CitySelect.selectedIndex].text;
   //   if(ConditionText==="보조금")
   // drawChart();
-  // //console.log(Subsidy)
-  // //console.log(Object.keys(Subsidy.city[0]))
+  // console.log(Subsidy)
+  // console.log(Object.keys(Subsidy.city[0]))
 
-  //console.log(RegionText)
+  console.log(RegionText);
   var num = [];
   Subsidy.forEach(function (value, index) {
     // d.push({key : value[0].name, value : value[0][Object.keys(value[0])[3]]})
-    // //console.log(Object.keys(value[0])[1]) ** city로 출력
-    // //console.log(Object.keys(value[0])[1])
-    // //console.log(value[0].city)
+    // console.log(Object.keys(value[0])[1]) ** city로 출력
+    // console.log(Object.keys(value[0])[1])
+    // console.log(value[0].city)
 
     if (CityText == value[0].city && RegionText == value[0].region) {
-      // //console.log(value[0][index]);
-      // //console.log(value[0].cost)
+      // console.log(value[0][index]);
+      // console.log(value[0].cost)
       num.push({ key: value[0].car, value: value[0].cost });
-      //console.log(value[0])
+      console.log(value[0]);
     }
   });
   num.sort(function (b, a) {
     return a.value - b.value;
   });
 
-  //console.log(num)
+  console.log(num);
 
   //div 삭제 후 다시 만들어주면서 그래프 갱신
-  const Olddiv = document.getElementById("my_dataviz");
-  Olddiv.remove();
-  const NewDiv = document.createElement("div");
-  NewDiv.setAttribute("id", "my_dataviz");
-  document.body.appendChild(NewDiv);
+  // const Olddiv = document.getElementById("my_dataviz");
+  // Olddiv.remove();
+  // const NewDiv = document.createElement("div");
+  // NewDiv.setAttribute("id", "my_dataviz");
+  // document.body.appendChild(NewDiv);
+
+  $("#my_dataviz").empty();
 
   drawChart(num);
   // let d = []
@@ -451,7 +457,7 @@ function categoryChange(e) {
   }
 }
 
-d3.json("json/Compared_ev.json", function (error, data) {
+d3.json("json/Compared_ev_.json", function (error, data) {
   readEV(error, data);
 });
 d3.json("json/Subsidy2.json", function (error, data) {
@@ -477,7 +483,7 @@ function readCost(error, data) {
     return x.지역구분 === CityText;
   });
 
-  //console.log(Subsidy)
+  console.log(Subsidy);
 }
 
 function readEV(error, data) {
@@ -511,8 +517,23 @@ function drawChart(value) {
   let tooltip = d3
     .select("body")
     .append("div")
+    .attr("class", "carscss")
     .attr("class", "toolTip")
-    .style("display", "none");
+    .style("display", "none")
+    .style("position", "absolute")
+    .style("border", "solid")
+    .style("border-radius", "4px 4px 4px 4px")
+    .style("text-align", "center")
+    .style("padding", "5px")
+    .style("font-size", "1px")
+    .style("background-color", "rgb(253, 253, 253)");
+
+  // border: solid;
+  // border-radius: 4px 4px 4px 4px;
+  // background-color: rgb(253, 253, 253);
+  // padding: 5px;
+  // text-align: center;
+  // font-size: 1px;
 
   let Unit;
   //단위 만들어서 합쳐보고 싶었는데...
@@ -539,7 +560,7 @@ function drawChart(value) {
       tooltip.text(String(d.value) + Unit);
     })
     .on("click", function (point, event) {
-      //console.log(point);
+      console.log(point);
       if (event.length <= 0) return;
       CarText = point.key;
 
