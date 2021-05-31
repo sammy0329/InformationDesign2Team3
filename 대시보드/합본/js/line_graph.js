@@ -5,7 +5,6 @@ fast_1kwh = 255.7;
 ice_1L = 1534.8;
 var ev_select = document.getElementById("ev_car");
 var selectValue = ev_select.options[ev_select.selectedIndex].value;
-console.log(selectValue);
 var selectValue_ice = 1;
 
 // window.onresize = function(event){
@@ -335,7 +334,7 @@ y = 0;
 // width = 700 - margin.left - margin.right;
 // height = 400 - margin.top - margin.bottom;
 
-var svg = d3.select("svg"),
+var svg = d3.select("#line"),
   margin = { top: 20, right: 40, bottom: 110, left: 80 },
   margin2 = { top: 430, right: 40, bottom: 30, left: 80 },
   width = +svg.attr("width") - margin.left - margin.right,
@@ -424,6 +423,22 @@ function changeLine(event) {
 }
 
 function evSelect() {
+
+  //d3.select("#line").remove();
+  // const NewSVG = document.createElement('svg');
+  // NewSVG.setAttribute("id", "line");
+  // document.body.appendChild(NewSVG);
+
+  // var svg = d3.select("body")
+  //   .append("svg")
+  //   .attr("id", "line")
+  //   .attr("top",0)
+  //   .attr("left",0)
+  //   .attr("width",700)
+  //   .attr("height",500)
+
+  $("#line").empty();
+
   selectValue = ev_select.options[ev_select.selectedIndex].value;
 
   // document.getElementById('ev_fast').setAttribute('checked', false);
@@ -481,7 +496,12 @@ function declaredLine(line) {
 }
 
 function makeLine(Object) {
-  d3.selectAll("svg > *").remove();
+  //d3.selectAll("svg > *").remove();
+  //d3.select("#line").remove();
+
+  // const NewSVG = document.createElement('svg');
+  // NewSVG.setAttribute("id", "line");
+  // document.body.appendChild(NewSVG);
 
   console.log(Object)
   //line,svg,focus,context,Line_chart
