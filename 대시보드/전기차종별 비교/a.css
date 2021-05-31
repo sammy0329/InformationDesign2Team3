@@ -7,6 +7,21 @@ html, body, #container {
 head{
   position: relative;
 }
+/* --------------------------- */
+td, th{
+  border: 1px solid black;
+  width: 120px;
+  height: 40px;
+}
+td{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+table{
+  border: 1px solid black;
+}
+/* --------------------------- */
 #select_box{
   display: flex;
   margin-bottom: 10px;
