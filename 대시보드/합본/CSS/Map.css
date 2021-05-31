@@ -1,3 +1,10 @@
+ html, body{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+ }
  .mapcss #mapwrap {
     position: relative;
     overflow: hidden;
@@ -117,7 +124,12 @@
 
         width: 800px;
     }
-
+    .radercss{
+        position: absolute;
+        width: 1000px;
+        height: 1000px;
+        top: 0%;
+    }
     .radercss #container {
         width: 100%;
         height: 100%;
@@ -128,46 +140,46 @@
       position: relative;
     }
     /* --------------------------- */
-    .radercss .radar td, th{
+    .radar td, th{
       border: 1px solid black;
       width: 180px;
       height: 60px;
     }
-    .radercss .radar td{
+    .radar td{
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .radercss .radar table{
+    .radar table{
       border: 1px solid black;
       position: absolute;
-      top: 20%;
-      left: 3%;
+      top: 2%;
+      left: 45%;
       z-index: 9999;
       font-size: 20px;
     }
     /* --------------------------- */
-    .radercss .radar #select_box{
+    .radar #select_box{
       display: flex;
       margin-bottom: 10px;
       width: 220px;
       height: 40px;
       font-size: 20px;
     }
-    .radercss .radar button{
+    .radar button{
       width: 105px;
       height: 40px;
       font-size: 20px;
     }
-    .radercss .radar form{
+    .radar form{
       position: absolute;
       z-index: 9999;
-      left: 25%;
-      top: 20%;
+      left: 49%;
+      top: 50%;
       padding: 10px;
       border: 4px double black;
     }
-    .radercss .radar tspan{
+    .radercss tspan{
       /* font-size: 14px;
       font-weight: bold; */
     }
