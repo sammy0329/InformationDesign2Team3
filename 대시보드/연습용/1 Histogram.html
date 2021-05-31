@@ -8,67 +8,65 @@
 </head>
 
 <style>
-    svg {
-      height:600px;
-      width: 500px;
-      border: 1px solid rgba(12, 12, 12, 0.829);
-    }
+svg {
+  height:600px;
+  width: 500px;
+  border: 1px solid rgba(12, 12, 12, 0.829);
+}
 
 
-    .bar {
-    fill: skyblue;  
-    
+.bar {
+fill: rgb(226, 226, 226);  
+stroke-width:0.5;
+stroke:black;
 }
 
 
 .bar:hover {
-    fill: blue;
+fill: blue;
 }
 
-.x.axis path {
-  display: none;
+/* .x.axis path {
+display: none;
 }
-.toolTip {
-    position: absolute;
-    border: solid;
-    border-radius: 4px 4px 4px 4px;
-    background-color: rgb(253, 253, 253);
-    padding: 5px;
-    text-align: center;
-    font-size: 1px;
-}
-/* div.tooltip {
-  position: absolute;
-  text-align: center;
-  width: 70px;
-  height: 15px;
-  padding: 2px;
-  font: 15px sans-serif;
-  background: lightsteelblue;
-  border: 0px;
-  border-radius: 8px;
-  pointer-events: none;
+.y.axis path {
+display: none;
 } */
+.toolTip {
+position: absolute;
+border: solid;
+border-radius: 4px 4px 4px 4px;
+background-color: rgb(253, 253, 253);
+padding: 5px;
+text-align: center;
+font-size: 1px;
+}
+.grid line {
+stroke: lightgrey;
+stroke-opacity: 0.8;
+shape-rendering: crispEdges;
+}
 
-  </style>
+</style>
 <body>
+  <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
     <table>
         <tr>
             <select id="name" name="option" onchange="changeLangSelect()">
-                <option value="0">코나</option>
-                <option value="1" >아이오닉</option>
-                <option value="2">아이오닉5</option>
-                <option value="3">니로EV</option>
-                <option value="4">쏘울</option>
-                <option value="5">ZOE ZEN</option>
-                <option value="6">i3 120Ah Lux</option>
-                <option value="7">BOLT EV LT</option>
-                <option value="8">Model 3</option>
-                <option value="9">Model Y</option>
-                <option value="10">Peugeot e-208 Allure</option>
-                <option value="11">Peugeot e-2008 SUV Allure</option>
-                <option value="12">DS3 E-tense So Chic</option>  
-                <option value="13">SMART EV Z</option>                 
+                <option value="코나">코나</option>
+                <option value="아이오닉" >아이오닉</option>
+                <option value="아이오닉5">아이오닉5</option>
+                <option value="니로EV">니로EV</option>
+                <option value="쏘울">쏘울</option>
+                <option value="ZOE ZEN">ZOE ZEN</option>
+                <option value="i3 120Ah Lux">i3 120Ah Lux</option>
+                <option value="BOLT EV LT">BOLT EV LT</option>
+                <option value="Model 3">Model 3</option>
+                <option value="Model Y">Model Y</option>
+                <option value="Peugeot e-208 Allure">Peugeot e-208 Allure</option>
+                <option value="Peugeot e-2008 SUV Allure">Peugeot e-2008 SUV Allure</option>
+                <option value="DS3 E-tense So Chic">DS3 E-tense So Chic</option>  
+                <option value="SMART EV Z">SMART EV Z</option>                 
             </select>
         </td>
         </tr>
@@ -84,7 +82,7 @@
             <option value="5">보조금</option>
           </select>
      
-  <select id="region" onchange=" categoryChange(this)">
+  <select style="visibility:hidden" id="region" onchange=" categoryChange(this)">
     <option>지역을 선택해주세요</option>
     <option value="a">강원</option>
     <option value="b">경기</option>
@@ -105,11 +103,11 @@
     <option value="q">충북</option>
   </select>
    
-  <select id="city" onchange="changeCitySelect()";>
+  <select style="visibility:hidden" id="city" onchange="changeCitySelect()";>
   <option>세부지역 선택해 주세요</option>
   </select>
 
     <div id="my_dataviz"></div>
-    <script src="pr5.js"></script>
+    <script src="pr4.js"></script>
 </body>
 </html>
