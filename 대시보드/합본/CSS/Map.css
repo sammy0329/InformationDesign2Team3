@@ -1,0 +1,65 @@
+ .mapcss #mapwrap {
+    position: relative;
+    overflow: hidden;
+}
+
+.mapcss .category,
+.mapcss .category * {
+    margin: 0;
+    padding: 0;
+    color: #000;
+}
+
+.mapcss .category {
+    position: absolute;
+    overflow: hidden;
+    top: 10px;
+    left: 10px;
+    width: 150px;
+    height: 50px;
+    z-index: 10;
+    border: 1px solid black;
+    font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+    font-size: 12px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.mapcss .category .menu_selected {
+    background: #FF5F4A;
+    color: #fff;
+    border-left: 1px solid #915B2F;
+    border-right: 1px solid #915B2F;
+    border-bottom: 1px solid #915B2F;
+    border-top: 1px solid #915B2F;
+    margin: 0 -1px;
+}
+
+.mapcss .category li {
+    list-style: none;
+    float: left;
+    width: 50px;
+    height: 45px;
+    padding-top: 5px;
+    cursor: pointer;
+}
+
+.mapcss .category .ico_comm {
+    display: block;
+    margin: 0 auto 2px;
+    width: 35px;
+    height: 22px;
+    background: url('../image/category.png') no-repeat;
+}
+
+.mapcss .category .ico_fast {
+    background-position: -1px 0;
+}
+
+.mapcss .category .ico_slow {
+    background-position: -1px -36px;
+}
+
+.mapcss .category .ico_both {
+    background-position: -1px -72px;
+}
