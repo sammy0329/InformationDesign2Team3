@@ -164,7 +164,7 @@
         width: 450px;
         height: 650px;
         left: 33%;
-        top: 48%;
+        bottom: -19%;
         z-index: 9998;
     }
     .radar #select_box{
