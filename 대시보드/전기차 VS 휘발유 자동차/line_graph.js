@@ -334,7 +334,7 @@ y = 0;
 // width = 700 - margin.left - margin.right;
 // height = 400 - margin.top - margin.bottom;
 
-var svg = d3.select("svg"),
+var svg = d3.select("#line"),
   margin = { top: 20, right: 40, bottom: 110, left: 80 },
   margin2 = { top: 430, right: 40, bottom: 30, left: 80 },
   width = +svg.attr("width") - margin.left - margin.right,

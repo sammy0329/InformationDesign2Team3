@@ -7,68 +7,60 @@ var Ice_fuel=14.5;
 var low_1kwh = 71.3;
 var fast_1kwh = 255.7;
 var ice_1L = 1534.8;
-Ev = [];
-Ice = [];
-
-d3.json("ControlGroup_ice.json",  function (error,data) {
-  data.forEach((element) => {
-    Ice.push([
-      {
-        name: element.차종별,
-        price: element.가격,
-        fuel: element.연비,
-        grade: element.차급,
-      },
-    ]);
-  });
-});
-d3.json("Compared_ev.json", function (error,data) {
-
-});
-
+MEv = [];
+MIce = [];
 
 bar();
 
-console.log(Ice);
-console.log(Ev);
+d3.json("ControlGroup_ice.json", function(error,data){
+  if (error) throw error;
+
+  data.forEach(function(d){
+      MIce.push([d.차종별,d.차급,d.가격,d.연비]);
+  });
+});
+d3.json("Compared_ev.json", function(error,data){
+  if (error) throw error;
+
+  data.forEach(function(d){
+    MEv.push([d.차종별,d.차급,d.가격,d.연비]);
+  });
+  
+});
+console.log(MIce);
+console.log(MEv);
+
+
+
 //----- 전기차 vs 휘발유차 ----
-// var canvas = document.getElementById("Canvas");
-// var ctx = canvas.getContext("2d"); // 캔버스 객체 생성
+var canvas = document.getElementById("Canvas");
+var ctx = canvas.getContext("2d"); // 캔버스 객체 생성
 
-// var rectX = 30;
-// var rectY = 30;
-// var rectWidth = 10;
-// var rectHeight = 40;
-// var cornerRadius = 10;
+var rectX = 30;
+var rectY = 30;
+var rectWidth = 10;
+var rectHeight = 40;
+var cornerRadius = 10;
 
-// // Set faux rounded corners
-// ctx.lineJoin = "round";
-// ctx.lineWidth = cornerRadius;
+// Set faux rounded corners
+ctx.lineJoin = "round";
+ctx.lineWidth = cornerRadius;
 
-// ctx.beginPath();
-// // 색 설정
-// ctx.strokeStyle = '#A9C9F7'; // 선 색
-// ctx.fillStyle = '#333333'; // 채운 사각형 색
+ctx.beginPath();
+// 색 설정
+ctx.strokeStyle = '#A9C9F7'; // 선 색
+ctx.fillStyle = '#333333'; // 채운 사각형 색
 
-// // 그리기
-// ctx.strokeRect(rectX+(cornerRadius/2), rectY+(cornerRadius/2), rectWidth-cornerRadius, rectHeight-cornerRadius);
-// ctx.fillRect(rectX+(cornerRadius/2), rectY+(cornerRadius/2), rectWidth-cornerRadius, rectHeight-cornerRadius);
-// ctx.font = '30px Arial';
-// ctx.fillText('전기차 vs 휘발유 자동차', rectX+15, rectY+30);
-// ctx.font = '15px Arial';
-// ctx.fillText('연료값', rectX+15, rectY+75);
-// ctx.fillText('완속 : 1kWh', rectX+15, rectY+110);
-// ctx.fillText('급속 : 1kWh', rectX+15, rectY+140);
-// var img = new Image();
-// var img1 = new Image();
-// img.src = "EV.png";
-// img.onload = function(e){
-//   ctx.drawImage(img, 45,190, 90,50);
-// }
-// img1.src = "ICE.png";
-// img1.onload = function(e){
-//   ctx.drawImage(img1, 45,290, 90,50);
-// }
+// 그리기
+ctx.strokeRect(rectX+(cornerRadius/2), rectY+(cornerRadius/2), rectWidth-cornerRadius, rectHeight-cornerRadius);
+ctx.fillRect(rectX+(cornerRadius/2), rectY+(cornerRadius/2), rectWidth-cornerRadius, rectHeight-cornerRadius);
+ctx.font = '30px Arial';
+ctx.fillText('전기차 vs 휘발유 자동차', rectX+15, rectY+30);
+ctx.font = '15px Arial';
+ctx.fillText('연료값', rectX+15, rectY+75);
+ctx.fillText('완속 : 1kWh', rectX+15, rectY+110);
+ctx.fillText('급속 : 1kWh', rectX+15, rectY+140);
+
 
 //---- 막대 그래프 ----
 // 상하좌우 여백 수치. 하단에는 축이 그려져야 하니까 여백을 많이.
@@ -83,21 +75,21 @@ var height = 200 - TOP - BOTTOM;
 
 // body 요소 밑에 svg 요소를 추가하고 그 결과를 svg 변수에 저장
 var body = d3.select("body");
-var svg = body.append("svg");
+var svg1 = body.append("svg");
 
 // svg 요소의 너비와 높이가 화면을 꽉 채우도록 수정
-svg.attr("width", window.innerWidth);
-svg.attr("height", window.innerHeight);
+svg1.attr("width", window.innerWidth);
+svg1.attr("height", window.innerHeight);
 
 // svg 요소에 g 요소를 추가하고 axisGroup 변수에 저장
-var axisGroup = svg.append("g");
+var axisGroup = svg1.append("g");
 // axisGroup에 "axis" 클래스를 부여하고 하단으로 이동
 axisGroup
   .attr("class", "axis")
   .style("transform", "translate(" + LEFT + "px, " + (TOP + height) + "px)");
 
 // svg 요소에 g 요소를 추가하고 barGroup 변수에 저장
-var barGroup = svg.append("g");
+var barGroup = svg1.append("g");
 // barGroup에 "bar" 클래스를 부여하고 좌상단 여백만큼 이동
 barGroup
   .attr("class", "bar")
@@ -154,7 +146,13 @@ function bar() {
         (km / Ice_fuel) * ice_1L - (km / data[selectValue].Fueleconomy) *fast_1kwh
       );
     }
-    console.log(dataset);
+    
+    for(j=0; j<MIce.length; j++){
+      if(MEv[selectValue][1]===MIce[j][1])
+        Ice_fuel=MIce[j][3];
+    }
+    
+   
 
     // X축 스케일 정의하기
     var xScale = d3.scaleLinear();
@@ -203,7 +201,7 @@ function bar() {
     barEnter.append("rect");
 
     // text 그리기
-    var bartext = svg.selectAll(".myLabels").data(dataset);
+    var bartext = svg1.selectAll(".myLabels").data(dataset);
     bartext
       .enter()
       .append("text")
@@ -231,7 +229,7 @@ function bar() {
         );
       });
 
-    var lable = svg.selectAll(".Label").data(dataset);
+    var lable = svg1.selectAll(".Label").data(dataset);
     lable.enter().append("text").attr("class", "Label");
     lable
       .transition()
@@ -251,3 +249,4 @@ function bar() {
       .attr("font-size", "18px");
   });
 }
+
