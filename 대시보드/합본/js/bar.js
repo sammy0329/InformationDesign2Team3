@@ -12,14 +12,14 @@ MIce = [];
 
 bar();
 
-d3.json("ControlGroup_ice.json", function(error,data){
+d3.json("json/ControlGroup_ice.json", function(error,data){
   if (error) throw error;
 
   data.forEach(function(d){
       MIce.push([d.차종별,d.차급,d.가격,d.연비]);
   });
 });
-d3.json("Compared_ev.json", function(error,data){
+d3.json("json/Compared_ev.json", function(error,data){
   if (error) throw error;
 
   data.forEach(function(d){
@@ -131,7 +131,7 @@ function changeLine(event) {
 
 //막대그래프 실행 함수
 function bar() {
-  d3.csv("EC.csv", function (error, data) {
+  d3.csv("json/EC.csv", function (error, data) {
     var dataset = [];
     if (radio == "ev_low") {
       dataset.push((km / data[selectValue].Fueleconomy) * low_1kwh);
