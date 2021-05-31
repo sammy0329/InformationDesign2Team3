@@ -133,7 +133,7 @@
         margin: 0;
         padding: 0;
         top: 70%;
-        left: 30%;
+        left: 20%;
     }
     head{
       position: relative;
@@ -153,7 +153,7 @@
       border: 1px solid black;
       position: absolute;
       top: 2%;
-      left: 45%;
+      left: 35%;
       z-index: 9999;
       font-size: 20px;
     }
@@ -173,7 +173,7 @@
     .radar form{
       position: absolute;
       z-index: 9999;
-      left: 49%;
+      left: 39%;
       top: 50%;
       padding: 10px;
       border: 4px double black;
