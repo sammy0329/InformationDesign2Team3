@@ -218,7 +218,7 @@ function MakeChart() {
   if (SelectData.includes("코나")) {
     chart.area(data1).name('코나(기본형, PTC, 모던)').markers(true).fill("#E55934", 0.3).stroke("#E55934")
   }
-  if (SelectData.includes("아이오닉")) {
+  if (SelectData.includes("아이오닉(HP)")) {
     chart.area(data2).name('아이오닉(HP)').markers(true).fill("#9BC53D", 0.3).stroke("#9BC53D")
   }
   if (SelectData.includes("아이오닉5")) {
@@ -252,10 +252,10 @@ function MakeChart() {
     chart.area(data12).name('Peugeot e-2008 SUV Allure').markers(true).fill("#9980FA", 0.3).stroke("#9980FA")
   }
   if (SelectData.includes("DS3")) {
-    chart.area(data3).name('아이오닉5').markers(true).fill("#5BC0EB", 0.3).stroke("#5BC0EB")//(롱레인지 RWD, 2WD 프레스티지)
+    chart.area(data3).name('DS3 E-tense So Chic').markers(true).fill("#5BC0EB", 0.3).stroke("#5BC0EB")//(롱레인지 RWD, 2WD 프레스티지)
   }
   if (SelectData.includes("SMART")) {
-    chart.area(data13).name('DS3 E-tense So Chic').markers(true).fill("#009432", 0.3).stroke("#009432")
+    chart.area(data13).name('SMART EV Z').markers(true).fill("#009432", 0.3).stroke("#009432")
   }
 
   chart.title("전기차종별 레이더차트");

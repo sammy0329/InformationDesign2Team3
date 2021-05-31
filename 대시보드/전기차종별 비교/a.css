@@ -42,12 +42,12 @@ head{
 .radar form{
   position: absolute;
   z-index: 9999;
-  left: 24%;
+  left: 25%;
   top: 20%;
   padding: 10px;
   border: 4px double black;
 }
 .radar tspan{
-  /* font-size: 14px; */
-  font-weight: bold;
+  /* font-size: 14px;
+  font-weight: bold; */
 }
