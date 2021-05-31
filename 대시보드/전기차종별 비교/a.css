@@ -20,6 +20,10 @@ td{
 }
 table{
   border: 1px solid black;
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  z-index: 9999;
 }
 /* --------------------------- */
 #select_box{
@@ -37,7 +41,7 @@ button{
 form{
   position: absolute;
   z-index: 9999;
-  left: 20%;
+  left: 25%;
   top: 20%;
 }
 tspan{
