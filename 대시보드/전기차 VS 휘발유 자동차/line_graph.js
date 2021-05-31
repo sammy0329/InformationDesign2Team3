@@ -256,22 +256,22 @@ var Line_chart = svg.append("g")
       .style("stroke", "lightgray");
   
 
-  function transition(path) {
-    path.transition()
-        .duration(2000)
-        .attrTween("stroke-dasharray", tweenDash);
-  }
-  function tweenDash() {
-    var l = this.getTotalLength(),
-        i = d3.interpolateString("0," + l, l + "," + l);
-    return function (t) { return i(t); };
-  }
+  // function transition(path) {
+  //   path.transition()
+  //       .duration(2000)
+  //       .attrTween("stroke-dasharray", tweenDash);
+  // }
+  // function tweenDash() {
+  //   var l = this.getTotalLength(),
+  //       i = d3.interpolateString("0," + l, l + "," + l);
+  //   return function (t) { return i(t); };
+  // }
   
-  Line_chart.select("path.ev_line")
-    .call(transition);
+  // Line_chart.select("path.ev_line")
+  //   .call(transition);
   
-  Line_chart.select("path.ice_line")
-    .call(transition);
+  // Line_chart.select("path.ice_line")
+  //   .call(transition);
 
 
   context.append("path")
