@@ -7,16 +7,30 @@ var Ice_fuel=14.5;
 var low_1kwh = 71.3;
 var fast_1kwh = 255.7;
 var ice_1L = 1534.8;
-
-bar();
-
 Ev = [];
 Ice = [];
 
-// d3.json("file://json/ControlGroup_ice.json",  function (error,data) {iceData(error,data)});
-// d3.json("file://C:/Users/최은영/Desktop/Compared_ev.json", function (error,data) {evData(error,data)});
+d3.json("ControlGroup_ice.json",  function (error,data) {
+  data.forEach((element) => {
+    Ice.push([
+      {
+        name: element.차종별,
+        price: element.가격,
+        fuel: element.연비,
+        grade: element.차급,
+      },
+    ]);
+  });
+});
+d3.json("Compared_ev.json", function (error,data) {
+
+});
 
 
+bar();
+
+console.log(Ice);
+console.log(Ev);
 //----- 전기차 vs 휘발유차 ----
 var canvas = document.getElementById("Canvas");
 var ctx = canvas.getContext("2d"); // 캔버스 객체 생성
@@ -46,10 +60,15 @@ ctx.fillText('연료값', rectX+15, rectY+75);
 ctx.fillText('완속 : 1kWh', rectX+15, rectY+110);
 ctx.fillText('급속 : 1kWh', rectX+15, rectY+140);
 var img = new Image();
-            img.src = "images/testimage.jpg";
-            img.onload = function(){
-                draw.drawImage(img, 50,50, 250,300);
-            }
+var img1 = new Image();
+img.src = "EV.png";
+img.onload = function(e){
+  ctx.drawImage(img, 45,190, 90,50);
+}
+img1.src = "ICE.png";
+img1.onload = function(e){
+  ctx.drawImage(img1, 45,290, 90,50);
+}
 
 //---- 막대 그래프 ----
 // 상하좌우 여백 수치. 하단에는 축이 그려져야 하니까 여백을 많이.
