@@ -6,7 +6,7 @@ ice_1L = 1534.8;
 var ev_select = document.getElementById("ev_car");
 var selectValue = ev_select.options[ev_select.selectedIndex].value;
 var selectValue_ice = 1;
-
+var km=100000;
 // window.onresize = function(event){
 //   redraw();
 // }
@@ -318,7 +318,7 @@ y = 0;
 // width = 700 - margin.left - margin.right;
 // height = 400 - margin.top - margin.bottom;
 
-var svg = d3.select("svg"),
+var svg = d3.select("#line"),
   margin = { top: 20, right: 40, bottom: 110, left: 80 },
   margin2 = { top: 430, right: 40, bottom: 30, left: 80 },
   width = +svg.attr("width") - margin.left - margin.right,
@@ -715,21 +715,21 @@ var height = 200 - TOP - BOTTOM;
 
 // body 요소 밑에 svg 요소를 추가하고 그 결과를 svg 변수에 저장
 var body = d3.select("body");
-var svg = body.append("svg");
+var svg1 = body.append("#bar");
 
 // svg 요소의 너비와 높이가 화면을 꽉 채우도록 수정
-svg.attr("width", window.innerWidth);
-svg.attr("height", window.innerHeight);
+svg1.attr("width", window.innerWidth);
+svg1.attr("height", window.innerHeight);
 
 // svg 요소에 g 요소를 추가하고 axisGroup 변수에 저장
-var axisGroup = svg.append("g");
+var axisGroup = svg1.append("g");
 // axisGroup에 "axis" 클래스를 부여하고 하단으로 이동
 axisGroup
   .attr("class", "axis")
   .style("transform", "translate(" + LEFT + "px, " + (TOP + height) + "px)");
 
 // svg 요소에 g 요소를 추가하고 barGroup 변수에 저장
-var barGroup = svg.append("g");
+var barGroup = svg1.append("g");
 // barGroup에 "bar" 클래스를 부여하고 좌상단 여백만큼 이동
 barGroup
   .attr("class", "bar")
@@ -746,13 +746,6 @@ function chageLangSelect() {
   console.log(selectText, selectValue);
   bar();
 }
-
-// 슬라이더 실행 함수
-var slider = d3.select("#km");
-slider.on("change", function () {
-  km = this.value;
-  bar();
-});
 
 // 라디오 버튼 실행 함수
 function changeLine(event) {
@@ -775,15 +768,15 @@ function bar() {
     var dataset = [];
     if (radio == "ev_low") {
       dataset.push((km / data[selectValue].Fueleconomy) * low_1kwh);
-      dataset.push((km / Ice_fuel) * ice_1L);
+      dataset.push((km / 11.5) * ice_1L);
       dataset.push(
-        (km / Ice_fuel) * ice_1L - (km / data[selectValue].Fueleconomy) * low_1kwh
+        (km / 11.5) * ice_1L - (km / data[selectValue].Fueleconomy) * low_1kwh
       );
     } else if (radio == "ev_fast") {
       dataset.push((km / data[selectValue].Fueleconomy) * fast_1kwh);
-      dataset.push((km / Ice_fuel) * ice_1L);
+      dataset.push((km / 11.5) * ice_1L);
       dataset.push(
-        (km / Ice_fuel) * ice_1L - (km / data[selectValue].Fueleconomy) *fast_1kwh
+        (km / 11.5) * ice_1L - (km / data[selectValue].Fueleconomy) *fast_1kwh
       );
     }
     console.log(dataset);
@@ -835,7 +828,7 @@ function bar() {
     barEnter.append("rect");
 
     // text 그리기
-    var bartext = svg.selectAll(".myLabels").data(dataset);
+    var bartext = svg1.selectAll(".myLabels").data(dataset);
     bartext
       .enter()
       .append("text")
@@ -863,7 +856,7 @@ function bar() {
         );
       });
 
-    var lable = svg.selectAll(".Label").data(dataset);
+    var lable = svg1.selectAll(".Label").data(dataset);
     lable.enter().append("text").attr("class", "Label");
     lable
       .transition()
