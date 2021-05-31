@@ -63,3 +63,57 @@
 .mapcss .category .ico_both {
     background-position: -1px -72px;
 }
+
+    /* #region 꺾은선 스타일 */
+    .barcss .zoom {
+        cursor: move;
+        fill: none;
+        pointer-events: all;
+    }
+
+    .barcss .brush {
+        opacity: 0.7;
+        color: "gray"
+    }
+
+    .barcss path.domain {
+        fill: none;
+        stroke: none;
+    }
+
+    .barcss .tick line {
+        opacity: 0.1;
+    }
+
+    /* #endregion */
+
+    .linebarcss #name {
+        left: 0;
+        top: 0;
+    }
+
+    .linebarcss body {
+        margin: 0;
+    }
+
+    .linebarcss .axis text {
+        fill: #888;
+        font-size: 11px;
+    }
+
+    .linebarcss .axis line {
+        stroke: #888;
+    }
+
+    .linebarcss .axis path {
+        stroke: #888;
+    }
+
+    .linebarcss .bar rect {
+        fill: #A9C9F7;
+    }
+
+    .linebarcss .slider {
+
+        width: 800px;
+    }
