@@ -7,6 +7,25 @@ html, body, #container {
 head{
   position: relative;
 }
+/* --------------------------- */
+td, th{
+  border: 1px solid black;
+  width: 120px;
+  height: 40px;
+}
+td{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+table{
+  border: 1px solid black;
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  z-index: 9999;
+}
+/* --------------------------- */
 #select_box{
   display: flex;
   margin-bottom: 10px;
@@ -22,7 +41,7 @@ button{
 form{
   position: absolute;
   z-index: 9999;
-  left: 20%;
+  left: 25%;
   top: 20%;
 }
 tspan{
