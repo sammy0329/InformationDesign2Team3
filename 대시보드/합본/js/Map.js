@@ -5,6 +5,8 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     };
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
+var NowInfowindow
+
 var Selectinfo = "" //현재 선택된 카테고리 정보
 
 readTextFile1('json/fast.json')
@@ -191,6 +193,7 @@ function setbothMarkers(map) {
 function makeOverListener(map, marker, infowindow) {
     return function () {
         infowindow.open(map, marker);
+        NowInfowindow = infowindow;
     };
 }
 
@@ -258,6 +261,7 @@ function wheelEvent()
         setfastMarkers(null);
         setslowMarkers(null);
         setbothMarkers(null);
+        NowInfowindow.close();
     }
     else
     {
