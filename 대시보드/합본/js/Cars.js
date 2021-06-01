@@ -8,9 +8,9 @@ RegionText = "";
 EV = [];
 Subsidy = [];
 // set the dimensions and margins of the graph
-(margin = { top: 40, right: 20, bottom: 40, left: 140 }),
-  (width = 460 - margin.left - margin.right),
-  (height = 550 - margin.top - margin.bottom);
+(margin = { top: 10, right: 20, bottom: 40, left: 140 }),
+  (width = 500),
+  (height = 1000);
 
 // selectValue = ev_select.options[ev_select.selectedIndex].value;
 
@@ -20,8 +20,13 @@ Chart = function (data) {
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
+    .attr("width", "500px")
+    .attr("height", "900px")
+    .attr("left", "50px")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  //this.chart = d3.select("#my_dataviz")
 
   this.data = data;
   this.avg = this.avg();
@@ -159,22 +164,10 @@ function changeConditionSelect() {
     document.all.region.style.visibility = "visible";
     document.all.city.style.visibility = "visible";
 
-    //div 삭제 후 다시 만들어주면서 그래프 갱신
-    // const Olddiv = document.getElementById("my_dataviz");
-    // Olddiv.remove();
-    // const NewDiv = document.createElement("div");
-    // NewDiv.setAttribute("id", "my_dataviz");
-    // document.body.appendChild(NewDiv);
     $("#my_dataviz").empty();
   } else {
     document.all.region.style.visibility = "hidden";
     document.all.city.style.visibility = "hidden";
-    // //div 삭제 후 다시 만들어주면서 그래프 갱신
-    // const Olddiv = document.getElementById("my_dataviz");
-    // Olddiv.remove();
-    // const NewDiv = document.createElement("div");
-    // NewDiv.setAttribute("id", "my_dataviz");
-    // document.body.appendChild(NewDiv);
 
     $("#my_dataviz").empty();
 
@@ -565,6 +558,7 @@ function drawChart(value) {
       CarText = point.key;
 
       $("#name2").val(CarText).prop("selected", true);
+      callfromCarsjs(CarText);
       update_color();
     });
 }

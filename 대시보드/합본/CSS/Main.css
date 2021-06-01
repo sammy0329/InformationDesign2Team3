@@ -128,12 +128,12 @@ body {
 
 #container {
   position: absolute;
-  width: 50%;
-  height: 50%;
+  width: 500px;
+  height: 500px;
   margin: 0;
   padding: 0;
-  top: 50%;
-  left: 20%;
+  top: 450px;
+  left: 605px;
 }
 head {
   position: relative;
@@ -163,16 +163,17 @@ th {
   border: 4px double black;
   position: absolute;
   width: 450px;
-  height: 650px;
-  left: 33%;
-  bottom: -19%;
+  height: 580px;
+  left: 628px;
+  top: 440px;
   z-index: 9998;
 }
 .radar #select_box {
   display: flex;
   margin-bottom: 10px;
-  width: 220px;
+  width: 320px;
   height: 40px;
+  top: 200px;
   font-size: 20px;
 }
 .radar button {
@@ -183,8 +184,8 @@ th {
 .radar form {
   position: absolute;
   z-index: 9999;
-  left: 38%;
-  bottom: -15%;
+  left: 690px;
+  top:950px;
   padding: 10px;
   border: 4px double black;
 }

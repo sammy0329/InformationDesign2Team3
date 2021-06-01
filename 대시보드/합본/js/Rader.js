@@ -97,9 +97,16 @@ var data14 = [
 ];
 
 var SelectData = [];
+SelectData.push("코나")
+MakeChart();
 
-function handleOnChange(e) {
+function callfromCarsjs(e)
+{
+  SelectData.push(e)
+  MakeChart();
+}
 
+function changeLangSelect2(e) {
   // 파라미터 데이터 저장하기 위한 변수
   const value = e.value;
 
@@ -120,7 +127,7 @@ function DeleteAll(e) {
 //부분 삭제
 function DeleteSelect(e)
 {
-  const ComboData = document.getElementById('select_box');
+  const ComboData = document.getElementById('cars');
   SelectData = SelectData.filter((element) => element !== ComboData.value);
   MakeChart();
 }
@@ -128,12 +135,14 @@ function DeleteSelect(e)
 function MakeChart() {
 
   //기존 div 태그 삭제하고 다시 만들기 (차트 초기화)
-  const Olddiv = document.getElementById("container");
-  Olddiv.remove();
+  // const Olddiv = document.getElementById("container");
+  // Olddiv.remove();
 
-  const NewDiv = document.createElement('div');
-  NewDiv.setAttribute("id", "container");
-  document.body.appendChild(NewDiv);
+  // const NewDiv = document.createElement('div');
+  // NewDiv.setAttribute("id", "container");
+  // document.body.appendChild(NewDiv);
+
+  $("#container").empty();
 
   // create radar chart
   var chart = anychart.radar();
@@ -159,45 +168,45 @@ function MakeChart() {
   chart.yGrid().palette(["gray 0.1", "gray 0.2"]);
 
   if (SelectData.includes("코나")) {
-    chart.area(data1).name('코나(기본형, PTC, 모던)').markers(true).fill("#E55934", 0.3).stroke("#E55934")
+    chart.area(data1).name('코나').markers(true).fill("#E55934", 0.3).stroke("#E55934")
   }
-  if (SelectData.includes("아이오닉(HP)")) {
-    chart.area(data2).name('아이오닉(HP)').markers(true).fill("#9BC53D", 0.3).stroke("#9BC53D")
+  if (SelectData.includes("아이오닉")) {
+    chart.area(data2).name('아이오닉').markers(true).fill("#9BC53D", 0.3).stroke("#9BC53D")
   }
   if (SelectData.includes("아이오닉5")) {
     chart.area(data3).name('아이오닉5').markers(true).fill("#5BC0EB", 0.3).stroke("#5BC0EB")//(롱레인지 RWD, 2WD 프레스티지)
   }
-  if (SelectData.includes("니로")) {
-    chart.area(data4).name('니로EV').markers(true).fill("#FFC312", 0.3).stroke("#FFC312") //(HP, 프레스티지)
+  if (SelectData.includes("니로EV")) {
+    chart.area(data4).name('니로').markers(true).fill("#FFC312", 0.3).stroke("#FFC312") //(HP, 프레스티지)
   }
   if (SelectData.includes("쏘울")) {
     chart.area(data5).name('쏘울').markers(true).fill("#FDA7DF", 0.3).stroke("#FDA7DF") //(기본형, 프레스티지)
   }
-  if (SelectData.includes("ZOE")) {
+  if (SelectData.includes("ZOE ZEN")) {
     chart.area(data6).name('ZOE ZEN').markers(true).fill("#6F1E51", 0.3).stroke("#6F1E51")
   }
-  if (SelectData.includes("i3")) {
-    chart.area(data7).name('i3 120Ah Lux').markers(true).fill("#1e272e", 0.3).stroke("#1e272e")
+  if (SelectData.includes("i3 120Ah Lux")) {
+    chart.area(data7).name('i3').markers(true).fill("#1e272e", 0.3).stroke("#1e272e")
   }
-  if (SelectData.includes("Bolt")) {
-    chart.area(data8).name('BOLT EV LT').markers(true).fill("#00d8d6", 0.3).stroke("#00d8d6")
+  if (SelectData.includes("BOLT EV LT")) {
+    chart.area(data8).name('BOLT EV').markers(true).fill("#00d8d6", 0.3).stroke("#00d8d6")
   }
-  if (SelectData.includes("Model3")) {
-    chart.area(data9).name('Model 3(SRP RWD)').markers(true).fill("#fad390", 0.3).stroke("#fad390")
+  if (SelectData.includes("Model 3")) {
+    chart.area(data9).name('Model 3').markers(true).fill("#fad390", 0.3).stroke("#fad390")
   }
-  if (SelectData.includes("Modely")) {
-    chart.area(data10).name('Model Y(Long Range)').markers(true).fill("#0be881", 0.3).stroke("#0be881")
+  if (SelectData.includes("Model Y")) {
+    chart.area(data10).name('Model Y').markers(true).fill("#0be881", 0.3).stroke("#0be881")
   }
-  if (SelectData.includes("208")) {
-    chart.area(data11).name('Peugeot e-208 Allure').markers(true).fill("#EA2027", 0.3).stroke("#EA2027")
+  if (SelectData.includes("Peugeot e-208 Allure")) {
+    chart.area(data11).name('e-208').markers(true).fill("#EA2027", 0.3).stroke("#EA2027")
   }
-  if (SelectData.includes("2008")) {
-    chart.area(data12).name('Peugeot e-2008 SUV Allure').markers(true).fill("#9980FA", 0.3).stroke("#9980FA")
+  if (SelectData.includes("Peugeot e-2008 SUV Allure")) {
+    chart.area(data12).name('e-2008').markers(true).fill("#9980FA", 0.3).stroke("#9980FA")
   }
-  if (SelectData.includes("DS3")) {
+  if (SelectData.includes("DS3 E-tense So Chic")) {
     chart.area(data3).name('DS3 E-tense So Chic').markers(true).fill("#5BC0EB", 0.3).stroke("#5BC0EB")//(롱레인지 RWD, 2WD 프레스티지)
   }
-  if (SelectData.includes("SMART")) {
+  if (SelectData.includes("SMART EV Z")) {
     chart.area(data13).name('SMART EV Z').markers(true).fill("#009432", 0.3).stroke("#009432")
   }
 
