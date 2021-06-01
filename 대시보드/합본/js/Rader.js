@@ -134,14 +134,6 @@ function DeleteSelect(e)
 //차트 만드는 함수
 function MakeChart() {
 
-  //기존 div 태그 삭제하고 다시 만들기 (차트 초기화)
-  // const Olddiv = document.getElementById("container");
-  // Olddiv.remove();
-
-  // const NewDiv = document.createElement('div');
-  // NewDiv.setAttribute("id", "container");
-  // document.body.appendChild(NewDiv);
-
   $("#container").empty();
 
   // create radar chart

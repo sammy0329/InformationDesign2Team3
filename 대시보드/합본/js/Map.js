@@ -5,7 +5,7 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     };
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
-var NowInfowindow
+var NowInfowindow = [];
 
 var Selectinfo = "" //현재 선택된 카테고리 정보
 
@@ -193,7 +193,7 @@ function setbothMarkers(map) {
 function makeOverListener(map, marker, infowindow) {
     return function () {
         infowindow.open(map, marker);
-        NowInfowindow = infowindow;
+        NowInfowindow.push(infowindow);
     };
 }
 
@@ -201,6 +201,7 @@ function makeOverListener(map, marker, infowindow) {
 function makeOutListener(infowindow) {
     return function () {
         infowindow.close();
+        NowInfowindow = NowInfowindow.filter((element) => element !== infowindow);
     };
 }
 
@@ -256,12 +257,18 @@ function changeMarker(type) {
 function wheelEvent()
 {
     var level = map.getLevel();
-    if(level>10)
+    if(level>11)
     {
         setfastMarkers(null);
         setslowMarkers(null);
         setbothMarkers(null);
-        NowInfowindow.close();
+        if(NowInfowindow.length>0)
+        {
+            for(i = 0; i<NowInfowindow.length; i++)
+            {
+                NowInfowindow[i].close();
+            }
+        }
     }
     else
     {
