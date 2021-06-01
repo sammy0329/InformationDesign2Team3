@@ -128,12 +128,12 @@ body {
 
 #container {
   position: absolute;
-  width: 500px;
+  width: 470px;
   height: 500px;
   margin: 0;
   padding: 0;
   top: 450px;
-  left: 605px;
+  left: 625px;
 }
 head {
   position: relative;
@@ -153,16 +153,17 @@ th {
 .radar table {
   border: 1px solid black;
   position: absolute;
-  top: 2%;
-  left: 33%;
+  top: 20px;
+  left: 628px;
   z-index: 9999;
   font-size: 20px;
+  width: 452px;
 }
 /* --------------------------- */
 #radar_wrapper {
   border: 4px double black;
   position: absolute;
-  width: 450px;
+  width: 445px;
   height: 580px;
   left: 628px;
   top: 440px;
@@ -184,7 +185,7 @@ th {
 .radar form {
   position: absolute;
   z-index: 9999;
-  left: 690px;
+  left: 730px;
   top:950px;
   padding: 10px;
   border: 4px double black;
