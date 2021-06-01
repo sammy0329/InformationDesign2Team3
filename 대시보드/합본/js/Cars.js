@@ -8,9 +8,9 @@ RegionText = "";
 EV = [];
 Subsidy = [];
 // set the dimensions and margins of the graph
-(margin = { top: 10, right: 20, bottom: 40, left: 140 }),
-  (width = 500),
-  (height = 1000);
+(car_margin = { top: 10, right: 0, bottom: 40, left: 160 }),
+  (car_width = 500),
+  (car_height = 1000);
 
 // selectValue = ev_select.options[ev_select.selectedIndex].value;
 
@@ -18,13 +18,11 @@ Chart = function (data) {
   this.chart = d3
     .select("#my_dataviz")
     .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .attr("width", "500px")
-    .attr("height", "900px")
+    .attr("width", car_width + car_margin.left + car_margin.right)
+    .attr("height", car_height + car_margin.top + car_margin.bottom)
     .attr("left", "50px")
     .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", "translate(" + car_margin.left + "," + car_margin.top + ")");
 
   //this.chart = d3.select("#my_dataviz")
 
@@ -39,12 +37,12 @@ Chart.prototype.axis = function () {
   let xScale = d3
     .scaleLinear()
     .domain([0, this.data[0].value])
-    .range([0, width]);
+    .range([0, car_width]);
 
   // Y axis 조절
   let yScale = d3
     .scaleBand()
-    .range([0, height])
+    .range([0, car_height])
     .domain(
       this.data.map(function (d) {
         return d.key;
@@ -52,7 +50,7 @@ Chart.prototype.axis = function () {
     )
     .padding(0.3);
 
-  //  console.log(this.xScale)
+  console.log(car_height)
   return [xScale, yScale];
 };
 
@@ -62,10 +60,10 @@ Chart.prototype.line = function () {
 
   this.chart
     .append("g")
-    .attr("transform", "translate(0," + height + ")")
+    .attr("transform", "translate(0," + car_height + ")")
     .attr("class", "grid")
 
-    .call(d3.axisBottom(xScale).ticks(5).tickSize(-height))
+    .call(d3.axisBottom(xScale).ticks(5).tickSize(-car_height))
 
     .selectAll("text")
     .attr("transform", "translate(-10,0)rotate(-45)")
@@ -101,7 +99,7 @@ Chart.prototype.line = function () {
       .attr("x1", xScale(this.avg))
       .attr("x2", xScale(this.avg))
       .attr("y1", 0)
-      .attr("y2", height)
+      .attr("y2", car_height)
       .attr("stroke", "red");
   }
 
