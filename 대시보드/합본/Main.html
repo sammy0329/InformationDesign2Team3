@@ -108,10 +108,11 @@
         <svg style="height: 1000px; width: 600px; left:100px;" id="my_dataviz"></svg>
         <script src="js/Cars.js"></script>
     </div>
-    <div id="Map_Area" class="mapcss" style="top: 20px; left: 1090px; position: absolute">
-        <div id="mapwrap" style="width: 800px; height: 400px" onmousewheel="wheelEvent()">
+    <div id="Map_Area" class="mapcss" style="top: 20px; left: 1090px; position: absolute" onmousewheel="wheelEvent()">
+        <label><input type="checkbox" id="IsSelectCar" onclick="CheckChange(this)">지원되는 차량만 보기</label>
+        <div id="mapwrap" style="width: 800px; height: 380px" >
             <!-- 지도가 표시될 div -->
-            <div id="map" style="width: 800px; height: 400px"></div>
+            <div id="map" style="width: 800px; height: 380px"></div>
             <!-- 지도 위에 표시될 마커 카테고리 -->
             <div class="category">
                 <ul>

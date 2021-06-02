@@ -471,11 +471,6 @@ function declaredLine(line) {
     ev_fast_line = new Cost(svg, Ev[selectValue][0], user_ice[0], fast_1kwh, "#F47378");
   }
 
-
-
-
-
-
   if (line == "ev_low") {
 
     makeLine(ev_low_line)
