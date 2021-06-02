@@ -7,6 +7,7 @@ RegionText = "";
 
 EV = [];
 Subsidy = [];
+num_back = [];
 // set the dimensions and margins of the graph
 (car_margin = { top: 10, right: 0, bottom: 40, left: 160 }),
   (car_width = 400),
@@ -134,11 +135,11 @@ function test(num) {
 //차량 선택에 따른 value 값 및 text 저장 함수
 function changeLangSelect() {
   let CarSelect = document.getElementById("name2");
-  // select element에서 선택된 option의 value가 저장된다.
   CarValue = CarSelect.options[CarSelect.selectedIndex].value;
-  // select element에서 선택된 option의 text가 저장된다.
   CarText = CarSelect.options[CarSelect.selectedIndex].text;
   console.log(CarValue, CarText);
+
+  setValue();
   update_color();
 }
 
@@ -231,6 +232,15 @@ function changeCitySelect() {
   //         return a.value - b.value;
   //     });
   // return d
+
+  num_back = num;
+
+  for (i = 0; i < num.length; i++) {
+    if (num[i].key == CarText) {
+      var a = num[i].value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " 원\n" + RegionText + CityText;
+      $("#Car_Subsidy").text(a);
+    }
+  }
 }
 
 function categoryChange(e) {
@@ -548,15 +558,40 @@ function drawChart(value) {
     .on("mousemove", function (d) {
       tooltip.style("left", d3.event.pageX + 10 + "px");
       tooltip.style("top", d3.event.pageY - 10 + "px");
-      tooltip.text(String(d.value) + Unit);
+      tooltip.text(String(d.value).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + Unit);
     })
     .on("click", function (point, event) {
       console.log(point);
       if (event.length <= 0) return;
       CarText = point.key;
-
       $("#name2").val(CarText).prop("selected", true);
       callfromCarsjs(CarText);
+      setValue();
       update_color();
     });
+}
+
+function setValue() {
+  EV.forEach((element) => {
+
+    if (element[0].name == CarText) {
+
+      var a = element[0].price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " 원";
+
+      $("#Car_People").text(element[0].passenger + " 인승");
+      $("#Car_MaxSpeed").text(element[0].speed + " km");
+      $("#Car_MaxKM").text(element[0].mileage + " km");
+      $("#Car_Efficiency").text(element[0].fuel + " km/kWh");
+      $("#Car_Price").text(a);
+    }
+
+  });
+
+  for (i = 0; i < num_back.length; i++) {
+    if (num_back[i].key == CarText) {
+      var a = num_back[i].value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " 원\n" + RegionText + CityText;
+      $("#Car_Subsidy").text(a);
+    }
+  }
+
 }
