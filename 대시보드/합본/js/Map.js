@@ -7,8 +7,13 @@ var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니
 
 var NowInfowindow = [];
 var Sigunguinfo = [];
+var FastCars = [];
+var SlowCars = [];
+var BothCars = [];
 
 var Selectinfo = "" //현재 선택된 카테고리 정보
+var SelectCar = ""
+var ischeck = false;
 
 d3.json("json/Sigungu.json", function (error, data) {
     readSigungu(error, data);
@@ -108,6 +113,8 @@ function createfastMarkers(data) {
         kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
         kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 
+        FastCars.push(element.Cars);
+
         // 생성된 마커를 급속 마커 배열에 추가합니다
         fastMarkers.push(marker);
     });
@@ -115,8 +122,24 @@ function createfastMarkers(data) {
 
 // 급속 마커들의 지도 표시 여부를 설정하는 함수입니다
 function setfastMarkers(map) {
+    count = 0;
     for (var i = 0; i < fastMarkers.length; i++) {
-        fastMarkers[i].setMap(map);
+
+        if (map != null) {
+            var index = FastCars[i].indexOf(SelectCar);
+
+            if (index > -1 && ischeck == true) {
+                fastMarkers[i].setMap(map);
+                count++;
+            }
+            else if (ischeck == false) {
+                fastMarkers[i].setMap(map);
+
+            }
+        }
+        else {
+            fastMarkers[i].setMap(map);
+        }
     }
 }
 
@@ -145,6 +168,8 @@ function createslowMarkers(data) {
         kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
         kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 
+        SlowCars.push(element.Cars);
+
         // 생성된 마커를 급속 마커 배열에 추가합니다
         slowMarkers.push(marker);
     });
@@ -152,9 +177,25 @@ function createslowMarkers(data) {
 
 // 완속 마커들의 지도 표시 여부를 설정하는 함수입니다
 function setslowMarkers(map) {
+    count = 0;
     for (var i = 0; i < slowMarkers.length; i++) {
-        slowMarkers[i].setMap(map);
+
+        if (map != null) {
+            var index = SlowCars[i].indexOf(SelectCar);
+
+            if (index > -1 && ischeck == true) {
+                slowMarkers[i].setMap(map);
+                count++;
+            }
+            else if (ischeck == false) {
+                slowMarkers[i].setMap(map);
+            }
+        }
+        else {
+            slowMarkers[i].setMap(map);
+        }
     }
+
 }
 
 // 혼합 마커를 생성하고 혼합 마커 배열에 추가하는 함수입니다
@@ -181,6 +222,8 @@ function createbothMarkers(data) {
         kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
         kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 
+        BothCars.push(element.Cars);
+
         // 생성된 마커를 급속 마커 배열에 추가합니다
         bothMarkers.push(marker);
     });
@@ -188,8 +231,23 @@ function createbothMarkers(data) {
 
 // 혼합 마커들의 지도 표시 여부를 설정하는 함수입니다
 function setbothMarkers(map) {
+    count = 0;
     for (var i = 0; i < bothMarkers.length; i++) {
-        bothMarkers[i].setMap(map);
+
+        if (map != null) {
+            var index = BothCars[i].indexOf(SelectCar);
+
+            if (index > -1 && ischeck == true) {
+                bothMarkers[i].setMap(map);
+                count++;
+            }
+            else if (ischeck == false) {
+                bothMarkers[i].setMap(map);
+            }
+        }
+        else {
+            bothMarkers[i].setMap(map);
+        }
     }
 }
 
@@ -214,6 +272,10 @@ function changeMarker(type) {
     var fastMenu = document.getElementById('fastMenu');
     var slowMenu = document.getElementById('slowMenu');
     var bothMenu = document.getElementById('bothMenu');
+
+    setfastMarkers(null);
+    setslowMarkers(null);
+    setbothMarkers(null);
 
     // 급속 카테고리가 클릭됐을 때
     if (type === 'fast') {
@@ -324,4 +386,19 @@ function readSigungu(error, data) {
             },
         ]);
     });
+}
+
+function CheckChange(e) {
+
+    var a = document.getElementById("name2");
+    SelectCar = a.value;
+
+    if (e.checked == true) {
+        ischeck = true;
+    }
+    else {
+        ischeck = false;
+    }
+
+    changeMarker(Selectinfo);
 }
