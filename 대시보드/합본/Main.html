@@ -80,25 +80,25 @@
             <option value="5">보조금</option>
         </select>
 
-        <select style="visibility:hidden;height:40px;width: 100px;" id="region" onchange=" categoryChange(this)">
+        <select style="visibility:hidden;height:40px;width: 100px;" id="region" onchange="categoryChange(this),changeCityXY2(this)">
             <option>지역</option>
-            <option value="a">강원</option>
-            <option value="b">경기</option>
-            <option value="c">경남</option>
-            <option value="d">경북</option>
-            <option value="e">광주</option>
-            <option value="f">대구</option>
-            <option value="g">대전</option>
-            <option value="h">부산</option>
-            <option value="i">서울</option>
-            <option value="j">세종</option>
-            <option value="k">울산</option> 
-            <option value="l">인천</option>
-            <option value="m">전남</option>
-            <option value="n">전북</option>
-            <option value="o">제주</option>
-            <option value="p">충남</option>
-            <option value="q">충북</option>
+            <option value="강원">강원</option>
+            <option value="경기">경기</option>
+            <option value="경남">경남</option>
+            <option value="경북">경북</option>
+            <option value="광주광역시">광주</option>
+            <option value="대구">대구</option>
+            <option value="대전">대전</option>
+            <option value="부산">부산</option>
+            <option value="서울">서울</option>
+            <option value="세종">세종</option>
+            <option value="울산">울산</option> 
+            <option value="인천">인천</option>
+            <option value="전남">전남</option>
+            <option value="전북">전북</option>
+            <option value="제주">제주</option>
+            <option value="충남">충남</option>
+            <option value="충북">충북</option>
         </select>
 
         <select style="visibility:hidden;height:40px;width: 100px;" id="city" onchange="changeCitySelect(),changeCityXY(this)">
@@ -108,9 +108,6 @@
         <svg style="height: 1000px; width: 600px; left:100px;" id="my_dataviz"></svg>
         <script src="js/Cars.js"></script>
     </div>
-    <div id="container"></div>
-
-    <div id="radar_wrapper"></div>
     <div id="Map_Area" class="mapcss" style="top: 20px; left: 1090px; position: absolute">
         <div id="mapwrap" style="width: 800px; height: 400px" onmousewheel="wheelEvent()">
             <!-- 지도가 표시될 div -->
@@ -231,6 +228,7 @@
     </div>
 
     <div class="radar">
+        <div id="container"></div>
         <form>
             <button onclick="DeleteAll()">모두 삭제</button>
             <button onclick="DeleteSelect()">선택 삭제</button>

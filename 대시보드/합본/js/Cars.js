@@ -421,23 +421,23 @@ function categoryChange(e) {
   var target = document.getElementById("city");
 
   let d;
-  if (e.value == "a") d = city_a;
-  else if (e.value == "b") d = city_b;
-  else if (e.value == "c") d = city_c;
-  else if (e.value == "d") d = city_d;
-  else if (e.value == "e") d = city_e;
-  else if (e.value == "f") d = city_f;
-  else if (e.value == "g") d = city_g;
-  else if (e.value == "h") d = city_h;
-  else if (e.value == "i") d = city_i;
-  else if (e.value == "j") d = city_j;
-  else if (e.value == "k") d = city_k;
-  else if (e.value == "l") d = city_l;
-  else if (e.value == "m") d = city_m;
-  else if (e.value == "n") d = city_n;
-  else if (e.value == "o") d = city_o;
-  else if (e.value == "p") d = city_p;
-  else if (e.value == "q") d = city_q;
+  if (e.value == "강원") d = city_a;
+  else if (e.value == "경기") d = city_b;
+  else if (e.value == "경남") d = city_c;
+  else if (e.value == "경북") d = city_d;
+  else if (e.value == "광주광역시") d = city_e;
+  else if (e.value == "대구") d = city_f;
+  else if (e.value == "대전") d = city_g;
+  else if (e.value == "부산") d = city_h;
+  else if (e.value == "서울") d = city_i;
+  else if (e.value == "세종") d = city_j;
+  else if (e.value == "울산") d = city_k;
+  else if (e.value == "인천") d = city_l;
+  else if (e.value == "전남") d = city_m;
+  else if (e.value == "전북") d = city_n;
+  else if (e.value == "제주") d = city_o;
+  else if (e.value == "충남") d = city_p;
+  else if (e.value == "충북") d = city_q;
   target.options.length = 0;
 
   for (x in d) {
