@@ -275,13 +275,31 @@ function wheelEvent() {
 }
 
 function changeCityXY(e) {
-    
-    Sigunguinfo.forEach((element) => {
-        if (e.value == element[0].name) {
-            var moveLatLon = new kakao.maps.LatLng(element[0].lat, element[0].lon);
+    if (e.value != "고성군") {
+        Sigunguinfo.forEach((element) => {
+            if (e.value == element[0].name) {
+                var moveLatLon = new kakao.maps.LatLng(element[0].lat, element[0].lon);
+                map.setCenter(moveLatLon);
+            }
+        })
+    }
+    else
+    {
+        var a = document.getElementById("region")
+        if(a.value=="a")
+        {
+            var moveLatLon = new kakao.maps.LatLng(38.38129972, 128.4680465);
             map.setCenter(moveLatLon);
+            return;
         }
-    })
+        else
+        {
+            var moveLatLon = new kakao.maps.LatLng(34.97329535, 128.3219769);
+            map.setCenter(moveLatLon);
+            return;
+        }
+
+    }
 
 }
 
