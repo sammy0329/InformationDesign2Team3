@@ -48,9 +48,9 @@
 </head>
 <!-- style="overflow:hidden;" -->
 <body  oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
-    <div id="cars" class="carscss" style="top:0;width: 650px;height: 1000px;">
+    <div id="cars" class="carscss" style="padding-top:40px;width: 1000px;height: 1000px;padding-left: 50px;">
         <tr>
-            <select id="name2" name="option" onchange="changeLangSelect(),changeLangSelect2(this)">
+            <select id="name2" name="option" onchange="changeLangSelect(),changeLangSelect2(this)" style="height:40px;width: 200px;">
                 <option value="코나">코나</option>
                 <option value="아이오닉">아이오닉</option>
                 <option value="아이오닉5">아이오닉5</option>
@@ -70,7 +70,7 @@
         </tr>
         </table>
 
-        <select id="condition" name="option" onchange="changeConditionSelect()">
+        <select id="condition" name="option" onchange="changeConditionSelect()" style="height:40px;width: 100px;">
             <!-- <option value="">조건선택</option>   -->
             <option value="0">가격</option>
             <option value="1">최고속도</option>
@@ -80,8 +80,8 @@
             <option value="5">보조금</option>
         </select>
 
-        <select style="visibility:hidden" id="region" onchange=" categoryChange(this)">
-            <option>지역을 선택해주세요</option>
+        <select style="visibility:hidden;height:40px;width: 100px;" id="region" onchange=" categoryChange(this)">
+            <option>지역</option>
             <option value="a">강원</option>
             <option value="b">경기</option>
             <option value="c">경남</option>
@@ -92,7 +92,7 @@
             <option value="h">부산</option>
             <option value="i">서울</option>
             <option value="j">세종</option>
-            <option value="k">울산</option>
+            <option value="k">울산</option> 
             <option value="l">인천</option>
             <option value="m">전남</option>
             <option value="n">전북</option>
@@ -101,8 +101,8 @@
             <option value="q">충북</option>
         </select>
 
-        <select style="visibility:hidden" id="city" onchange="changeCitySelect()" ;>
-            <option>세부지역 선택해 주세요</option>
+        <select style="visibility:hidden;height:40px;width: 100px;" id="city" onchange="changeCitySelect(),changeCityXY(this)">
+            <option>세부지역</option>
         </select>
 
         <svg style="height: 1000px; width: 600px; left:100px;" id="my_dataviz"></svg>

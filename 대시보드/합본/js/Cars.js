@@ -9,8 +9,8 @@ EV = [];
 Subsidy = [];
 // set the dimensions and margins of the graph
 (car_margin = { top: 10, right: 0, bottom: 40, left: 160 }),
-  (car_width = 500),
-  (car_height = 1000);
+  (car_width = 400),
+  (car_height = 900);
 
 // selectValue = ev_select.options[ev_select.selectedIndex].value;
 
@@ -235,7 +235,7 @@ function changeCitySelect() {
 
 function categoryChange(e) {
   let city_a = [
-    "세부지역을 선택해주세요",
+    "세부지역",
     "강릉시",
     "고성군",
     "동해시",
@@ -256,7 +256,7 @@ function categoryChange(e) {
     "횡성군",
   ];
   let city_b = [
-    "세부지역을 선택해주세요",
+    "세부지역",
     "가평군",
     "고양시",
     "과천시",
@@ -290,7 +290,7 @@ function categoryChange(e) {
     "화성시",
   ];
   let city_c = [
-    "세부지역을 선택해주세요",
+    "세부지역",
     "거제시",
     "거창군",
     "고성군",
@@ -311,7 +311,7 @@ function categoryChange(e) {
     "합천군",
   ];
   let city_d = [
-    "세부지역을 선택해주세요",
+    "세부지역",
     "경산시",
     "경주시",
     "고령군",
@@ -334,16 +334,16 @@ function categoryChange(e) {
     "칠곡군",
     "포항시",
   ];
-  let city_e = ["세부지역을 선택해주세요", "광주광역시"];
-  let city_f = ["세부지역을 선택해주세요", "대구광역시"];
-  let city_g = ["세부지역을 선택해주세요", "대전광역시"];
-  let city_h = ["세부지역을 선택해주세요", "부산광역시"];
-  let city_i = ["세부지역을 선택해주세요", "서울특별시"];
-  let city_j = ["세부지역을 선택해주세요", "세종특벽시"];
-  let city_k = ["세부지역을 선택해주세요", "울산광역시"];
-  let city_l = ["세부지역을 선택해주세요", "인천광역시"];
+  let city_e = ["세부지역", "광주광역시"];
+  let city_f = ["세부지역", "대구광역시"];
+  let city_g = ["세부지역", "대전광역시"];
+  let city_h = ["세부지역", "부산광역시"];
+  let city_i = ["세부지역", "서울특별시"];
+  let city_j = ["세부지역", "세종특벽시"];
+  let city_k = ["세부지역", "울산광역시"];
+  let city_l = ["세부지역", "인천광역시"];
   let city_m = [
-    "세부지역을 선택해주세요",
+    "세부지역",
     "강진군",
     "고흥군",
     "곡성군",
@@ -368,7 +368,7 @@ function categoryChange(e) {
     "화순군",
   ];
   let city_n = [
-    "세부지역을 선택해주세요",
+    "세부지역",
     "고창군",
     "군산시",
     "김제시",
@@ -384,9 +384,9 @@ function categoryChange(e) {
     "정읍시",
     "진안군",
   ];
-  let city_o = ["세부지역을 선택해주세요", "제주특별시"];
+  let city_o = ["세부지역", "제주특별시"];
   let city_p = [
-    "세부지역을 선택해주세요",
+    "세부지역",
     "계룡시",
     "공주시",
     "금산군",
@@ -404,7 +404,7 @@ function categoryChange(e) {
     "홍성군",
   ];
   let city_q = [
-    "세부지역을 선택해주세요",
+    "세부지역",
     "괴산군",
     "단양군",
     "보은군",

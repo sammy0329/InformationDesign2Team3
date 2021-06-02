@@ -6,8 +6,13 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
 var NowInfowindow = [];
+var Sigunguinfo = [];
 
 var Selectinfo = "" //현재 선택된 카테고리 정보
+
+d3.json("json/Sigungu.json", function (error, data) {
+    readSigungu(error, data);
+});
 
 readTextFile1('json/fast.json')
 readTextFile2('json/slow.json')
@@ -90,7 +95,7 @@ function createfastMarkers(data) {
             };
 
         var infowindow = new kakao.maps.InfoWindow({
-            content: '<div style="padding:10px;text-align:center;width:auto;height:auto;white-space:nowrap;">'+ element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow +'</div>', // 인포윈도우에 표시할 내용
+            content: '<div style="padding:10px;text-align:center;width:auto;height:auto;white-space:nowrap;">' + element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow + '</div>', // 인포윈도우에 표시할 내용
         });
 
         var latloninfo = new kakao.maps.LatLng(element.Lat, element.Lon);
@@ -106,8 +111,6 @@ function createfastMarkers(data) {
         // 생성된 마커를 급속 마커 배열에 추가합니다
         fastMarkers.push(marker);
     });
-
-
 }
 
 // 급속 마커들의 지도 표시 여부를 설정하는 함수입니다
@@ -129,7 +132,7 @@ function createslowMarkers(data) {
 
         var infowindow = new kakao.maps.InfoWindow({
             //content: '<span class="info-title">'+ element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow +'</span>', // 인포윈도우에 표시할 내용
-            content: '<div style="padding:10px;text-align:center;width:auto;height:auto;white-space: nowrap;">'+ element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow +'</div>', // 인포윈도우에 표시할 내용
+            content: '<div style="padding:10px;text-align:center;width:auto;height:auto;white-space: nowrap;">' + element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow + '</div>', // 인포윈도우에 표시할 내용
         });
 
         var latloninfo = new kakao.maps.LatLng(element.Lat, element.Lon);
@@ -165,7 +168,7 @@ function createbothMarkers(data) {
 
         var infowindow = new kakao.maps.InfoWindow({
             //content: '<span class="info-title">'+ element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow +'</span>' // 인포윈도우에 표시할 내용
-            content: '<div style="padding:10px;text-align:center;width:auto;height:auto;white-space: nowrap;">'+ element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow +'</div>', // 인포윈도우에 표시할 내용
+            content: '<div style="padding:10px;text-align:center;width:auto;height:auto;white-space: nowrap;">' + element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow + '</div>', // 인포윈도우에 표시할 내용
         });
 
         var latloninfo = new kakao.maps.LatLng(element.Lat, element.Lon);
@@ -254,24 +257,45 @@ function changeMarker(type) {
 
 }
 
-function wheelEvent()
-{
+function wheelEvent() {
     var level = map.getLevel();
-    if(level>11)
-    {
+    if (level > 11) {
         setfastMarkers(null);
         setslowMarkers(null);
         setbothMarkers(null);
-        if(NowInfowindow.length>0)
-        {
-            for(i = 0; i<NowInfowindow.length; i++)
-            {
+        if (NowInfowindow.length > 0) {
+            for (i = 0; i < NowInfowindow.length; i++) {
                 NowInfowindow[i].close();
             }
         }
     }
-    else
-    {
+    else {
         changeMarker(Selectinfo);
     }
+}
+
+function changeCityXY(e) {
+    
+    Sigunguinfo.forEach((element) => {
+        if (e.value == element[0].name) {
+            var moveLatLon = new kakao.maps.LatLng(element[0].lat, element[0].lon);
+            map.setCenter(moveLatLon);
+        }
+    })
+
+}
+
+function readSigungu(error, data) {
+    //sorting
+    if (error) throw error;
+
+    data.forEach((element) => {
+        Sigunguinfo.push([
+            {
+                name: element.Name,
+                lon: element.lon,
+                lat: element.lat,
+            },
+        ]);
+    });
 }
