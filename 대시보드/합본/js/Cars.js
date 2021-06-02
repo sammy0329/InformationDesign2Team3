@@ -13,6 +13,7 @@ num_back = [];
   (car_width = 400),
   (car_height = 900);
 
+
 // selectValue = ev_select.options[ev_select.selectedIndex].value;
 
 Chart = function (data) {
@@ -237,8 +238,9 @@ function changeCitySelect() {
 
   for (i = 0; i < num.length; i++) {
     if (num[i].key == CarText) {
-      var a = num[i].value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " 원\n" + RegionText + CityText;
+      var a = num[i].value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " 원";
       $("#Car_Subsidy").text(a);
+      $("#Car_Place").text(RegionText + " " + CityText);      
     }
   }
 }
@@ -589,8 +591,9 @@ function setValue() {
 
   for (i = 0; i < num_back.length; i++) {
     if (num_back[i].key == CarText) {
-      var a = num_back[i].value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " 원\n" + RegionText + CityText;
+      var a = num_back[i].value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " 원";
       $("#Car_Subsidy").text(a);
+      $("#Car_Place").text(RegionText + " " + CityText);      
     }
   }
 

@@ -129,10 +129,10 @@ body {
 #container {
   position: absolute;
   width: 470px;
-  height: 500px;
+  height: 450px;
   margin: 0;
   padding: 0;
-  top: 450px;
+  top: 500px;
   left: 625px;
 }
 head {
@@ -188,5 +188,4 @@ th {
   left: 730px;
   top:950px;
   padding: 10px;
-  border: 4px double black;
 }
