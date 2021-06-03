@@ -129,10 +129,10 @@ body {
 #container {
   position: absolute;
   width: 470px;
-  height: 500px;
+  height: 450px;
   margin: 0;
   padding: 0;
-  top: 450px;
+  top: 500px;
   left: 625px;
 }
 head {
@@ -188,5 +188,17 @@ th {
   left: 730px;
   top:950px;
   padding: 10px;
-  border: 4px double black;
+}
+
+#Bar_Graph_Area{
+  position: absolute;
+  left: 1030px;
+  top:1000px;
+  padding: 10px;
+}
+.test{
+  position: absolute;
+  left: 1700px;
+  top:700px;
+  padding: 10px;
 }

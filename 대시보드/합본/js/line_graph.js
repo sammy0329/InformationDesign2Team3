@@ -112,7 +112,7 @@ Cost.prototype.axis = function () {
       this.ev_cost_data[0].mileage,
       this.ev_cost_data[this.ev_cost_data.length - 1].mileage,
     ])
-    .range([0, width]);
+    .range([0, line_width]);
 
   let xScale2 = d3
     .scaleLinear()
@@ -120,15 +120,15 @@ Cost.prototype.axis = function () {
       this.ev_cost_data[0].mileage,
       this.ev_cost_data[this.ev_cost_data.length - 1].mileage,
     ])
-    .range([0, width]);
+    .range([0, line_width]);
 
-  let xAxis = d3.axisBottom(this.xScale).ticks(10).tickSize(-height);
+  let xAxis = d3.axisBottom(this.xScale).ticks(10).tickSize(-line_height);
   let xAxis2 = d3.axisBottom(this.xScale2).ticks(10);
 
   // y축
-  let yScale = d3.scaleLinear().domain([domain_min, domain_max]).range([height, 0]);
-  let yScale2 = d3.scaleLinear().domain([domain_min, domain_max]).range([height2, 0]);
-  let yAxis = d3.axisLeft(this.yScale).tickSize(-width);
+  let yScale = d3.scaleLinear().domain([domain_min, domain_max]).range([line_height, 0]);
+  let yScale2 = d3.scaleLinear().domain([domain_min, domain_max]).range([line_height2, 0]);
+  let yAxis = d3.axisLeft(this.yScale).tickSize(-line_width);
 
 
 
@@ -178,21 +178,21 @@ Cost.prototype.draw = function () {
   svg.append("defs").append("svg:clipPath")
     .attr("id", "clip")
     .append("svg:rect")
-    .attr("width", width)
-    .attr("height", height)
+    .attr("width", line_width)
+    .attr("height", line_height)
     .attr("x", 0)
     .attr("y", 0);
 
 
   var Line_chart = svg.append("g")
     .attr("class", "focus")
-    .attr("transform", "translate( " + margin.left + " ," + margin.top + ")")
+    .attr("transform", "translate( " + line_margin.left + " ," + line_margin.top + ")")
     .attr("clip-path", "url(#clip)");
 
   svg
     .append("text")
     .text("유지비")
-    .attr("x", 0 - height / 2 - 20)
+    .attr("x", 0 - line_height / 2 - 20)
     .attr("y", 0)
     .attr("dy", "1em")
     .style("text-anchor", "middle")
@@ -201,24 +201,24 @@ Cost.prototype.draw = function () {
   svg
     .append("text")
     .text("주행거리")
-    .attr("x", width / 2 + 90)
-    .attr("y", height + margin.bottom - 55)
+    .attr("x", line_width / 2 + 90)
+    .attr("y", line_height + line_margin.bottom - 55)
     .style("text-anchor", "middle");
 
   let focus = svg
     .append("g")
     .attr("class", "focus")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", "translate(" + line_margin.left + "," + line_margin.top + ")");
 
 
   let context = svg
     .append("g")
     .attr("class", "context")
-    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+    .attr("transform", "translate(" + line_margin2.left + "," + line_margin2.top + ")");
 
 
-  let context_x = x + margin2.left;
-  let context_y = y + margin2.top;
+  let context_x = x + line_margin2.left;
+  let context_y = y + line_margin2.top;
 
   let line = this.line;
   let line2 = this.line2;
@@ -227,7 +227,7 @@ Cost.prototype.draw = function () {
   focus
     .append("g")
     .attr("class", "axis axis--x")
-    .attr("transform", "translate(0," + height + ")")
+    .attr("transform", "translate(0," + line_height + ")")
     .call(this.xAxis);
 
   focus
@@ -289,7 +289,7 @@ Cost.prototype.draw = function () {
   context
     .append("g")
     .attr("class", "axis axis--x")
-    .attr("transform", "translate(0," + height2 + ")")
+    .attr("transform", "translate(0," + line_height2 + ")")
     .call(this.xAxis2);
 
 
@@ -311,13 +311,6 @@ user_ice = [];
 line_width = document.getElementById("line").width.animVal.value;
 line_height = document.getElementById("line").height.animVal.value;
 
-// var margin	= {top: 20, right: 30, bottom: 100, left: 20},
-//     width	= line_width - margin.left - margin.right,
-//     height	= line_height - margin.top - margin.bottom;
-
-// var margin_context = {top: 320, right: 30, bottom: 20, left: 20},
-//     height_context = line_height - margin_context.top - margin_context.bottom;
-
 nameTextBox = document.querySelector("#car_name");
 costTextBox = document.querySelector("#car_cost");
 fuelTextBox = document.querySelector("#car_fuel");
@@ -330,16 +323,13 @@ ice_fuel = document.getElementById("ice_fuel");
 
 x = 0;
 y = 0;
-// margin = { top: 20, right: 20, bottom: 50, left: 90 };
-// width = 700 - margin.left - margin.right;
-// height = 400 - margin.top - margin.bottom;
 
 var svg = d3.select("#line"),
-  margin = { top: 20, right: 40, bottom: 110, left: 80 },
-  margin2 = { top: 430, right: 40, bottom: 30, left: 80 },
-  width = +svg.attr("width") - margin.left - margin.right,
-  height = +svg.attr("height") - margin.top - margin.bottom,
-  height2 = +svg.attr("height") - margin2.top - margin2.bottom;
+  line_margin = { top: 20, right: 40, bottom: 110, left: 80 },
+  line_margin2 = { top: 430, right: 40, bottom: 30, left: 80 },
+  line_width = +svg.attr("width") - line_margin.left - line_margin.right,
+  line_height = +svg.attr("height") - line_margin.top - line_margin.bottom,
+  line_height2 = +svg.attr("height") - line_margin2.top - line_margin2.bottom;
 
 // ev_lowBtn = document.getElementById('ev_low');
 // ev_fastBtn = document.getElementById('ev_fast');
@@ -481,11 +471,6 @@ function declaredLine(line) {
     ev_fast_line = new Cost(svg, Ev[selectValue][0], user_ice[0], fast_1kwh, "#F47378");
   }
 
-
-
-
-
-
   if (line == "ev_low") {
 
     makeLine(ev_low_line)
@@ -537,18 +522,18 @@ function makeLine(Object) {
       .attr('x1', xScale(Object.pickValue))
       .attr('x2', xScale(Object.pickValue))
       .attr('y1', 0)
-      .attr('y2', height)
+      .attr('y2', line_height)
       .attr('stroke', 'gray')
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      .attr("transform", "translate(" + line_margin.left + "," + line_margin.top + ")");
 
 
     svg.select(".zoom")
       .call(
         zoom.transform,
-        d3.zoomIdentity.scale(width / (s[1] - s[0])).translate(-s[0], 0)
+        d3.zoomIdentity.scale(line_width / (s[1] - s[0])).translate(-s[0], 0)
       );
   }
-  let brush = d3.brushX().extent([[0, 0], [width, height2],]).on("brush end", brushed);
+  let brush = d3.brushX().extent([[0, 0], [line_width, line_height2],]).on("brush end", brushed);
   zoomed = function () {
     if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
     let t = d3.event.transform;
@@ -564,14 +549,14 @@ function makeLine(Object) {
       .attr('x1', xScale(Object.pickValue))
       .attr('x2', xScale(Object.pickValue))
       .attr('y1', 0)
-      .attr('y2', height)
+      .attr('y2', line_height)
       .attr('stroke', 'gray')
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      .attr("transform", "translate(" + line_margin.left + "," + line_margin.top + ")");
 
 
 
   }
-  let zoom = d3.zoom().scaleExtent([1, Infinity]).translateExtent([[0, 0], [width, height]]).extent([[0, 0], [width, height]]).on("zoom", zoomed);
+  let zoom = d3.zoom().scaleExtent([1, Infinity]).translateExtent([[0, 0], [line_width, line_height]]).extent([[0, 0], [line_width, line_height]]).on("zoom", zoomed);
 
 
   context
@@ -584,9 +569,9 @@ function makeLine(Object) {
   tipBox = svg
     .append("rect")
     .attr("class", "zoom")
-    .attr("width", width)
-    .attr("height", height)
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    .attr("width", line_width)
+    .attr("height", line_height)
+    .attr("transform", "translate(" + line_margin.left + "," + line_margin.top + ")")
     .call(zoom)
     .on('mousemove', drawTooltip)
     .on('mouseout', removeTooltip);
@@ -633,8 +618,8 @@ function makeLine(Object) {
       .attr('x1', xScale(kilometer))
       .attr('x2', xScale(kilometer))
       .attr('y1', 0)
-      .attr('y2', height)
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      .attr('y2', line_height)
+      .attr("transform", "translate(" + line_margin.left + "," + line_margin.top + ")");
 
     tooltip.html("주행거리 : " + kilometer.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "km")
       .style('display', 'block')

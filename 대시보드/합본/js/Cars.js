@@ -7,10 +7,12 @@ RegionText = "";
 
 EV = [];
 Subsidy = [];
+num_back = [];
 // set the dimensions and margins of the graph
 (car_margin = { top: 10, right: 0, bottom: 40, left: 160 }),
-  (car_width = 500),
-  (car_height = 1000);
+  (car_width = 400),
+  (car_height = 900);
+
 
 // selectValue = ev_select.options[ev_select.selectedIndex].value;
 
@@ -134,11 +136,11 @@ function test(num) {
 //차량 선택에 따른 value 값 및 text 저장 함수
 function changeLangSelect() {
   let CarSelect = document.getElementById("name2");
-  // select element에서 선택된 option의 value가 저장된다.
   CarValue = CarSelect.options[CarSelect.selectedIndex].value;
-  // select element에서 선택된 option의 text가 저장된다.
   CarText = CarSelect.options[CarSelect.selectedIndex].text;
   console.log(CarValue, CarText);
+
+  setValue();
   update_color();
 }
 
@@ -231,11 +233,21 @@ function changeCitySelect() {
   //         return a.value - b.value;
   //     });
   // return d
+
+  num_back = num;
+
+  for (i = 0; i < num.length; i++) {
+    if (num[i].key == CarText) {
+      var a = num[i].value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " 원";
+      $("#Car_Subsidy").text(a);
+      $("#Car_Place").text(RegionText + " " + CityText);      
+    }
+  }
 }
 
 function categoryChange(e) {
   let city_a = [
-    "세부지역을 선택해주세요",
+    "세부지역",
     "강릉시",
     "고성군",
     "동해시",
@@ -256,7 +268,7 @@ function categoryChange(e) {
     "횡성군",
   ];
   let city_b = [
-    "세부지역을 선택해주세요",
+    "세부지역",
     "가평군",
     "고양시",
     "과천시",
@@ -290,7 +302,7 @@ function categoryChange(e) {
     "화성시",
   ];
   let city_c = [
-    "세부지역을 선택해주세요",
+    "세부지역",
     "거제시",
     "거창군",
     "고성군",
@@ -311,7 +323,7 @@ function categoryChange(e) {
     "합천군",
   ];
   let city_d = [
-    "세부지역을 선택해주세요",
+    "세부지역",
     "경산시",
     "경주시",
     "고령군",
@@ -334,16 +346,16 @@ function categoryChange(e) {
     "칠곡군",
     "포항시",
   ];
-  let city_e = ["세부지역을 선택해주세요", "광주광역시"];
-  let city_f = ["세부지역을 선택해주세요", "대구광역시"];
-  let city_g = ["세부지역을 선택해주세요", "대전광역시"];
-  let city_h = ["세부지역을 선택해주세요", "부산광역시"];
-  let city_i = ["세부지역을 선택해주세요", "서울특별시"];
-  let city_j = ["세부지역을 선택해주세요", "세종특벽시"];
-  let city_k = ["세부지역을 선택해주세요", "울산광역시"];
-  let city_l = ["세부지역을 선택해주세요", "인천광역시"];
+  let city_e = ["세부지역", "광주광역시"];
+  let city_f = ["세부지역", "대구광역시"];
+  let city_g = ["세부지역", "대전광역시"];
+  let city_h = ["세부지역", "부산광역시"];
+  let city_i = ["세부지역", "서울특별시"];
+  let city_j = ["세부지역", "세종특벽시"];
+  let city_k = ["세부지역", "울산광역시"];
+  let city_l = ["세부지역", "인천광역시"];
   let city_m = [
-    "세부지역을 선택해주세요",
+    "세부지역",
     "강진군",
     "고흥군",
     "곡성군",
@@ -368,7 +380,7 @@ function categoryChange(e) {
     "화순군",
   ];
   let city_n = [
-    "세부지역을 선택해주세요",
+    "세부지역",
     "고창군",
     "군산시",
     "김제시",
@@ -384,9 +396,9 @@ function categoryChange(e) {
     "정읍시",
     "진안군",
   ];
-  let city_o = ["세부지역을 선택해주세요", "제주특별시"];
+  let city_o = ["세부지역", "제주특별시"];
   let city_p = [
-    "세부지역을 선택해주세요",
+    "세부지역",
     "계룡시",
     "공주시",
     "금산군",
@@ -404,7 +416,7 @@ function categoryChange(e) {
     "홍성군",
   ];
   let city_q = [
-    "세부지역을 선택해주세요",
+    "세부지역",
     "괴산군",
     "단양군",
     "보은군",
@@ -421,23 +433,23 @@ function categoryChange(e) {
   var target = document.getElementById("city");
 
   let d;
-  if (e.value == "a") d = city_a;
-  else if (e.value == "b") d = city_b;
-  else if (e.value == "c") d = city_c;
-  else if (e.value == "d") d = city_d;
-  else if (e.value == "e") d = city_e;
-  else if (e.value == "f") d = city_f;
-  else if (e.value == "g") d = city_g;
-  else if (e.value == "h") d = city_h;
-  else if (e.value == "i") d = city_i;
-  else if (e.value == "j") d = city_j;
-  else if (e.value == "k") d = city_k;
-  else if (e.value == "l") d = city_l;
-  else if (e.value == "m") d = city_m;
-  else if (e.value == "n") d = city_n;
-  else if (e.value == "o") d = city_o;
-  else if (e.value == "p") d = city_p;
-  else if (e.value == "q") d = city_q;
+  if (e.value == "강원") d = city_a;
+  else if (e.value == "경기") d = city_b;
+  else if (e.value == "경남") d = city_c;
+  else if (e.value == "경북") d = city_d;
+  else if (e.value == "광주광역시") d = city_e;
+  else if (e.value == "대구") d = city_f;
+  else if (e.value == "대전") d = city_g;
+  else if (e.value == "부산") d = city_h;
+  else if (e.value == "서울") d = city_i;
+  else if (e.value == "세종") d = city_j;
+  else if (e.value == "울산") d = city_k;
+  else if (e.value == "인천") d = city_l;
+  else if (e.value == "전남") d = city_m;
+  else if (e.value == "전북") d = city_n;
+  else if (e.value == "제주") d = city_o;
+  else if (e.value == "충남") d = city_p;
+  else if (e.value == "충북") d = city_q;
   target.options.length = 0;
 
   for (x in d) {
@@ -548,15 +560,42 @@ function drawChart(value) {
     .on("mousemove", function (d) {
       tooltip.style("left", d3.event.pageX + 10 + "px");
       tooltip.style("top", d3.event.pageY - 10 + "px");
-      tooltip.text(String(d.value) + Unit);
+      tooltip.text(String(d.value).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + Unit);
     })
     .on("click", function (point, event) {
       console.log(point);
       if (event.length <= 0) return;
       CarText = point.key;
-
       $("#name2").val(CarText).prop("selected", true);
       callfromCarsjs(CarText);
+      setValue();
       update_color();
+      ChangeBarSelect(CarText);
     });
+}
+
+function setValue() {
+  EV.forEach((element) => {
+
+    if (element[0].name == CarText) {
+
+      var a = element[0].price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " 원";
+
+      $("#Car_People").text(element[0].passenger + " 인승");
+      $("#Car_MaxSpeed").text(element[0].speed + " km");
+      $("#Car_MaxKM").text(element[0].mileage + " km");
+      $("#Car_Efficiency").text(element[0].fuel + " km/kWh");
+      $("#Car_Price").text(a);
+    }
+
+  });
+
+  for (i = 0; i < num_back.length; i++) {
+    if (num_back[i].key == CarText) {
+      var a = num_back[i].value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " 원";
+      $("#Car_Subsidy").text(a);
+      $("#Car_Place").text(RegionText + " " + CityText);      
+    }
+  }
+
 }
