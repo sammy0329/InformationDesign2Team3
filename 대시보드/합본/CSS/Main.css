@@ -189,3 +189,16 @@ th {
   top:950px;
   padding: 10px;
 }
+
+#Bar_Graph_Area{
+  position: absolute;
+  left: 1030px;
+  top:1000px;
+  padding: 10px;
+}
+.test{
+  position: absolute;
+  left: 1700px;
+  top:700px;
+  padding: 10px;
+}

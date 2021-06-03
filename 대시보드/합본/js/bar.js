@@ -70,16 +70,17 @@ var TOP = 00;
 var BOTTOM = 30;
 
 // 데이터가 그려질 영역의 크기
-var width =800 - LEFT - RIGHT;
+var width =500 - LEFT - RIGHT;
 var height = 200 - TOP - BOTTOM;
 
 // body 요소 밑에 svg 요소를 추가하고 그 결과를 svg 변수에 저장
 var body = d3.select("body");
 var svg1 = body.append("svg");
+svg1.attr("class","test");
 
 // svg 요소의 너비와 높이가 화면을 꽉 채우도록 수정
-svg1.attr("width", window.innerWidth);
-svg1.attr("height", window.innerHeight);
+svg1.attr("width", 1000);
+svg1.attr("height", 200);
 
 // svg 요소에 g 요소를 추가하고 axisGroup 변수에 저장
 var axisGroup = svg1.append("g");
@@ -98,7 +99,7 @@ barGroup
 //if(now - lastUpdate < 2000) return;
 
 function chageLangSelect() {
-  var langSelect = document.getElementById("name");
+  var langSelect = document.getElementById("ev_car");
   // select element에서 선택된 option의 value가 저장된다.
   selectValue = langSelect.options[langSelect.selectedIndex].value;
   // select element에서 선택된 option의 text가 저장된다.
@@ -174,7 +175,9 @@ function bar() {
     var barUpdate = barGroup.selectAll("rect").data(dataset);
     barUpdate
       .style("fill", function (d, i) {
-        if (i === 1) {
+        if(i===0){
+          return "#A9C9F7";
+        } else if (i === 1) {
           return "#CFCFCF";
         } else if (i === 2) {
           return "#B0E0BF";
