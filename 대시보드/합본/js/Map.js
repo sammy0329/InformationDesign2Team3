@@ -402,3 +402,12 @@ function CheckChange(e) {
 
     changeMarker(Selectinfo);
 }
+
+function ChangeBarSelect(e)
+{
+    if(ischeck)
+    {
+        SelectCar = e;
+        changeMarker(Selectinfo);
+    }
+}

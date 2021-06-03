@@ -570,6 +570,7 @@ function drawChart(value) {
       callfromCarsjs(CarText);
       setValue();
       update_color();
+      ChangeBarSelect(CarText);
     });
 }
 
