@@ -99,14 +99,29 @@ barGroup
 
 //if(now - lastUpdate < 2000) return;
 
-function chagebar() {
+function chagebar(CarText=0) {
+  if (CarText != 0 ){
+    MEv.forEach(function(value,index){
+      console.log(value[0])
+        if(CarText == value[0]){
+          console.log(index);
+          selectValue = index;
+        }
+    });
+  }
+  else {
+    selectValue = ev_select.options[ev_select.selectedIndex].value;
+    selectText = langSelect.options[langSelect.selectedIndex].text;
+  }
+    
+
   var langSelect = document.getElementById("name2");
   // select element에서 선택된 option의 value가 저장된다.
-  selectValue = langSelect.options[langSelect.selectedIndex].value;
+  // selectValue = langSelect.options[langSelect.selectedIndex].value;
   // select element에서 선택된 option의 text가 저장된다.
-  selectText = langSelect.options[langSelect.selectedIndex].text;
+  
   console.log(selectText, selectValue);
-  bar(km);
+
 }
 
 // // 슬라이더 실행 함수
@@ -146,6 +161,7 @@ function changeBar(event) {
 //막대그래프 실행 함수
 function bar(km) {
   console.log(Max_mileage)
+  
   d3.csv("json/EC.csv", function (error, data) {
     var dataset = [];
     if (radio == "ev_low") {
@@ -168,10 +184,10 @@ function bar(km) {
     }
     
   
-
+    maxCost = (Max_mileage / Ice_fuel) * ice_1L
     // X축 스케일 정의하기
     var xScale = d3.scaleLinear();
-    xScale.domain([0, Max_mileage]).range([0, width]);
+    xScale.domain([0, maxCost]).range([0, width]);
 
     // Y축 스케일 정의하기
     var yScale = d3.scaleBand();
@@ -190,16 +206,17 @@ function bar(km) {
     barUpdate
       .style("fill", function (d, i) {
         if(i===0){
-          return "#A9C9F7";
+          if (radio == "ev_fast") {
+            return "#F4A8A8";
+          }
+          else{
+            return "#A9C9F7";
+          }
         } else if (i === 1) {
           return "#CFCFCF";
         } else if (i === 2) {
           return "#B0E0BF";
-        } else {
-          if (radio == "ev_fast") {
-            return "#F4A8A8";
-          }
-        }
+        } 
       })
       .attr("y", function (d, i) {
         return yScale(i);

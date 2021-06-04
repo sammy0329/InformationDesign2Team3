@@ -415,7 +415,7 @@ function changeLine(event) {
   }
 }
 
-function evSelect() {
+function evSelect(CarText = 0) {
 
   //d3.select("#line").remove();
   // const NewSVG = document.createElement('svg');
@@ -429,11 +429,23 @@ function evSelect() {
   //   .attr("left",0)
   //   .attr("width",700)
   //   .attr("height",500)
-
+  
   $("#line").empty();
-
-  selectValue = ev_select.options[ev_select.selectedIndex].value;
-  console.log(selectValue)
+  if (CarText != 0 ){
+    Ev.forEach(function(value,index){
+      // console.log(value[0].name)
+      // console.log(CarText)
+        if(CarText == value[0].name){
+          console.log(index);
+          selectValue = index;
+        }
+    });
+  }
+  else 
+    selectValue = ev_select.options[ev_select.selectedIndex].value;
+    
+  
+  
   // document.getElementById('ev_fast').setAttribute('checked', false);
   document.getElementById("ev_low").setAttribute("checked", false);
 
@@ -448,7 +460,7 @@ function evSelect() {
     });
   }
   else {
-    console.log(user_ice)
+    
     user_ice.forEach(function (element) {
       ice_name.innerText = element.name;
       ice_cost.innerText = element.price;
@@ -459,7 +471,7 @@ function evSelect() {
 
   if (document.getElementById("ev_low").checked) declaredLine("ev_low");
   else if (document.getElementById("ev_fast").checked){
-      console.log("a")
+      
       declaredLine("ev_fast");
     
   } 
@@ -468,7 +480,7 @@ function evSelect() {
 function declaredLine(line) {
   //svg, ev_car_data,ice_car_data, select, color
   // if(user_ice == null)
-
+  console.log(CarText)
   if (user_ice.length == 0) {
     ev_low_line = new Cost(svg, Ev[selectValue][0], Ice[selectValue_ice][0], low_1kwh, "#6A8EE4");
     ev_fast_line = new Cost(svg, Ev[selectValue][0], Ice[selectValue_ice][0], fast_1kwh, "#F47378");
@@ -483,7 +495,7 @@ function declaredLine(line) {
     makeLine(ev_low_line)
 
   } else if (line == "ev_fast") {
-    console.log("a")
+    
     makeLine(ev_fast_line)
   }
 }
@@ -496,9 +508,10 @@ function makeLine(Object) {
   // NewSVG.setAttribute("id", "line");
   // document.body.appendChild(NewSVG);
   Max_mileage = Object.ev_cost_data[Object.ev_cost_data.length - 1].mileage
-
+  Diverse_value = Object.pickValue;
+  bar(Diverse_value);
   $("#line").empty();
-  console.log(Object)
+
   //line,svg,focus,context,Line_chart
   let graph = Object.draw();
 
@@ -592,10 +605,17 @@ function makeLine(Object) {
   //   .attr('opacity', 0)
   //  ;
 
+  tooltipLine.attr('stroke', 'black')
+  .attr('stroke-width', 2)
+  .attr('x1', xScale(Diverse_value))
+  .attr('x2', xScale(Diverse_value))
+  .attr('y1', 0)
+  .attr('y2', line_height)
+  .attr("transform", "translate(" + line_margin.left + "," + line_margin.top + ")");
 
   function removeTooltip() {
     if (tooltip) tooltip.style('display', 'none');
-    if (tooltipLine) tooltipLine.attr('stroke', 'none');
+    // if (tooltipLine) tooltipLine.attr('stroke', 'none');
   }
 
   function drawTooltip() {
@@ -618,7 +638,7 @@ function makeLine(Object) {
       // a must be equal to b
       return 0;
     });
-
+    
     tooltip_cost.forEach(function (v) {
       v.value = v.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       return
