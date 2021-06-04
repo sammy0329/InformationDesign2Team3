@@ -449,7 +449,7 @@ function categoryChange(e) {
   }
 }
 
-d3.json("json/Compared_ev_.json", function (error, data) {
+d3.json("json/Compared_ev.json", function (error, data) {
   readEV(error, data);
 });
 d3.json("json/Subsidy2.json", function (error, data) {
@@ -481,7 +481,7 @@ function readEV(error, data) {
   //sorting
   if (error) throw error;
 
-  data.cars.forEach((element) => {
+  data.forEach((element) => {
     EV.push([
       {
         name: element.차종별,
@@ -490,6 +490,7 @@ function readEV(error, data) {
         mileage: element.주행거리,
         fuel: element.연비,
         passenger: element.승차인원,
+        grade: element.차급
       },
     ]);
   });
@@ -583,6 +584,7 @@ function setValue() {
       $("#Car_MaxKM").text(element[0].mileage + " km");
       $("#Car_Efficiency").text(element[0].fuel + " km/kWh");
       $("#Car_Price").text(a);
+      $("#Car_grade").text(element[0].grade);
     }
 
   });

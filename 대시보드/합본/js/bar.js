@@ -10,7 +10,7 @@ var ice_1L = 1534.8;
 MEv = [];
 MIce = [];
 // var Max_mileage = 180000
-console.log(Max_mileage)
+
 
 d3.json("json/ControlGroup_ice.json", function(error,data){
   if (error) throw error;
@@ -28,39 +28,18 @@ d3.json("json/Compared_ev.json", function(error,data){
   });
   
 });
-console.log(MIce);
-console.log(MEv);
+
 
 
 
 //----- 전기차 vs 휘발유차 ----
-var canvas = document.getElementById("Canvas");
-var ctx = canvas.getContext("2d"); // 캔버스 객체 생성
+
 
 var rectX = 30;
 var rectY = 30;
 var rectWidth = 10;
 var rectHeight = 40;
 var cornerRadius = 10;
-
-// Set faux rounded corners
-ctx.lineJoin = "round";
-ctx.lineWidth = cornerRadius;
-
-ctx.beginPath();
-// 색 설정
-ctx.strokeStyle = '#A9C9F7'; // 선 색
-ctx.fillStyle = '#333333'; // 채운 사각형 색
-
-// 그리기
-ctx.strokeRect(rectX+(cornerRadius/2), rectY+(cornerRadius/2), rectWidth-cornerRadius, rectHeight-cornerRadius);
-ctx.fillRect(rectX+(cornerRadius/2), rectY+(cornerRadius/2), rectWidth-cornerRadius, rectHeight-cornerRadius);
-ctx.font = '30px Arial';
-ctx.fillText('전기차 vs 휘발유 자동차', rectX+15, rectY+30);
-ctx.font = '15px Arial';
-// ctx.fillText('연료값', rectX+15, rectY+75);
-// ctx.fillText('완속 : 1kWh', rectX+15, rectY+110);
-// ctx.fillText('급속 : 1kWh', rectX+15, rectY+140);
 
 
 //---- 막대 그래프 ----
@@ -102,9 +81,9 @@ barGroup
 function chagebar(CarText=0) {
   if (CarText != 0 ){
     MEv.forEach(function(value,index){
-      console.log(value[0])
+      
         if(CarText == value[0]){
-          console.log(index);
+        
           selectValue = index;
         }
     });
@@ -116,35 +95,9 @@ function chagebar(CarText=0) {
     
 
   var langSelect = document.getElementById("name2");
-  // select element에서 선택된 option의 value가 저장된다.
-  // selectValue = langSelect.options[langSelect.selectedIndex].value;
-  // select element에서 선택된 option의 text가 저장된다.
   
-  console.log(selectText, selectValue);
 
 }
-
-// // 슬라이더 실행 함수
-// var slider = d3.select("#km");
-// slider.on("change", function () {
-//   km = this.value;
-//   bar(km);
-// });
-
-// 라디오 버튼 실행 함수
-// function changeLine(event) {
-//   if (event.target.id == "ev_low") {
-//     document.getElementById("ev_low").checked = true;
-//     document.getElementById("ev_fast").checked = false;
-//     radio = "ev_low";
-//     bar(km);
-//   } else if (event.target.id == "ev_fast") {
-//     document.getElementById("ev_low").checked = false;
-//     document.getElementById("ev_fast").checked = true;
-//     radio = "ev_fast";
-//     bar(km);
-//   }
-// }
 
 
 function changeBar(event) {
@@ -160,7 +113,7 @@ function changeBar(event) {
 
 //막대그래프 실행 함수
 function bar(km) {
-  console.log(Max_mileage)
+  
   
   d3.csv("json/EC.csv", function (error, data) {
     var dataset = [];

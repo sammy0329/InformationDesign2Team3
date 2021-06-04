@@ -383,7 +383,6 @@ function main() {
   else if (document.getElementById("ev_fast").checked) declaredLine("ev_fast");
 
   applyBtn.addEventListener("click", function () {
-    console.log()
     if (user_ice.length == 0) {
       user_ice.push({ name: nameTextBox.value, price: Number(costTextBox.value), fuel: Number(fuelTextBox.value) })
     }
@@ -433,10 +432,8 @@ function evSelect(CarText = 0) {
   $("#line").empty();
   if (CarText != 0 ){
     Ev.forEach(function(value,index){
-      // console.log(value[0].name)
-      // console.log(CarText)
+      
         if(CarText == value[0].name){
-          console.log(index);
           selectValue = index;
         }
     });
@@ -480,7 +477,7 @@ function evSelect(CarText = 0) {
 function declaredLine(line) {
   //svg, ev_car_data,ice_car_data, select, color
   // if(user_ice == null)
-  console.log(CarText)
+
   if (user_ice.length == 0) {
     ev_low_line = new Cost(svg, Ev[selectValue][0], Ice[selectValue_ice][0], low_1kwh, "#6A8EE4");
     ev_fast_line = new Cost(svg, Ev[selectValue][0], Ice[selectValue_ice][0], fast_1kwh, "#F47378");
