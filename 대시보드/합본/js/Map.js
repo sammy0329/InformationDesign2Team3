@@ -391,7 +391,7 @@ function readSigungu(error, data) {
 function CheckChange(e) {
 
     var a = document.getElementById("name2");
-    SelectCar = a.value;
+    SelectCar = NumToEvCar(a.value);
 
     if (e.checked == true) {
         ischeck = true;
