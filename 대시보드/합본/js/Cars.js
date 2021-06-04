@@ -566,6 +566,8 @@ function drawChart(value) {
       setValue();
       update_color();
       ChangeBarSelect(CarText);
+      evSelect(CarText);
+      chagebar(CarText);
     });
 }
 
