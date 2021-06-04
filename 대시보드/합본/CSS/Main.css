@@ -141,24 +141,43 @@ head {
 /* --------------------------- */
 .radar td,
 th {
-  border: 1px solid black;
-  width: 220px;
-  height: 60px;
+
+  height: 35px;
 }
 .radar td {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  width: 250px;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.radar th {
+  width: 250px;
+  padding: 10px;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+  background: #efefef;
 }
 .radar table {
-  border: 1px solid black;
   position: absolute;
   top: 20px;
   left: 628px;
   z-index: 9999;
   font-size: 20px;
-  width: 452px;
+  width: 410px;
+
+  border-collapse: separate;
+  border-spacing: 1px;
+  line-height: 1.5;
+  border-top: 1px solid #ccc;
+  margin: 20px 10px;
 }
+
+
+
 /* --------------------------- */
 #radar_wrapper {
   border: 4px double black;

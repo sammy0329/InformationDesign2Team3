@@ -10,8 +10,8 @@ Subsidy = [];
 num_back = [];
 // set the dimensions and margins of the graph
 (car_margin = { top: 10, right: 0, bottom: 40, left: 160 }),
-  (car_width = 400),
-  (car_height = 900);
+  (car_width = 325),
+  (car_height = 640);
 
 
 // selectValue = ev_select.options[ev_select.selectedIndex].value;
@@ -70,7 +70,7 @@ Chart.prototype.line = function () {
     .attr("transform", "translate(-10,0)rotate(-45)")
     .style("text-anchor", "end");
 
-  this.chart.append("g").call(d3.axisLeft(yScale));
+  this.chart.append("g").call(d3.axisLeft(yScale)).attr("class", "y_axis");
 
   const barGroups = this.chart.selectAll().data(this.data).enter().append("g");
 
@@ -100,7 +100,7 @@ Chart.prototype.line = function () {
       .attr("x2", xScale(this.avg))
       .attr("y1", 0)
       .attr("y2", car_height)
-      .attr("stroke", "red");
+      .attr("stroke", "#808080");
   }
 
   return barGroups;
@@ -490,7 +490,8 @@ function readEV(error, data) {
         mileage: element.주행거리,
         fuel: element.연비,
         passenger: element.승차인원,
-        grade: element.차급
+        grade: element.차급,
+        score: element.점수
       },
     ]);
   });
@@ -517,7 +518,7 @@ function drawChart(value) {
     .style("border-radius", "4px 4px 4px 4px")
     .style("text-align", "center")
     .style("padding", "5px")
-    .style("font-size", "1px")
+    .style("font-size", "15px")
     .style("background-color", "rgb(253, 253, 253)");
 
   // border: solid;
@@ -584,7 +585,7 @@ function setValue() {
       $("#Car_MaxKM").text(element[0].mileage + " km");
       $("#Car_Efficiency").text(element[0].fuel + " km/kWh");
       $("#Car_Price").text(a);
-      $("#Car_grade").text(element[0].grade);
+      $("#Car_score").text(element[0].score);
     }
 
   });

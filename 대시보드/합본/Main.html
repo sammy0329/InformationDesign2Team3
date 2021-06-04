@@ -13,20 +13,18 @@
     <link rel="stylesheet" href="CSS/Main.css" />
     <style>
         .carscss svg {
-            height: 1000px;
-            width: 500px;
-            left: 700px;
+            height: 800px;
+            width: 470px;
         }
         
         .carscss .bar {
             fill: rgb(226, 226, 226);
             stroke-width: 0.5;
-            stroke: black;
         }
 
 
         .carscss .bar:hover {
-            fill: blue;
+            fill: rgb(135, 198, 240);
         }
 
         .carscss .toolTip {
@@ -36,7 +34,7 @@
             background-color: rgb(253, 253, 253);
             padding: 5px;
             text-align: center;
-            font-size: 1px;
+            font-size: 20px;
         }
 
         .carscss .grid line {
@@ -44,12 +42,23 @@
             stroke-opacity: 0.8;
             shape-rendering: crispEdges;
         }
+        
+        .carscss .y_axis text{
+            font-size: 12px;
+        }
+
+        .carscss .y_axis path{
+            stroke: rgb(255, 255, 255);
+        }
+    
+        
     </style>
 </head>
 <!-- style="overflow:hidden;" -->
-<body  oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
-    <div id="cars" class="carscss" style="padding-top:40px;width: 1000px;height: 1000px;padding-left: 50px;">
-     
+<body  oncontextmenu="return false" ondragstart="return false" onselectstart="return false" >
+
+    <div width = "300px" style="margin-left:50px; margin-top:20px;">
+        <img class="EV_img"src="image/EV.png"width="130" height="65" style = "vertical-align : middle;">
         <select id="name2" name="option" onchange="changeLangSelect(),changeLangSelect2(this), evSelect(),chagebar(),callfromCarsjs(this)" style="height:40px;width: 200px;">
             <option value="0">코나</option>
             <option value="1">아이오닉</option>
@@ -66,45 +75,55 @@
             <option value="12">DS3 E-tense So Chic</option>
             <option value="13">SMART EV Z</option>
         </select>
-     
-        <select id="condition" name="option" onchange="changeConditionSelect()" style="height:40px;width: 100px;">
-            <!-- <option value="">조건선택</option>   -->
-            <option value="1">가격</option>
-            <option value="2">최고속도</option>
-            <option value="3">주행거리</option>
-            <option value="4">연비</option>
-            <option value="5">승차인원</option>
-            <option value="6">보조금</option>
-        </select>
-
-        <select style="visibility:hidden;height:40px;width: 100px;" id="region" onchange="categoryChange(this),changeCityXY2(this)">
-            <option>지역</option>
-            <option value="강원">강원</option>
-            <option value="경기">경기</option>
-            <option value="경남">경남</option>
-            <option value="경북">경북</option>
-            <option value="광주광역시">광주</option>
-            <option value="대구">대구</option>
-            <option value="대전">대전</option>
-            <option value="부산">부산</option>
-            <option value="서울">서울</option>
-            <option value="세종">세종</option>
-            <option value="울산">울산</option> 
-            <option value="인천">인천</option>
-            <option value="전남">전남</option>
-            <option value="전북">전북</option>
-            <option value="제주">제주</option>
-            <option value="충남">충남</option>
-            <option value="충북">충북</option>
-        </select>
-
-        <select style="visibility:hidden;height:40px;width: 100px;" id="city" onchange="changeCitySelect(),changeCityXY(this)">
-            <option>세부지역</option>
-        </select>
-
-        <svg style="height: 1000px; width: 600px; left:100px;" id="my_dataviz"></svg>
-       
+        <text style = "font-size : 30px; vertical-align : middle; font-weight : bold; color :#A9C9F7;"> 에 관심있는 당신에게 </text>
+        <hr size="10px" color="#A9C9F7" style=" margin-left:50px; width : 700px;  position: absolute; left : 0px; top : 55px;">
     </div>
+    
+    <div style=" box-sizing: border-box;  border: 1px solid #A9C9F7;  border-radius: 20px 20px 20px 20px; padding : 15px">
+        <canvas id="Canvas_Compared_Ev" width="500" height="70" > </canvas>
+        <span style="margin-left:30px;">
+            <select id="condition" name="option" onchange="changeConditionSelect()" style="height:40px;width: 100px;">
+                <!-- <option value="">조건선택</option>   -->
+                <option value="1">가격</option>
+                <option value="2">최고속도</option>
+                <option value="3">주행거리</option>
+                <option value="4">연비</option>
+                <option value="5">승차인원</option>
+                <option value="6">보조금</option>
+            </select>
+            
+            <select style="visibility:hidden;height:40px;width: 100px;" id="region" onchange="categoryChange(this),changeCityXY2(this)">
+                <option>지역</option>
+                <option value="강원">강원</option>
+                <option value="경기">경기</option>
+                <option value="경남">경남</option>
+                <option value="경북">경북</option>
+                <option value="광주광역시">광주</option>
+                <option value="대구">대구</option>
+                <option value="대전">대전</option>
+                <option value="부산">부산</option>
+                <option value="서울">서울</option>
+                <option value="세종">세종</option>
+                <option value="울산">울산</option> 
+                <option value="인천">인천</option>
+                <option value="전남">전남</option>
+                <option value="전북">전북</option>
+                <option value="제주">제주</option>
+                <option value="충남">충남</option>
+                <option value="충북">충북</option>
+            </select>
+        
+            <select style="visibility:hidden;height:40px;width: 100px;" id="city" onchange="changeCitySelect(),changeCityXY(this)">
+                <option>세부지역</option>
+            </select>
+
+        </span>
+        
+        <div id="cars" class="carscss" style="padding-left: 10px; width: 100px;">
+            <svg class="carscss" style="left:100px;" id="my_dataviz"></svg>
+        </div>
+    </div>
+    
     <div id="Map_Area" class="mapcss" style="top: 20px; left: 1090px; position: absolute" onmousewheel="wheelEvent()">
         <label><input type="checkbox" id="IsSelectCar" onclick="CheckChange(this)">해당 차량이 지원되는 충전소만 보기</label>
         <div id="mapwrap" style="width: 800px; height: 440px" >
@@ -127,51 +146,87 @@
                     </li>
                 </ul>
             </div>
-            
         </div>
     </div>
-    <div id="Bar_Graph_Area" style="left:1100px;top:500px;"width="2000" height="400" >
+    <div id="Bar_Graph_Area" style="left:1100px;top:480px;"width="2000" height="900" >
 
      
-        <div id="Bar_Area" class="barcss" style="left:700px;top:1000px;">
+        <div id="Bar_Area" class="barcss" style="left:700px;top:1200px;">
         
             <div>
-                <canvas id="Canvas" width="500" height="70" > </canvas>
+                <canvas id="Canvas_EV_vs_ICE" width="500" height="70" > </canvas>
             </div>
-            <div style = "margin-top : 5px; margin-left :30px">
-                <input type="radio" id="ev_low" name="comparedLine" value="low" onclick="changeLine(event),changeBar(event)" checked />
-                <label for="ev_low">완속</label>
+            <!-- background-color: rgb(207, 207, 207) -->
+            <div style = "margin-top : 5px; margin-left :30px; box-sizing: border-box;  border: 1px solid #A9C9F7;  border-radius: 20px 20px 20px 20px; padding : 15px">
+            
+                <div style = "margin-top : 10px; " >
+                    <div>
+                        <input type="radio" id="ev_low" name="comparedLine" style="vertical-align : middle" value="low" onclick="changeLine(event),changeBar(event)" checked />
+                        <label for="ev_low" style="vertical-align : middle">완속</label>
+                        <input type="radio" id="ev_fast" style="vertical-align : middle" name="comparedLine" value="fast" onclick="changeLine(event),changeBar(event)" />
+                        <label for="ev_fast" style="vertical-align : middle">급속</label>    
+                    </div>
+                    
+                    <img class="EV_img"src="image/EV.png"width="85" height="42" style = "vertical-align : middle; margin-right : 5%;  margin-top : 15%;">
+                    
+                    
+                    <text style = " font-size : 25px; font-weight : bold; position: absolute; left : 160px; top : 140px; color :#5f9cf1">코나 </text>
+                    
+                    <div style = "position: absolute; left : 160px; top : 180px;">
+                        <text style = "font-size : 18px; vertical-align : middle;">차량가격 : </text>
+                        <text style = "font-size : 20px; vertical-align : middle; font-weight : bold; color :#4382da">46,900,000 </text>
+                        <text style = "font-size : 18px; vertical-align : middle;">원 </text>
+                    </div>
 
-                <input type="radio" id="ev_fast" name="comparedLine" value="fast" onclick="changeLine(event),changeBar(event)" />
-                <label for="ev_fast">급속</label>
-                <div>
-                    <input type="text" id="car_name" required minlength="4" maxlength="8" size="10" placeholder="차량이름" />
-                    <input id="car_cost" type="number" placeholder="차량가격" min="0" step="1" />
-                    <input id="car_fuel" type="number" placeholder="연비" min="0" max="100" step="0.01" />
-                    <input type="button" class="meters" value="적용" />
+                    <div style = "position: absolute; left : 160px; top : 200px;">
+                        <text style = "font-size : 18px; vertical-align : middle;">연비 : </text>
+                        <text style = "font-size : 20px; vertical-align : middle; font-weight : bold; color :#4382da">5.6 </text>
+                        <text style = "font-size : 18px; vertical-align : middle;">km/kWh </text>
+                    </div>
+
+                    <div style = "position: absolute; left : 160px; top : 220px;">
+                        <text style = "font-size : 18px; vertical-align : middle;">1kWh </text>
+                        <text style = "font-size : 20px; vertical-align : middle; "> 71.3 원</text>
+                    </div>
+                    
+                    <hr style="width : 500px; border :solid 1px #A9C9F7;">
                 </div>
+                <div style = "margin-top : 10px; margin-bottom : 10px; " >
+                    <div>
+                        <input type="text" id="car_name" required minlength="4" maxlength="8" size="10" placeholder="차량이름" />
+                        <input id="car_cost" type="number" placeholder="차량가격" min="0" step="1" />
+                        <input id="car_fuel" type="number" placeholder="연비" min="0" max="100" step="0.01" />
+                        <input type="button" class="meters" value="적용" />
+                    </div>
+                    <img class="EV_img"src="image/ICE.png"width="100" height="50" style = "vertical-align : middle; margin-right : 5%;  margin-top : 15%;">
+                    <text   id="ice_name" style = " font-size : 25px; font-weight : bold; position: absolute; left : 160px; top : 310px; color :rgb(93, 93, 93)">미니 Hatch </text>
+                    
+                    <div style = "position: absolute; left : 160px; top : 350px;">
+                        <text style = "font-size : 18px; vertical-align : middle;">차량가격 : </text>
+                        <text id="ice_cost" style = "font-size : 20px; vertical-align : middle; font-weight : bold; color :rgb(93, 93, 93)">32,300,000 </text>
+                        <text style = "font-size : 18px; vertical-align : middle;">원 </text>
+                    </div>
 
-                <table>
-                <tr>
-                    <td align="center">
-                        <text id="ice_name" height="20px" width="70px" font-size="10px">
-                            미니 Hatch
-                        </text>
-                        <text id="ice_cost" height="20px" width="70px" font-size="10px" value>
-                            32300000
-                        </text>
-                        <text id="ice_fuel" height="20px" width="70px" font-size="10px">
-                            12.5
-                        </text>
-                    </td>
-                </tr>
-                </table>
+                    <div style = "position: absolute; left : 160px; top : 370px;">
+                        <text style = "font-size : 18px; vertical-align : middle;">연비 : </text>
+                        <text id="ice_fuel" style = "font-size : 20px; vertical-align : middle; font-weight : bold; color :rgb(93, 93, 93)">12.5 </text>
+                        <text style = "font-size : 18px; vertical-align : middle;">km/kWh </text>
+                    </div>
+                    <div style = "position: absolute; left : 160px; top : 390px;">
+                        <text style = "font-size : 18px; vertical-align : middle;">1L </text>
+                        <text style = "font-size : 20px; vertical-align : middle; "> 1534.8 원</text>
+                    </div>
+
+
+                    <hr style="width : 500px;  border :solid 1px #CFCFCF;">
+                </div>       
+                
                 
             </div>
            
 
             <div>
-            <svg id = "test"style="left:0px;top:250px;" ></svg>
+            <svg id = "test"style="left:0px;top:380px;" ></svg>
             </div>
 
            
@@ -232,9 +287,11 @@
                 <td id="Car_Place">선택해 주세요.</td>
             </tr>
             <tr>
-                <th>가격</th>
-                <td id="Car_grade">소형</td>
+                <th>점수</th>
+                <td id="Car_score">60 (4위)</td>
+                
             </tr>
+            
         </table>
     </div>
     <script src="js/Cars.js"></script>

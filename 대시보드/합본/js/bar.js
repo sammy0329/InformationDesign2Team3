@@ -35,11 +35,6 @@ d3.json("json/Compared_ev.json", function(error,data){
 //----- 전기차 vs 휘발유차 ----
 
 
-var rectX = 30;
-var rectY = 30;
-var rectWidth = 10;
-var rectHeight = 40;
-var cornerRadius = 10;
 
 
 //---- 막대 그래프 ----
