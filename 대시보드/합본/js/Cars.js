@@ -554,6 +554,13 @@ function drawChart(value) {
       
       if (event.length <= 0) return;
       CarText = point.key;
+      let CarSelect = document.getElementById("name2");
+   
+      for(let i=0; i<14;i++){
+    
+      if(CarSelect.options[i].text===CarText) CarValue = i;
+      
+      }
       $("#name2").val(CarText).prop("selected", true);
       callfromCarsjs(CarText);
       setValue();
