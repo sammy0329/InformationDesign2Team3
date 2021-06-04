@@ -370,8 +370,8 @@ function drawChart(value){
     }
     bargraph = testV.line();
 
-    let tooltip = d3.select("body").append("div")
-        .attr("class", "toolTip")
+    let toolTip = d3.select("body").append("div")
+        .attr("class", "test1.toolTip")
         .style("display", "none"); 
     
         let Unit;

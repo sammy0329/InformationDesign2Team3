@@ -100,10 +100,43 @@ var SelectData = [];
 SelectData.push("코나")
 MakeChart();
 
-function callfromCarsjs(e)
-{
-  SelectData.push(e)
+function callfromCarsjs(e) {
+  //추가 필요
+  SelectData.push(e);
   MakeChart();
+}
+
+NumToEvCar = function (num) {
+  switch (num.toString()) {
+    case "0":
+      return "코나";
+    case "1":
+      return "아이오닉";
+    case "2":
+      return "아이오닉5";
+    case "3":
+      return "니로EV";
+    case "4":
+      return "쏘울";
+    case "5":
+      return "ZOE ZEN";
+    case "6":
+      return "i3 120Ah Lux";
+    case "7":
+      return "BOLT EV LT";
+    case "8":
+      return "Model 3";
+    case "9":
+      return "Model Y";
+    case "10":
+      return "Peugeot e-208 Allure";
+    case "11":
+      return "Peugeot e-2008 SUV Allure";
+    case "12":
+      return "DS3 E-tense So Chic";
+    case "13":
+      return "SMART EV Z";
+  }
 }
 
 function changeLangSelect2(e) {
@@ -113,7 +146,7 @@ function changeLangSelect2(e) {
   if (value != "none") {
 
     //리스트에 데이터를 넣어서 누적방식으로 하기
-    SelectData.push(value);
+    SelectData.push(NumToEvCar(e.value));
     MakeChart();
   }
 
@@ -127,7 +160,7 @@ function DeleteAll(e) {
 //부분 삭제
 function DeleteSelect(e)
 {
-  const ComboData = document.getElementById('cars');
+  const ComboData = document.getElementById('name2');
   SelectData = SelectData.filter((element) => element !== ComboData.value);
   MakeChart();
 }
@@ -203,7 +236,7 @@ function MakeChart() {
   }
 
   chart.title("전기차종별 레이더차트");
-    // set legend
+  // set legend
   chart.legend(true);
 
   // set container id for the chart

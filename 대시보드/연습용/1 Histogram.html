@@ -8,44 +8,45 @@
 </head>
 
 <style>
-svg {
-  height:600px;
-  width: 500px;
-  border: 1px solid rgba(12, 12, 12, 0.829);
-}
+  svg {
+    height:600px;
+    width: 500px;
+    border: 1px solid rgba(12, 12, 12, 0.829);
+  }
+  
+  
+  .bar {
+  fill: rgb(226, 226, 226);  
+  stroke-width:0.5;
+  stroke:black;
+  }
+  
+  
+  .bar:hover {
+  fill: blue;
+  }
+  
+  /* .x.axis path {
+  display: none;
+  }
+  .y.axis path {
+  display: none;
+  } */
+  .test1.toolTip {
+  position: absolute;
+  border: solid;
+  border-radius: 4px 4px 4px 4px;
+  background-color: rgb(253, 253, 253);
+  padding: 5px;
+  text-align: center;
+  font-size: 1px;
+  }
+  .grid line {
+  stroke: lightgrey;
+  stroke-opacity: 0.8;
+  shape-rendering: crispEdges;
+  }
 
-
-.bar {
-fill: rgb(226, 226, 226);  
-stroke-width:0.5;
-stroke:black;
-}
-
-
-.bar:hover {
-fill: blue;
-}
-
-/* .x.axis path {
-display: none;
-}
-.y.axis path {
-display: none;
-} */
-.toolTip {
-position: absolute;
-border: solid;
-border-radius: 4px 4px 4px 4px;
-background-color: rgb(253, 253, 253);
-padding: 5px;
-text-align: center;
-font-size: 1px;
-}
-.grid line {
-stroke: lightgrey;
-stroke-opacity: 0.8;
-shape-rendering: crispEdges;
-}
 
 </style>
 <body>
@@ -74,12 +75,21 @@ shape-rendering: crispEdges;
  
           <select id="condition" name="option" onchange="changeConditionSelect()">
             <!-- <option value="">조건선택</option>   -->
+<<<<<<< HEAD
+            <option value="1">가격</option>
+            <option value="2" >최고속도</option>
+            <option value="3">주행거리</option>
+            <option value="4">연비</option>
+            <option value="5">승차인원</option> 
+            <option value="6">보조금</option>
+=======
             <option value="0">가격</option>
             <option value="1" >최고속도</option>
             <option value="2">주행거리</option>
             <option value="3">연비</option>
             <option value="4">승차인원</option> 
             <option value="5">보조금</option>
+>>>>>>> bbdc9f5bd23bcf4fd40b7be2c23783ddcaf6a669
           </select>
      
   <select style="visibility:hidden" id="region" onchange=" categoryChange(this)">
