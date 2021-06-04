@@ -10,8 +10,8 @@ Subsidy = [];
 num_back = [];
 // set the dimensions and margins of the graph
 (car_margin = { top: 10, right: 0, bottom: 40, left: 160 }),
-  (car_width = 400),
-  (car_height = 900);
+  (car_width = 325),
+  (car_height = 731.25);
 
 
 // selectValue = ev_select.options[ev_select.selectedIndex].value;
