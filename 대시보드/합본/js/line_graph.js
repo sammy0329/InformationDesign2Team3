@@ -3,10 +3,10 @@ Ice = [];
 low_1kwh = 71.3;
 fast_1kwh = 255.7;
 ice_1L = 1534.8;
-var ev_select = document.getElementById("ev_car");
+var ev_select = document.getElementById("name2");
 var selectValue = ev_select.options[ev_select.selectedIndex].value;
 var selectValue_ice = 1;
-
+Max_mileage = 0;
 // window.onresize = function(event){
 //   redraw();
 // }
@@ -77,6 +77,8 @@ Cost = function (svg, ev_car_data, ice_car_data, select, color) {
 
   this.pickValue = pickValue(this.ev_car_data, this.ice_car_data, this.select);
 
+ 
+
 };
 
 Cost.prototype = Object.create(Cost.prototype);
@@ -113,7 +115,8 @@ Cost.prototype.axis = function () {
       this.ev_cost_data[this.ev_cost_data.length - 1].mileage,
     ])
     .range([0, line_width]);
-
+  
+    
   let xScale2 = d3
     .scaleLinear()
     .domain([
@@ -430,7 +433,7 @@ function evSelect() {
   $("#line").empty();
 
   selectValue = ev_select.options[ev_select.selectedIndex].value;
-
+  console.log(selectValue)
   // document.getElementById('ev_fast').setAttribute('checked', false);
   document.getElementById("ev_low").setAttribute("checked", false);
 
@@ -455,7 +458,11 @@ function evSelect() {
 
 
   if (document.getElementById("ev_low").checked) declaredLine("ev_low");
-  else if (document.getElementById("ev_fast").checked) declaredLine("ev_fast");
+  else if (document.getElementById("ev_fast").checked){
+      console.log("a")
+      declaredLine("ev_fast");
+    
+  } 
 }
 
 function declaredLine(line) {
@@ -476,6 +483,7 @@ function declaredLine(line) {
     makeLine(ev_low_line)
 
   } else if (line == "ev_fast") {
+    console.log("a")
     makeLine(ev_fast_line)
   }
 }
@@ -487,7 +495,9 @@ function makeLine(Object) {
   // const NewSVG = document.createElement('svg');
   // NewSVG.setAttribute("id", "line");
   // document.body.appendChild(NewSVG);
+  Max_mileage = Object.ev_cost_data[Object.ev_cost_data.length - 1].mileage
 
+  $("#line").empty();
   console.log(Object)
   //line,svg,focus,context,Line_chart
   let graph = Object.draw();
@@ -624,8 +634,8 @@ function makeLine(Object) {
     tooltip.html("주행거리 : " + kilometer.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "km")
       .style('display', 'block')
       .style("font-weight", "bold")
-      .style('left', (d3.event.pageX + 5) + "px")
-      .style('top', (d3.event.pageY - 28) + "px")
+      .style('left', (d3.event.pageX-1700) + "px")
+      .style('top', (d3.event.pageY-500 ) + "px")
       .append('div')
       .html(tooltip_cost[0].name)
       .style("font-weight", "normal")
@@ -641,7 +651,7 @@ function makeLine(Object) {
     if (kilometer == Object.pickValue) {
       tooltipLine.attr('stroke', 'yellow')
     }
-
+    bar(kilometer);
   }
 
 }
