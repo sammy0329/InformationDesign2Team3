@@ -52,7 +52,6 @@ Chart.prototype.axis = function () {
     )
     .padding(0.3);
 
-  console.log(car_height)
   return [xScale, yScale];
 };
 
@@ -75,8 +74,7 @@ Chart.prototype.line = function () {
 
   const barGroups = this.chart.selectAll().data(this.data).enter().append("g");
 
-  console.log(yScale);
-  // chart.selectAll("myRect")
+
   barGroups
     .append("rect")
     .attr("class", "carscss")
@@ -115,7 +113,6 @@ Chart.prototype.avg = function () {
   });
 
   let avg = sum / this.data.length;
-  console.log(avg);
   return avg;
 };
 
@@ -189,22 +186,14 @@ function changeCitySelect() {
   let CitySelect = document.getElementById("city");
   // select element에서 선택된 option의 text가 저장된다.
   CityText = CitySelect.options[CitySelect.selectedIndex].text;
-  //   if(ConditionText==="보조금")
-  // drawChart();
-  // console.log(Subsidy)
-  // console.log(Object.keys(Subsidy.city[0]))
+  
 
   console.log(RegionText);
   var num = [];
-  Subsidy.forEach(function (value, index) {
-    // d.push({key : value[0].name, value : value[0][Object.keys(value[0])[3]]})
-    // console.log(Object.keys(value[0])[1]) ** city로 출력
-    // console.log(Object.keys(value[0])[1])
-    // console.log(value[0].city)
+  Subsidy.forEach(function (value) {
 
     if (CityText == value[0].city && RegionText == value[0].region) {
-      // console.log(value[0][index]);
-      // console.log(value[0].cost)
+     
       num.push({ key: value[0].car, value: value[0].cost });
       console.log(value[0]);
     }
@@ -486,7 +475,6 @@ function readCost(error, data) {
     return x.지역구분 === CityText;
   });
 
-  console.log(Subsidy);
 }
 
 function readEV(error, data) {
@@ -563,7 +551,7 @@ function drawChart(value) {
       tooltip.text(String(d.value).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + Unit);
     })
     .on("click", function (point, event) {
-      console.log(point);
+      
       if (event.length <= 0) return;
       CarText = point.key;
       $("#name2").val(CarText).prop("selected", true);

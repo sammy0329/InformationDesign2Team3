@@ -74,55 +74,55 @@ body {
 }
 
 /* #region 꺾은선 스타일 */
-.barcss .zoom {
+.linecss .zoom {
   cursor: move;
   fill: none;
   pointer-events: all;
 }
 
-.barcss .brush {
+.linecss .brush {
   opacity: 0.7;
   color: "gray";
 }
 
-.barcss path.domain {
+.linecss path.domain {
   fill: none;
   stroke: none;
 }
 
-.barcss .tick line {
+.linecss .tick line {
   opacity: 0.1;
 }
 
 /* #endregion */
 
-.linebarcss #name {
+.barcss #name {
   left: 0;
   top: 0;
 }
 
-.linebarcss body {
+.barcss body {
   margin: 0;
 }
 
-.linebarcss .axis text {
+.barcss .axis text {
   fill: #888;
   font-size: 11px;
 }
 
-.linebarcss .axis line {
+.barcss .axis line {
   stroke: #888;
 }
 
-.linebarcss .axis path {
+.barcss .axis path {
   stroke: #888;
 }
 
-.linebarcss .bar rect {
+.barcss .bar rect {
   fill: #a9c9f7;
 }
 
-.linebarcss .slider {
+.barcss .slider {
   width: 800px;
 }
 

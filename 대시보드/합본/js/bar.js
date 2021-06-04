@@ -9,8 +9,8 @@ var fast_1kwh = 255.7;
 var ice_1L = 1534.8;
 MEv = [];
 MIce = [];
-
-bar();
+// var Max_mileage = 180000
+console.log(Max_mileage)
 
 d3.json("json/ControlGroup_ice.json", function(error,data){
   if (error) throw error;
@@ -24,6 +24,7 @@ d3.json("json/Compared_ev.json", function(error,data){
 
   data.forEach(function(d){
     MEv.push([d.차종별,d.차급,d.가격,d.연비]);
+    bar(km);
   });
   
 });
@@ -57,9 +58,9 @@ ctx.fillRect(rectX+(cornerRadius/2), rectY+(cornerRadius/2), rectWidth-cornerRad
 ctx.font = '30px Arial';
 ctx.fillText('전기차 vs 휘발유 자동차', rectX+15, rectY+30);
 ctx.font = '15px Arial';
-ctx.fillText('연료값', rectX+15, rectY+75);
-ctx.fillText('완속 : 1kWh', rectX+15, rectY+110);
-ctx.fillText('급속 : 1kWh', rectX+15, rectY+140);
+// ctx.fillText('연료값', rectX+15, rectY+75);
+// ctx.fillText('완속 : 1kWh', rectX+15, rectY+110);
+// ctx.fillText('급속 : 1kWh', rectX+15, rectY+140);
 
 
 //---- 막대 그래프 ----
@@ -70,16 +71,16 @@ var TOP = 00;
 var BOTTOM = 30;
 
 // 데이터가 그려질 영역의 크기
-var width =500 - LEFT - RIGHT;
+var width =600 - LEFT - RIGHT;
 var height = 200 - TOP - BOTTOM;
 
 // body 요소 밑에 svg 요소를 추가하고 그 결과를 svg 변수에 저장
-var body = d3.select("body");
-var svg1 = body.append("svg");
+// var body = d3.select("#line");
+var svg1 = d3.select("#test");
 svg1.attr("class","test");
 
 // svg 요소의 너비와 높이가 화면을 꽉 채우도록 수정
-svg1.attr("width", 1000);
+svg1.attr("width", 700);
 svg1.attr("height", 200);
 
 // svg 요소에 g 요소를 추가하고 axisGroup 변수에 저장
@@ -98,40 +99,53 @@ barGroup
 
 //if(now - lastUpdate < 2000) return;
 
-function chageLangSelect() {
-  var langSelect = document.getElementById("ev_car");
+function chagebar() {
+  var langSelect = document.getElementById("name2");
   // select element에서 선택된 option의 value가 저장된다.
   selectValue = langSelect.options[langSelect.selectedIndex].value;
   // select element에서 선택된 option의 text가 저장된다.
   selectText = langSelect.options[langSelect.selectedIndex].text;
   console.log(selectText, selectValue);
-  bar();
+  bar(km);
 }
 
-// 슬라이더 실행 함수
-var slider = d3.select("#km");
-slider.on("change", function () {
-  km = this.value;
-  bar();
-});
+// // 슬라이더 실행 함수
+// var slider = d3.select("#km");
+// slider.on("change", function () {
+//   km = this.value;
+//   bar(km);
+// });
 
 // 라디오 버튼 실행 함수
-function changeLine(event) {
+// function changeLine(event) {
+//   if (event.target.id == "ev_low") {
+//     document.getElementById("ev_low").checked = true;
+//     document.getElementById("ev_fast").checked = false;
+//     radio = "ev_low";
+//     bar(km);
+//   } else if (event.target.id == "ev_fast") {
+//     document.getElementById("ev_low").checked = false;
+//     document.getElementById("ev_fast").checked = true;
+//     radio = "ev_fast";
+//     bar(km);
+//   }
+// }
+
+
+function changeBar(event) {
   if (event.target.id == "ev_low") {
-    document.getElementById("ev_low").checked = true;
-    document.getElementById("ev_fast").checked = false;
     radio = "ev_low";
-    bar();
+    bar(km);
+    
   } else if (event.target.id == "ev_fast") {
-    document.getElementById("ev_low").checked = false;
-    document.getElementById("ev_fast").checked = true;
     radio = "ev_fast";
-    bar();
+    bar(km);;
   }
 }
 
 //막대그래프 실행 함수
-function bar() {
+function bar(km) {
+  console.log(Max_mileage)
   d3.csv("json/EC.csv", function (error, data) {
     var dataset = [];
     if (radio == "ev_low") {
@@ -153,11 +167,11 @@ function bar() {
         Ice_fuel=MIce[j][3];
     }
     
-   
+  
 
     // X축 스케일 정의하기
     var xScale = d3.scaleLinear();
-    xScale.domain([0, 25000000]).range([0, width]);
+    xScale.domain([0, Max_mileage]).range([0, width]);
 
     // Y축 스케일 정의하기
     var yScale = d3.scaleBand();
@@ -167,7 +181,7 @@ function bar() {
       .rangeRound([0, height]);
 
     // X축 그리기
-    var xAxis = d3.axisBottom();
+    var xAxis = d3.axisBottom().ticks(6);
     xAxis.scale(xScale);
     axisGroup.call(xAxis);
 
