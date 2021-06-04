@@ -127,7 +127,7 @@ function DeleteAll(e) {
 //부분 삭제
 function DeleteSelect(e)
 {
-  const ComboData = document.getElementById('cars');
+  const ComboData = document.getElementById('name2');
   SelectData = SelectData.filter((element) => element !== ComboData.value);
   MakeChart();
 }
