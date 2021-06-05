@@ -324,6 +324,12 @@ ice_name = document.getElementById("ice_name");
 ice_cost = document.getElementById("ice_cost");
 ice_fuel = document.getElementById("ice_fuel");
 
+ev_name = document.getElementById("text_EV_name");
+ev_fuel = document.getElementById("text_EV_fuel");
+ev_cost = document.getElementById("text_EV_cost");
+ev_km_kwh = document.getElementById("text_EV_km_kWh");
+ev_img = document.getElementById("ev_img");
+
 x = 0;
 y = 0;
 
@@ -409,8 +415,11 @@ function main() {
 function changeLine(event) {
   if (event.target.id == "ev_low") {
     declaredLine("ev_low");
+    ev_km_kwh.innerText = low_1kwh;
   } else if (event.target.id == "ev_fast") {
     declaredLine("ev_fast");
+    ev_km_kwh.innerText = fast_1kwh;
+    ev_km_kwh.style.color = "F4A8A8";
   }
 }
 
@@ -441,7 +450,10 @@ function evSelect(CarText = 0) {
   else 
     selectValue = ev_select.options[ev_select.selectedIndex].value;
     
-  
+  console.log()
+  ev_name.innerText = Ev[selectValue][0].name;
+  ev_fuel.innerText = Ev[selectValue][0].fuel;
+  ev_cost.innerText = Ev[selectValue][0].price;
   
   // document.getElementById('ev_fast').setAttribute('checked', false);
   document.getElementById("ev_low").setAttribute("checked", false);
@@ -490,10 +502,12 @@ function declaredLine(line) {
   if (line == "ev_low") {
 
     makeLine(ev_low_line)
+    ev_km_kwh.innerText = low_1kwh;
 
   } else if (line == "ev_fast") {
     
     makeLine(ev_fast_line)
+    low_1kwh = fast_1kwh;
   }
 }
 
@@ -508,6 +522,10 @@ function makeLine(Object) {
   Diverse_value = Object.pickValue;
   bar(Diverse_value);
   $("#line").empty();
+
+  
+ 
+  // ev_img.innerText = Ev[0][selectValue].names;
 
   //line,svg,focus,context,Line_chart
   let graph = Object.draw();
@@ -651,7 +669,7 @@ function makeLine(Object) {
     tooltip.html("주행거리 : " + kilometer.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "km")
       .style('display', 'block')
       .style("font-weight", "bold")
-      .style('left', (d3.event.pageX-1700) + "px")
+      .style('left', (d3.event.pageX-1500) + "px")
       .style('top', (d3.event.pageY-500 ) + "px")
       .append('div')
       .html(tooltip_cost[0].name)

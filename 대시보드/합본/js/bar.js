@@ -45,8 +45,8 @@ var TOP = 00;
 var BOTTOM = 30;
 
 // 데이터가 그려질 영역의 크기
-var width =600 - LEFT - RIGHT;
-var height = 200 - TOP - BOTTOM;
+var width =460 - LEFT - RIGHT;
+var height = 150 - TOP - BOTTOM;
 
 // body 요소 밑에 svg 요소를 추가하고 그 결과를 svg 변수에 저장
 // var body = d3.select("#line");
@@ -102,7 +102,7 @@ function changeBar(event) {
     
   } else if (event.target.id == "ev_fast") {
     radio = "ev_fast";
-    bar(km);;
+    bar(km);
   }
 }
 
@@ -228,7 +228,7 @@ function bar(km) {
         }
       })
       .attr("text-anchor", "end")
-      .attr("font-size", "18px");
+      .attr("font-size", "15px");
   });
 }
 

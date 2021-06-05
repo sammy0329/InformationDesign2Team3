@@ -34,9 +34,11 @@ Tittle.prototype.draw = function(){
 
 ev_vs_ice = new Tittle("Canvas_EV_vs_ICE","전기차 vs 휘발유 자동차")
 compared_ev = new Tittle("Canvas_Compared_Ev","전기차종별 비교")
+map_ev = new Tittle("Canvas_Map_Ev","전기충전소 분포 현황")
 
 ev_vs_ice.draw();
 compared_ev.draw();
+map_ev.draw();
 // ctx.fillText('연료값', rectX+15, rectY+75);
 // ctx.fillText('완속 : 1kWh', rectX+15, rectY+110);
 // ctx.fillText('급속 : 1kWh', rectX+15, rectY+140);

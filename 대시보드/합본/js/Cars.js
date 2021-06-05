@@ -12,8 +12,6 @@ num_back = [];
 (car_margin = { top: 10, right: 0, bottom: 40, left: 160 }),
   (car_width = 325),
   (car_height = 640);
-
-
 // selectValue = ev_select.options[ev_select.selectedIndex].value;
 
 Chart = function (data) {
@@ -83,8 +81,8 @@ Chart.prototype.line = function () {
     .attr("y", function (d) {
       return yScale(d.key);
     })
-    // .transition()
-    // .duration(2000)
+    .transition()
+    .duration(500)
     .attr("width", function (d) {
       return xScale(d.value);
     })
@@ -145,7 +143,7 @@ function changeLangSelect() {
 function update_color() {
   d3.selectAll(".carscss .bar").style("fill", function (d, i) {
     if (d.key === CarText) {
-      return "orange";
+      return "#FBBD05";
     }
   });
 }

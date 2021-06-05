@@ -128,12 +128,12 @@ body {
 
 #container {
   position: absolute;
-  width: 470px;
-  height: 450px;
+  width: 400px;
+  height: 350px;
   margin: 0;
   padding: 0;
-  top: 500px;
-  left: 625px;
+  top: 330px;
+  left: 570px;
 }
 head {
   position: relative;
@@ -142,32 +142,32 @@ head {
 .radar td,
 th {
 
-  height: 35px;
+  height: 12px;
 }
 .radar td {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 250px;
+  width: 160px;
   padding: 10px;
   border-bottom: 1px solid #ccc;
 }
 
 .radar th {
   width: 250px;
-  padding: 10px;
+  padding: 5px;
   font-weight: bold;
   border-bottom: 1px solid #ccc;
-  background: #efefef;
+  background: #E2E2E2;
 }
 .radar table {
   position: absolute;
   top: 20px;
   left: 628px;
   z-index: 9999;
-  font-size: 20px;
-  width: 410px;
+  font-size: 14px;
+  width: 280px;
 
   border-collapse: separate;
   border-spacing: 1px;
@@ -220,4 +220,35 @@ th {
   left: 1700px;
   top:700px;
   padding: 10px;
+}
+
+.selectradio {
+  padding: 15px 10px;
+}
+.selectradio input[type=radio]{
+  display: none;
+}
+.selectradio input[type=radio]+label{
+  display: inline-block;
+  cursor: pointer;
+  height: 24px;
+  width: 90px;
+  border: 1px solid rgb(204, 204, 204);
+  line-height: 24px;
+  text-align: center;
+  font-weight:bold;
+  font-size:13px;
+  border-radius: 12px;
+}
+.selectradio input[type=radio]+label{
+  background-color: #fff;
+  color: #333;
+}
+.selectradio input[id=ev_fast]:checked+label{
+  background-color: #F4A8A8;
+  color: #fff;
+}
+.selectradio input[id=ev_low]:checked+label{
+  background-color: #A9C9F7;
+  color: #fff;
 }
