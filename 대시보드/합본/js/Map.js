@@ -10,67 +10,87 @@ var Sigunguinfo = [];
 var FastCars = [];
 var SlowCars = [];
 var BothCars = [];
+var slowlist = [];
+var fastlist = [];
+var bothlist = [];
 
 var Selectinfo = "" //현재 선택된 카테고리 정보
 var SelectCar = ""
 var ischeck = false;
-
-d3.json("json/Sigungu.json", function (error, data) {
-    readSigungu(error, data);
-});
-
-readTextFile1('json/fast.json')
-readTextFile2('json/slow.json')
-readTextFile3('json/EV_Charging_Station_Information.json')
-
 
 var markerImageSrc = 'image/category_icon2.png';  // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
 fastMarkers = [], // 급속 마커 객체를 가지고 있을 배열입니다
     slowMarkers = [], // 완속 마커 객체를 가지고 있을 배열입니다
     bothMarkers = []; // 혼합 마커 객체를 가지고 있을 배열입니다
 
-changeMarker('slow'); // 지도에 급속 마커가 보이도록 설정합니다    
+d3.json("json/Sigungu.json", function (error, data) {
+    readSigungu(error, data);
+});
 
-function readTextFile1(file) {
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file);
-    rawFile.onreadystatechange = function () {
-        if (rawFile.readyState === 4) {
-            if (rawFile.status === 200 || rawFile.status == 0) {
-                var allText = rawFile.responseText;
-                createfastMarkers(eval(allText)); // 급속 마커를 생성하고 급속 마커 배열에 추가합니다
-            }
-        }
-    }
-    rawFile.send(null);
+d3.json("json/Fast.json", function (error, data) { fastdata(error, data) });
+d3.json("json/Slow.json", function (error, data) { slowdata(error, data) });
+d3.json("json/EV_Charging_Station_Information.json", function (error, data) { bothdata(error, data) });
+
+
+function fastdata(error, data) {
+    if (error) throw error;
+
+    data.forEach((element) => {
+        fastlist.push([
+            {
+                Place: element.Place,
+                Address: element.Address,
+                Lon: element.Lon,
+                Lat: element.Lat,
+                Fast: element.Fast,
+                Slow: element.Slow,
+                Cars: element.Cars,
+            },
+        ]);
+    });
+
+    createfastMarkers(fastlist);
 }
 
-function readTextFile2(file) {
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file);
-    rawFile.onreadystatechange = function () {
-        if (rawFile.readyState === 4) {
-            if (rawFile.status === 200 || rawFile.status == 0) {
-                var allText = rawFile.responseText;
-                createslowMarkers(eval(allText)); // 완속 마커를 생성하고 완속 마커 배열에 추가합니다
-            }
-        }
-    }
-    rawFile.send(null);
+function slowdata(error, data) {
+    if (error) throw error;
+
+    data.forEach((element) => {
+        slowlist.push([
+            {
+                Place: element.Place,
+                Address: element.Address,
+                Lon: element.Lon,
+                Lat: element.Lat,
+                Fast: element.Fast,
+                Slow: element.Slow,
+                Cars: element.Cars,
+            },
+        ]);
+    });
+
+    createslowMarkers(slowlist);
 }
 
-function readTextFile3(file) {
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file);
-    rawFile.onreadystatechange = function () {
-        if (rawFile.readyState === 4) {
-            if (rawFile.status === 200 || rawFile.status == 0) {
-                var allText = rawFile.responseText;
-                createbothMarkers(eval(allText)); // 혼합 마커를 생성하고 혼합 마커 배열에 추가합니다
-            }
-        }
-    }
-    rawFile.send(null);
+function bothdata(error, data) {
+    if (error) throw error;
+
+    data.forEach((element) => {
+        bothlist.push([
+            {
+                Place: element.Place,
+                Address: element.Address,
+                Lon: element.Lon,
+                Lat: element.Lat,
+                Fast: element.Fast,
+                Slow: element.Slow,
+                Cars: element.Cars,
+            },
+        ]);
+    });
+
+
+    createbothMarkers(bothlist);
 }
 
 
@@ -100,10 +120,10 @@ function createfastMarkers(data) {
             };
 
         var infowindow = new kakao.maps.InfoWindow({
-            content: '<div style="padding:10px;text-align:center;width:auto;height:auto;white-space:nowrap;">' + element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow + '</div>', // 인포윈도우에 표시할 내용
+            content: '<div style="padding:10px;text-align:center;width:auto;height:auto;white-space:nowrap;">' + element[0].Place + '<br>' + '급속 충전기 : ' + element[0].Fast + '<br>' + '완속 충전기 : ' + element[0].Slow + '</div>', // 인포윈도우에 표시할 내용
         });
 
-        var latloninfo = new kakao.maps.LatLng(element.Lat, element.Lon);
+        var latloninfo = new kakao.maps.LatLng(element[0].Lat, element[0].Lon);
 
         // 마커이미지와 마커를 생성합니다
         var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),
@@ -113,10 +133,75 @@ function createfastMarkers(data) {
         kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
         kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 
-        FastCars.push(element.Cars);
+        FastCars.push(element[0].Cars);
 
         // 생성된 마커를 급속 마커 배열에 추가합니다
         fastMarkers.push(marker);
+    });
+}
+
+// 완속 마커를 생성하고 완속 마커 배열에 추가하는 함수입니다
+function createslowMarkers(data) {
+
+    data.forEach((element, i) => {
+        var imageSize = new kakao.maps.Size(22, 26),
+            imageOptions = {
+                spriteOrigin: new kakao.maps.Point(10, 36),
+                spriteSize: new kakao.maps.Size(36, 98)
+            };
+
+        var infowindow = new kakao.maps.InfoWindow({
+            //content: '<span class="info-title">'+ element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow +'</span>', // 인포윈도우에 표시할 내용
+            content: '<div style="padding:10px;text-align:center;width:auto;height:auto;white-space: nowrap;">' + element[0].Place + '<br>' + '급속 충전기 : ' + element[0].Fast + '<br>' + '완속 충전기 : ' + element[0].Slow + '</div>', // 인포윈도우에 표시할 내용
+        });
+
+        var latloninfo = new kakao.maps.LatLng(element[0].Lat, element[0].Lon);
+
+        // 마커이미지와 마커를 생성합니다
+        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),
+            marker = createMarker(latloninfo, markerImage);
+
+
+        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+
+        SlowCars.push(element[0].Cars);
+
+        // 생성된 마커를 급속 마커 배열에 추가합니다
+        slowMarkers.push(marker);
+    });
+
+    changeMarker('slow'); // 지도에 급속 마커가 보이도록 설정합니다    
+}
+
+// 혼합 마커를 생성하고 혼합 마커 배열에 추가하는 함수입니다
+function createbothMarkers(data) {
+    data.forEach((element, i) => {
+        var imageSize = new kakao.maps.Size(22, 26),
+            imageOptions = {
+                spriteOrigin: new kakao.maps.Point(10, 72),
+                spriteSize: new kakao.maps.Size(36, 98)
+            };
+
+        var infowindow = new kakao.maps.InfoWindow({
+            //content: '<span class="info-title">'+ element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow +'</span>' // 인포윈도우에 표시할 내용
+            content: '<div style="padding:10px;text-align:center;width:auto;height:auto;white-space: nowrap;">' + element[0].Place + '<br>' + '급속 충전기 : ' + element[0].Fast + '<br>' + '완속 충전기 : ' + element[0].Slow + '</div>', // 인포윈도우에 표시할 내용
+        });
+
+        var latloninfo = new kakao.maps.LatLng(element[0].Lat, element[0].Lon);
+
+        // 마커이미지와 마커를 생성합니다
+        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),
+            marker = createMarker(latloninfo, markerImage);
+
+
+        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+
+        BothCars.push(element[0].Cars);
+
+        // 생성된 마커를 급속 마커 배열에 추가합니다
+        bothMarkers.push(marker);
     });
 }
 
@@ -143,38 +228,6 @@ function setfastMarkers(map) {
     }
 }
 
-// 완속 마커를 생성하고 완속 마커 배열에 추가하는 함수입니다
-function createslowMarkers(data) {
-
-    data.forEach((element, i) => {
-        var imageSize = new kakao.maps.Size(22, 26),
-            imageOptions = {
-                spriteOrigin: new kakao.maps.Point(10, 36),
-                spriteSize: new kakao.maps.Size(36, 98)
-            };
-
-        var infowindow = new kakao.maps.InfoWindow({
-            //content: '<span class="info-title">'+ element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow +'</span>', // 인포윈도우에 표시할 내용
-            content: '<div style="padding:10px;text-align:center;width:auto;height:auto;white-space: nowrap;">' + element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow + '</div>', // 인포윈도우에 표시할 내용
-        });
-
-        var latloninfo = new kakao.maps.LatLng(element.Lat, element.Lon);
-
-        // 마커이미지와 마커를 생성합니다
-        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),
-            marker = createMarker(latloninfo, markerImage);
-
-
-        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-
-        SlowCars.push(element.Cars);
-
-        // 생성된 마커를 급속 마커 배열에 추가합니다
-        slowMarkers.push(marker);
-    });
-}
-
 // 완속 마커들의 지도 표시 여부를 설정하는 함수입니다
 function setslowMarkers(map) {
     count = 0;
@@ -196,37 +249,6 @@ function setslowMarkers(map) {
         }
     }
 
-}
-
-// 혼합 마커를 생성하고 혼합 마커 배열에 추가하는 함수입니다
-function createbothMarkers(data) {
-    data.forEach((element, i) => {
-        var imageSize = new kakao.maps.Size(22, 26),
-            imageOptions = {
-                spriteOrigin: new kakao.maps.Point(10, 72),
-                spriteSize: new kakao.maps.Size(36, 98)
-            };
-
-        var infowindow = new kakao.maps.InfoWindow({
-            //content: '<span class="info-title">'+ element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow +'</span>' // 인포윈도우에 표시할 내용
-            content: '<div style="padding:10px;text-align:center;width:auto;height:auto;white-space: nowrap;">' + element.Place + '<br>' + '급속 충전기 : ' + element.Fast + '<br>' + '완속 충전기 : ' + element.Slow + '</div>', // 인포윈도우에 표시할 내용
-        });
-
-        var latloninfo = new kakao.maps.LatLng(element.Lat, element.Lon);
-
-        // 마커이미지와 마커를 생성합니다
-        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),
-            marker = createMarker(latloninfo, markerImage);
-
-
-        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-
-        BothCars.push(element.Cars);
-
-        // 생성된 마커를 급속 마커 배열에 추가합니다
-        bothMarkers.push(marker);
-    });
 }
 
 // 혼합 마커들의 지도 표시 여부를 설정하는 함수입니다
@@ -403,20 +425,17 @@ function CheckChange(e) {
     changeMarker(Selectinfo);
 }
 
-function ChangeBarSelect(e)
-{
-    if(ischeck)
-    {
+function ChangeBarSelect(e) {
+    if (ischeck) {
         SelectCar = e;
         changeMarker(Selectinfo);
     }
 }
 
-function ChangeLowFast(e)
-{
+function ChangeLowFast(e) {
     if (e.id == "ev_low") {
         changeMarker('slow');
-    } 
+    }
     else if (e.id == "ev_fast") {
         changeMarker('fast');
     }
