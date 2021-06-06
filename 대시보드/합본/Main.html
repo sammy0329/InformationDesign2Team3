@@ -49,36 +49,17 @@
 
         .carscss .y_axis path {
             stroke: rgb(255, 255, 255);
-        }
-<<<<<<< HEAD
-        .updown {
-            border: 2px solid #E2E2E2;
-            width: 0.1px;
-            border-radius: 2em;
-        }
-    
-        
+        }        
     </style>
 </head>
-<!-- style="overflow:hidden;" -->
-<body  oncontextmenu="return false" ondragstart="return false" onselectstart="return false" style="overflow:hidden;" >
-    
-    <div width = "300px" style="margin-left:50px; margin-top:20px;">
-        <img id="EV_title_img"src="image/EV.png"width="130" height="65" style = "vertical-align : middle;">
-        <select id="name2" name="option" onchange="changeLangSelect(),changeLangSelect2(this), evSelect(),chagebar(),callfromCarsjs(this)" style="height:40px;width: 280px; font-size : 20px">
-=======
-    </style>
-</head>
-<!-- style="overflow:hidden;" -->
 
 <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false" style="overflow:hidden;">
-
     <div width="300px" style="margin-left:50px; margin-top:20px;">
         <img id="EV_title_img" src="image/EV.png" width="130" height="65" style="vertical-align : middle;">
         <select id="name2" name="option"
             onchange="changeLangSelect(),changeLangSelect2(this), evSelect(),chagebar(),callfromCarsjs(this)"
             style="height:40px;width: 280px; font-size : 20px">
->>>>>>> e832015b1d4243d920d35ba60ea8366088422d0c
+
             <option value="0">코나</option>
             <option value="1">아이오닉</option>
             <option value="2">아이오닉5</option>
@@ -95,17 +76,6 @@
             <option value="13">SMART EV Z</option>
 
         </select>
-<<<<<<< HEAD
-        <text id = "tittle" style = "font-size : 30px; vertical-align : middle; font-weight : bold; color :#A9C9F7;"> 에 관심있는 당신에게 </text>
-        <hr id = "hr_tittle" size="10px" color="#A9C9F7" style=" margin-left:50px; width : 770px;  position: absolute; left : 0px; top : 55px;">
-       
-
-    </div>
-   
-    <div style=" padding : 15px;">
-        <canvas id="Canvas_Compared_Ev" width="500" height="70" > </canvas>
-        <div style="margin-left:30px; margin-top:100px; position: absolute; left : 250px; top:8px;">
-=======
         <text id="tittle" style="font-size : 30px; vertical-align : middle; font-weight : bold; color :#A9C9F7;"> 에 관심있는
             당신에게 </text>
         <hr id="hr_tittle" size="10px" color="#A9C9F7"
@@ -117,7 +87,6 @@
     <div style=" padding : 15px;">
         <canvas id="Canvas_Compared_Ev" width="500" height="70"> </canvas>
         <div style="margin-left:30px; position: absolute; left : 250px; top : 105px;">
->>>>>>> e832015b1d4243d920d35ba60ea8366088422d0c
             <select id="condition" name="option" onchange="changeConditionSelect()" style="height:35px;width: 100px;">
               
                 <option value="1">가격</option>
@@ -161,16 +130,10 @@
             <svg class="carscss" style="left:100px;" id="my_dataviz"></svg>
         </div>
     </div>
-<<<<<<< HEAD
     
     
     <canvas id="Canvas_Map_Ev" width="500" height="70" style = "position: absolute; left : 850px; top : -10px;"> </canvas>
     
-=======
-
-    <canvas id="Canvas_Map_Ev" width="500" height="70" style="position: absolute; left : 850px; top : -10px;"> </canvas>
-
->>>>>>> e832015b1d4243d920d35ba60ea8366088422d0c
     <div id="Map_Area" class="mapcss" style="top: 60px; left: 880px; position: absolute" onmousewheel="wheelEvent()">
         <label style="position: absolute; left : 260px; top : -33px;"><input type="checkbox" id="IsSelectCar"
                 onclick="CheckChange(this)">해당 차량이 지원되는 충전소만 보기</label>
