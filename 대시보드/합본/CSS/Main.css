@@ -177,7 +177,7 @@ th {
   position: absolute;
   top: 20px;
   left: 628px;
-  z-index: 9999;
+  z-index: 9998;
   font-size: 14px;
   width: 280px;
 
@@ -215,12 +215,11 @@ th {
 }
 .radar form {
   position: absolute;
-  z-index: 9999;
+  z-index: 9998;
   left: 730px;
-  top:950px;
+  top: 950px;
   padding: 10px;
 }
-
 #Bar_Graph_Area{
   position: absolute;
   left: 1030px;
