@@ -12,7 +12,6 @@ num_back = [];
 (car_margin = { top: 10, right: 0, bottom: 40, left: 160 }),
   (car_width = 325),
   (car_height = 640);
-// selectValue = ev_select.options[ev_select.selectedIndex].value;
 
 Chart = function (data) {
   this.chart = d3
@@ -23,13 +22,43 @@ Chart = function (data) {
     .attr("left", "50px")
     .append("g")
     .attr("transform", "translate(" + car_margin.left + "," + car_margin.top + ")");
+    
+    d3
+    .select("#my_dataviz")
+    .append("text")
+    .text("차종별")
+    .attr("x", 0 - car_height / 2 - 20)
+    .attr("y", 0)
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .attr("transform", "rotate(-90)");
+    
+    if(ConditionText==="가격"||ConditionText==="보조금"){
+    d3
+    .select("#my_dataviz")
+    .append("text")
+    .text(ConditionText)
+    .attr("x", car_width / 2 + 130)
+    .attr("y", car_height + car_margin.bottom +45)
+    .style("text-anchor", "middle");
+    }else{
+    d3
+    .select("#my_dataviz")
+    .append("text")
+    .text(ConditionText)
+    .attr("x", car_width / 2 + 130)
+    .attr("y", car_height + car_margin.bottom +30)
+    .style("text-anchor", "middle");
+    }
 
-  //this.chart = d3.select("#my_dataviz")
 
   this.data = data;
   this.avg = this.avg();
   this.xScale = this.axis()[0];
   this.yScale = this.axis()[1];
+
+
+
 };
 Chart.prototype = Object.create(Chart.prototype);
 Chart.prototype.axis = function () {
@@ -125,15 +154,12 @@ function test(num) {
   return d;
 }
 
-// //처음화면에 가격 부터 띄워줌
-// Make_Ev_Compared_Chart();
 
 //차량 선택에 따른 value 값 및 text 저장 함수
 function changeLangSelect() {
   let CarSelect = document.getElementById("name2");
   CarValue = CarSelect.options[CarSelect.selectedIndex].value;
   CarText = CarSelect.options[CarSelect.selectedIndex].text;
-  console.log(CarValue, CarText);
 
   setValue();
   update_color();
@@ -170,56 +196,33 @@ function changeConditionSelect() {
   }
 }
 
-// function changeRegionSelect(){
-
-// }
-
-//Object.keys(value[0])[1] -> city 다 ~
 //city 값을 저장하는 함수
 function changeCitySelect() {
   let RegionSelect = document.getElementById("region");
   // select element에서 선택된 option의 text가 저장된다.
   RegionText = RegionSelect.options[RegionSelect.selectedIndex].text;
-  //   if(ConditionText==="보조금") drawChart();
   let CitySelect = document.getElementById("city");
   // select element에서 선택된 option의 text가 저장된다.
   CityText = CitySelect.options[CitySelect.selectedIndex].text;
   
-
-  console.log(RegionText);
   var num = [];
   Subsidy.forEach(function (value) {
 
     if (CityText == value[0].city && RegionText == value[0].region) {
      
       num.push({ key: value[0].car, value: value[0].cost });
-      console.log(value[0]);
     }
   });
   num.sort(function (b, a) {
     return a.value - b.value;
   });
 
-  console.log(num);
 
-  //div 삭제 후 다시 만들어주면서 그래프 갱신
-  // const Olddiv = document.getElementById("my_dataviz");
-  // Olddiv.remove();
-  // const NewDiv = document.createElement("div");
-  // NewDiv.setAttribute("id", "my_dataviz");
-  // document.body.appendChild(NewDiv);
 
   $("#my_dataviz").empty();
 
   drawChart(num);
-  // let d = []
-  // Subsidy.forEach(function(value){
-  //     d.push({key : value[0].name, value : value[0][Object.keys(value[0])[3]]})
-  // })
-  // d.sort(function(b, a) {
-  //         return a.value - b.value;
-  //     });
-  // return d
+
 
   num_back = num;
 
@@ -519,15 +522,9 @@ function drawChart(value) {
     .style("font-size", "15px")
     .style("background-color", "rgb(253, 253, 253)");
 
-  // border: solid;
-  // border-radius: 4px 4px 4px 4px;
-  // background-color: rgb(253, 253, 253);
-  // padding: 5px;
-  // text-align: center;
-  // font-size: 1px;
 
   let Unit;
-  //단위 만들어서 합쳐보고 싶었는데...
+  //단위 만들기
   if (ConditionText === "가격") {
     Unit = " 원";
   } else if (ConditionText === "최고속도" || ConditionText === "주행거리") {
