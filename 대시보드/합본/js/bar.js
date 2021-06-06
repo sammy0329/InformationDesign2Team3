@@ -1,6 +1,6 @@
 var selectValue = 0; //자동차 인덱스 전역변수
 var selectText = "코나"; //자동차 모델명 전역변수
-var km=100000;
+var km=10000;
 var value;
 var radio = "ev_low";
 var Ice_fuel=14.5;
