@@ -149,7 +149,6 @@ function changeLangSelect2(e) {
     SelectData.push(NumToEvCar(e.value));
     MakeChart();
   }
-
 }
 
 //전부 삭제
@@ -157,6 +156,7 @@ function DeleteAll(e) {
   SelectData = [];
   MakeChart();
 }
+
 //부분 삭제
 function DeleteSelect(e)
 {
