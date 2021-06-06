@@ -296,7 +296,7 @@ function changeMarker(type) {
 
         // 완속 카테고리를 선택된 스타일로 변경하고
         fastMenu.className = '';
-        slowMenu.className = 'menu_selected';
+        slowMenu.className = 'menu_selected2';
         bothMenu.className = '';
 
         // 완속 마커들만 지도에 표시하도록 설정합니다
@@ -309,7 +309,7 @@ function changeMarker(type) {
         // 혼합 카테고리를 선택된 스타일로 변경하고
         fastMenu.className = '';
         slowMenu.className = '';
-        bothMenu.className = 'menu_selected';
+        bothMenu.className = 'menu_selected3';
 
         // 혼합 마커들만 지도에 표시하도록 설정합니다
         setfastMarkers(null);
