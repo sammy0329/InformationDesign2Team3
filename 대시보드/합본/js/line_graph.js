@@ -411,7 +411,7 @@ function main() {
 
     user_ice.forEach(function (element) {
       ice_name.innerText = element.name;
-      ice_cost.innerText = element.price;
+      ice_cost.innerText = element.price; 
       ice_fuel.innerText = element.fuel;
     });
 
@@ -459,7 +459,7 @@ function evSelect(CarText = 0) {
   console.log()
   ev_name.innerText = Ev[selectValue][0].name;
   ev_fuel.innerText = Ev[selectValue][0].fuel;
-  ev_cost.innerText = Ev[selectValue][0].price;
+  ev_cost.innerText = Ev[selectValue][0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   
   // document.getElementById('ev_fast').setAttribute('checked', false);
   document.getElementById("ev_low").setAttribute("checked", false);
@@ -469,7 +469,7 @@ function evSelect(CarText = 0) {
       if (Ev[selectValue][0].grade == element[0].grade) {
         selectValue_ice = index;
         ice_name.innerText = element[0].name;
-        ice_cost.innerText = element[0].price;
+        ice_cost.innerText = element[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         ice_fuel.innerText = element[0].fuel;
       }
     });
@@ -478,7 +478,7 @@ function evSelect(CarText = 0) {
     
     user_ice.forEach(function (element) {
       ice_name.innerText = element.name;
-      ice_cost.innerText = element.price;
+      ice_cost.innerText = element.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       ice_fuel.innerText = element.fuel;
     });
   }
