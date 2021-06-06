@@ -50,13 +50,18 @@
         .carscss .y_axis path{
             stroke: rgb(255, 255, 255);
         }
+        .updown {
+            border: 2px solid #E2E2E2;
+            width: 0.1px;
+            border-radius: 2em;
+        }
     
         
     </style>
 </head>
 <!-- style="overflow:hidden;" -->
 <body  oncontextmenu="return false" ondragstart="return false" onselectstart="return false" style="overflow:hidden;" >
-
+    
     <div width = "300px" style="margin-left:50px; margin-top:20px;">
         <img id="EV_title_img"src="image/EV.png"width="130" height="65" style = "vertical-align : middle;">
         <select id="name2" name="option" onchange="changeLangSelect(),changeLangSelect2(this), evSelect(),chagebar(),callfromCarsjs(this)" style="height:40px;width: 280px; font-size : 20px">
@@ -74,18 +79,19 @@
             <option value="11">Peugeot e-2008 SUV Allure</option>
             <option value="12">DS3 E-tense So Chic</option>
             <option value="13">SMART EV Z</option>
+
         </select>
         <text id = "tittle" style = "font-size : 30px; vertical-align : middle; font-weight : bold; color :#A9C9F7;"> 에 관심있는 당신에게 </text>
         <hr id = "hr_tittle" size="10px" color="#A9C9F7" style=" margin-left:50px; width : 770px;  position: absolute; left : 0px; top : 55px;">
-    </div>
-    <!-- <div align="center" style="width:840px; height: 740px; background-color : orange; border-radius: 2em; position: absolute; left : 0px; top : 150px; z-index: 1"> -->
        
-        </div>
+
+    </div>
+   
     <div style=" padding : 15px;">
         <canvas id="Canvas_Compared_Ev" width="500" height="70" > </canvas>
-        <div style="margin-left:30px; position: absolute; left : 250px; top : 105px;">
+        <div style="margin-left:30px; margin-top:100px; position: absolute; left : 250px; top:8px;">
             <select id="condition" name="option" onchange="changeConditionSelect()" style="height:35px;width: 100px;">
-                <!-- <option value="">조건선택</option>   -->
+              
                 <option value="1">가격</option>
                 <option value="2">최고속도</option>
                 <option value="3">주행거리</option>
@@ -126,8 +132,9 @@
         </div>
     </div>
     
+    
     <canvas id="Canvas_Map_Ev" width="500" height="70" style = "position: absolute; left : 850px; top : -10px;"> </canvas>
-
+    
     <div id="Map_Area" class="mapcss" style="top: 60px; left: 880px; position: absolute" onmousewheel="wheelEvent()">
         <label style = "position: absolute; left : 260px; top : -33px;"><input type="checkbox" id="IsSelectCar" onclick="CheckChange(this)" >해당 차량이 지원되는 충전소만 보기</label>
         <div id="mapwrap" style="width: 950px; height: 300px" >
@@ -305,7 +312,10 @@
                 
             </tr>
         </table>
+        
     </div>
+    
+
     <span style="position: absolute; left : 620px; top : 155px;font-size : 17px; color:#7C868E">해당 차종 스펙</span>
     <form><input type="button" value="페이지 새로 고침" onClick="window.location.reload()" style="left:50px;top:0px;position:absolute;height:63px;width:121px;opacity:0;"></form>
     <script src="js/Cars.js"></script>

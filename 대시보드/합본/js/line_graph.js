@@ -7,9 +7,7 @@ var ev_select = document.getElementById("name2");
 var selectValue = ev_select.options[ev_select.selectedIndex].value;
 var selectValue_ice = 1;
 Max_mileage = 0;
-// window.onresize = function(event){
-//   redraw();
-// }
+
 function cost(kilometer, fuel, select, price) {
 
   fuel_cost = (kilometer / fuel) * select;
@@ -260,25 +258,6 @@ Cost.prototype.draw = function () {
     .attr("stroke-width", "2px")
     .style("stroke", "lightgray");
 
-
-  // function transition(path) {
-  //   path.transition()
-  //       .duration(2000)
-  //       .attrTween("stroke-dasharray", tweenDash);
-  // }
-  // function tweenDash() {
-  //   var l = this.getTotalLength(),
-  //       i = d3.interpolateString("0," + l, l + "," + l);
-  //   return function (t) { return i(t); };
-  // }
-
-  // Line_chart.select("path.ev_line")
-  //   .call(transition);
-
-  // Line_chart.select("path.ice_line")
-  //   .call(transition);
-
-
   context.append("path")
     .datum(this.ev_cost_data)
     .attr("class", "ev_line_2")
@@ -431,18 +410,6 @@ function changeLine(event) {
 
 function evSelect(CarText = 0) {
 
-  //d3.select("#line").remove();
-  // const NewSVG = document.createElement('svg');
-  // NewSVG.setAttribute("id", "line");
-  // document.body.appendChild(NewSVG);
-
-  // var svg = d3.select("body")
-  //   .append("svg")
-  //   .attr("id", "line")
-  //   .attr("top",0)
-  //   .attr("left",0)
-  //   .attr("width",700)
-  //   .attr("height",500)
   
   $("#line").empty();
   if (CarText != 0 ){
@@ -461,7 +428,6 @@ function evSelect(CarText = 0) {
   ev_fuel.innerText = Ev[selectValue][0].fuel;
   ev_cost.innerText = Ev[selectValue][0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   
-  // document.getElementById('ev_fast').setAttribute('checked', false);
   document.getElementById("ev_low").setAttribute("checked", false);
 
   if (user_ice.length == 0) {
@@ -493,8 +459,7 @@ function evSelect(CarText = 0) {
 }
 
 function declaredLine(line) {
-  //svg, ev_car_data,ice_car_data, select, color
-  // if(user_ice == null)
+  
   $("#line").empty();
 
   if (user_ice.length == 0) {
@@ -507,7 +472,7 @@ function declaredLine(line) {
   }
   update_color();
   if (line == "ev_low") {
-    console.log("low")
+    
     makeLine(ev_low_line)
     ev_km_kwh.innerText = low_1kwh;
     ev_name.style.color = '#5f9cf1';
@@ -526,7 +491,7 @@ function declaredLine(line) {
     map_ev.draw('#A9C9F7');
 
   } else if (line == "ev_fast") {
-    console.log("fast")
+    
     makeLine(ev_fast_line)
     ev_km_kwh.innerText = fast_1kwh;
     ev_name.style.color = '#F47378';
@@ -547,38 +512,16 @@ function declaredLine(line) {
 }
 
 
-  /*
-  EV_title_img =  document.getElementById("EV_title_img");
-  tittle = document.getElementById("tittle");
-hr_tittle = document.getElementById("hr_tittle");
-  ev_ice_border = document.getElementById("ev_ice_border");
-  ev_name = document.getElementById("text_EV_name");
-  ev_fuel = document.getElementById("text_EV_fuel");
-  ev_cost = document.getElementById("text_EV_cost");
-  ev_km_kwh = document.getElementById("text_EV_km_kWh");
-  ev_img = document.getElementById("ev_img");
-  EV_title_img =  document.getElementById("EV_title_img");
-
-  */
 
 function makeLine(Object) {
-  //d3.selectAll("svg > *").remove();
-  //d3.select("#line").remove();
-
-  // const NewSVG = document.createElement('svg');
-  // NewSVG.setAttribute("id", "line");
-  // document.body.appendChild(NewSVG);
+  
   Max_mileage = Object.ev_cost_data[Object.ev_cost_data.length - 1].mileage
   Diverse_value = Object.pickValue;
   bar(Diverse_value);
-  console.log("first");
+  
   $("#line").empty();
 
-  console.log(Object);
- 
-  // ev_img.innerText = Ev[0][selectValue].names;
 
-  //line,svg,focus,context,Line_chart
   let graph = Object.draw();
 
   let line = graph[0];
@@ -665,11 +608,6 @@ function makeLine(Object) {
     .on('mousemove', drawTooltip)
     .on('mouseout', removeTooltip);
 
-  //   tipBox = svg.append('rect')
-  //   .attr('width', width)
-  //   .attr('height', height)
-  //   .attr('opacity', 0)
-  //  ;
 
   tooltipLine.attr('stroke', 'black')
   .attr('stroke-width', 2)
