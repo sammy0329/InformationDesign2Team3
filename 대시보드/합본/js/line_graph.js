@@ -329,6 +329,10 @@ ev_fuel = document.getElementById("text_EV_fuel");
 ev_cost = document.getElementById("text_EV_cost");
 ev_km_kwh = document.getElementById("text_EV_km_kWh");
 ev_img = document.getElementById("ev_img");
+ev_hr =  document.getElementById("ev_hr");
+ev_ice_border = document.getElementById("ev_ice_border");
+tittle = document.getElementById("tittle");
+hr_tittle = document.getElementById("hr_tittle");
 
 x = 0;
 y = 0;
@@ -411,7 +415,7 @@ function main() {
 
   });
 }
-ev_km_kwh.style.color = "F4A8A8";
+
 function changeLine(event) {
   if (event.target.id == "ev_low") {
     declaredLine("ev_low");
@@ -419,8 +423,7 @@ function changeLine(event) {
     // 5f9cf1
   } else if (event.target.id == "ev_fast") {
     declaredLine("ev_fast");
-    ev_km_kwh.innerText = fast_1kwh;
-    ev_km_kwh.style.color = "F4A8A8";
+    
   }
 }
 
@@ -490,6 +493,7 @@ function evSelect(CarText = 0) {
 function declaredLine(line) {
   //svg, ev_car_data,ice_car_data, select, color
   // if(user_ice == null)
+  $("#line").empty();
 
   if (user_ice.length == 0) {
     ev_low_line = new Cost(svg, Ev[selectValue][0], Ice[selectValue_ice][0], low_1kwh, "#6A8EE4");
@@ -501,16 +505,52 @@ function declaredLine(line) {
   }
 
   if (line == "ev_low") {
-
+    console.log("low")
     makeLine(ev_low_line)
     ev_km_kwh.innerText = low_1kwh;
+    ev_name.style.color = '#5f9cf1';
+    ev_cost.style.color = "#4382da";
+    ev_fuel.style.color = "#4382da";
+    ev_km_kwh.style.color = "#4382da";
+    ev_hr.style.border = "solid 1px #A9C9F7";
+    ev_img.src="image/EV.png"
+    ev_ice_border.style.border = "solid 1px #A9C9F7";
+    tittle.style.color = '#A9C9F7';
+    hr_tittle.color = '#A9C9F7';
+    EV_title_img.src="image/EV.png"
 
   } else if (line == "ev_fast") {
-    
+    console.log("fast")
     makeLine(ev_fast_line)
-    low_1kwh = fast_1kwh;
+    ev_km_kwh.innerText = fast_1kwh;
+    ev_name.style.color = '#F47378';
+    ev_cost.style.color = "#F47378";
+    ev_fuel.style.color = "#F47378";
+    ev_km_kwh.style.color = "#F47378";
+    ev_hr.style.border = "solid 1px #F4A8A8";
+    ev_img.src="image/EV_FAST.png"
+    ev_ice_border.style.border = "solid 1px #F4A8A8";
+    tittle.style.color = '#F4A8A8';
+    hr_tittle.color = '#F4A8A8';
+    EV_title_img.src="image/EV_FAST.png"
+    
   }
 }
+
+
+  /*
+  EV_title_img =  document.getElementById("EV_title_img");
+  tittle = document.getElementById("tittle");
+hr_tittle = document.getElementById("hr_tittle");
+  ev_ice_border = document.getElementById("ev_ice_border");
+  ev_name = document.getElementById("text_EV_name");
+  ev_fuel = document.getElementById("text_EV_fuel");
+  ev_cost = document.getElementById("text_EV_cost");
+  ev_km_kwh = document.getElementById("text_EV_km_kWh");
+  ev_img = document.getElementById("ev_img");
+  EV_title_img =  document.getElementById("EV_title_img");
+
+  */
 
 function makeLine(Object) {
   //d3.selectAll("svg > *").remove();
@@ -524,7 +564,7 @@ function makeLine(Object) {
   bar(Diverse_value);
   $("#line").empty();
 
-  
+  console.log(Object);
  
   // ev_img.innerText = Ev[0][selectValue].names;
 

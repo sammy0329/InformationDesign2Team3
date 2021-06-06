@@ -245,6 +245,7 @@ th {
   background-color: #fff;
   color: #333;
 }
+
 .selectradio input[id=ev_fast]:checked+label{
   background-color: #F4A8A8;
   color: #fff;
@@ -253,4 +254,3 @@ th {
   background-color: #A9C9F7;
   color: #fff;
 }
-

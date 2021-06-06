@@ -58,7 +58,7 @@
 <body  oncontextmenu="return false" ondragstart="return false" onselectstart="return false" >
 
     <div width = "300px" style="margin-left:50px; margin-top:20px;">
-        <img class="EV_img"src="image/EV.png"width="130" height="65" style = "vertical-align : middle;">
+        <img id="EV_title_img"src="image/EV.png"width="130" height="65" style = "vertical-align : middle;">
         <select id="name2" name="option" onchange="changeLangSelect(),changeLangSelect2(this), evSelect(),chagebar(),callfromCarsjs(this)" style="height:40px;width: 280px; font-size : 20px">
             <option value="0">코나</option>
             <option value="1">아이오닉</option>
@@ -75,8 +75,8 @@
             <option value="12">DS3 E-tense So Chic</option>
             <option value="13">SMART EV Z</option>
         </select>
-        <text style = "font-size : 30px; vertical-align : middle; font-weight : bold; color :#A9C9F7;"> 에 관심있는 당신에게 </text>
-        <hr size="10px" color="#A9C9F7" style=" margin-left:50px; width : 770px;  position: absolute; left : 0px; top : 55px;">
+        <text id = "tittle" style = "font-size : 30px; vertical-align : middle; font-weight : bold; color :#A9C9F7;"> 에 관심있는 당신에게 </text>
+        <hr id = "hr_tittle" size="10px" color="#A9C9F7" style=" margin-left:50px; width : 770px;  position: absolute; left : 0px; top : 55px;">
     </div>
     
     <div style=" padding : 15px">
@@ -135,13 +135,13 @@
             <!-- 지도 위에 표시될 마커 카테고리 -->
             <div class="category">
                 <ul>
-                    <li id="fastMenu" onclick="changeMarker('fast')">
-                        <span class="ico_comm ico_fast"></span>
-                        급속
-                    </li>
-                    <li id="slowMenu" onclick="changeMarker('slow')">
+                    <li id="slowMenu" onclick="changeMarker('slow'),ChangeRadio(this),ChangeLineFromMap(this)">
                         <span class="ico_comm ico_slow"></span>
                         완속
+                    </li>
+                    <li id="fastMenu" onclick="changeMarker('fast'),ChangeRadio(this),ChangeLineFromMap(this)">
+                        <span class="ico_comm ico_fast"></span>
+                        급속
                     </li>
                     <li id="bothMenu" onclick="changeMarker('both')">
                         <span class="ico_comm ico_both"></span>
@@ -153,9 +153,9 @@
     </div>
 
     <div class = "selectradio" style="position : absolute; left:1170px; top:368px;">
-            <input type="radio" id="ev_low" name="comparedLine" style="vertical-align : middle" value="low" onclick="changeLine(event),changeBar(event)" checked />
+            <input type="radio" id="ev_low" name="comparedLine" style="vertical-align : middle" value="low" onclick="changeLine(event),changeBar(event),ChangeLowFast(this)" checked />
             <label for="ev_low" style="vertical-align : middle">완속</label>
-            <input type="radio" id="ev_fast" style="vertical-align : middle" name="comparedLine" value="fast" onclick="changeLine(event),changeBar(event)" />
+            <input type="radio" id="ev_fast" style="vertical-align : middle" name="comparedLine" value="fast" onclick="changeLine(event),changeBar(event),ChangeLowFast(this)" />
             <label for="ev_fast" style="vertical-align : middle">급속</label>   
         </div>
 
@@ -164,7 +164,7 @@
         <div id="Bar_Area" class="barcss" style="left:700px;top:1200px;">
         
             <!-- background-color: rgb(207, 207, 207) -->
-            <div style = "margin-top : 5px; margin-left :30px; box-sizing: border-box;  border: 1px solid #A9C9F7;  border-radius: 20px 20px 20px 20px; padding : 15px; position : absolute; left:-250px; top:-60px;">
+            <div id = "ev_ice_border"style = "margin-top : 5px; margin-left :30px; box-sizing: border-box;  border: 1px solid #A9C9F7;  border-radius: 20px 20px 20px 20px; padding : 15px; position : absolute; left:-250px; top:-60px;">
             
                 <div style = "margin-top : 10px; " >
                     
@@ -192,7 +192,7 @@
                         <text style = "font-size : 13px; vertical-align : middle;">원 </text>
                     </div>
                     
-                    <hr style="width : 400px; border :solid 1px #A9C9F7; ">
+                    <hr id = "ev_hr" style="width : 400px; border :solid 1px #A9C9F7; ">
                 </div>
                 
                 <div style = "margin-top : 5px; " >
@@ -310,3 +310,4 @@
 </body>
 
 </html>
+  

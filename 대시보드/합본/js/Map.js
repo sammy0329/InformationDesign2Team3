@@ -29,7 +29,7 @@ fastMarkers = [], // 급속 마커 객체를 가지고 있을 배열입니다
     slowMarkers = [], // 완속 마커 객체를 가지고 있을 배열입니다
     bothMarkers = []; // 혼합 마커 객체를 가지고 있을 배열입니다
 
-changeMarker('fast'); // 지도에 급속 마커가 보이도록 설정합니다    
+changeMarker('slow'); // 지도에 급속 마커가 보이도록 설정합니다    
 
 function readTextFile1(file) {
     var rawFile = new XMLHttpRequest();
@@ -409,5 +409,15 @@ function ChangeBarSelect(e)
     {
         SelectCar = e;
         changeMarker(Selectinfo);
+    }
+}
+
+function ChangeLowFast(e)
+{
+    if (e.id == "ev_low") {
+        changeMarker('slow');
+    } 
+    else if (e.id == "ev_fast") {
+        changeMarker('fast');
     }
 }

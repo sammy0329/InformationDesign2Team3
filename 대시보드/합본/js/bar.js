@@ -1,6 +1,6 @@
 var selectValue = 0; //자동차 인덱스 전역변수
 var selectText = "코나"; //자동차 모델명 전역변수
-var km = 100000;
+var km=100000;
 var value;
 var radio = "ev_low";
 var Ice_fuel=14.5;
@@ -107,22 +107,22 @@ function changeBar(event) {
 }
 
 //막대그래프 실행 함수
-function bar(km) {
+function bar(num) {
   
   
   d3.csv("json/EC.csv", function (error, data) {
     var dataset = [];
     if (radio == "ev_low") {
-      dataset.push((km / data[selectValue].Fueleconomy) * low_1kwh);
-      dataset.push((km / Ice_fuel) * ice_1L);
+      dataset.push((num / data[selectValue].Fueleconomy) * low_1kwh);
+      dataset.push((num / Ice_fuel) * ice_1L);
       dataset.push(
-        (km / Ice_fuel) * ice_1L - (km / data[selectValue].Fueleconomy) * low_1kwh
+        (num / Ice_fuel) * ice_1L - (num / data[selectValue].Fueleconomy) * low_1kwh
       );
     } else if (radio == "ev_fast") {
-      dataset.push((km / data[selectValue].Fueleconomy) * fast_1kwh);
-      dataset.push((km / Ice_fuel) * ice_1L);
+      dataset.push((num / data[selectValue].Fueleconomy) * fast_1kwh);
+      dataset.push((num / Ice_fuel) * ice_1L);
       dataset.push(
-        (km / Ice_fuel) * ice_1L - (km / data[selectValue].Fueleconomy) *fast_1kwh
+        (num / Ice_fuel) * ice_1L - (num / data[selectValue].Fueleconomy) *fast_1kwh
       );
     }
     
@@ -230,8 +230,38 @@ function bar(km) {
       .attr("text-anchor", "end")
       .attr("font-size", "15px");
 
-      console.log(dataset);
+
   });
 
 }
 
+function ChangeRadio(e)
+{
+  const ev_low_map = document.getElementById("ev_low");
+  const ev_fast_map = document.getElementById("ev_fast");
+
+  if (e.id == "slowMenu") {
+    radio = "ev_low";
+
+    ev_low_map.select = true;
+    ev_low_map.select = true;
+    bar(km);
+    
+  } else if (e.id == "fastMenu") {
+    radio = "ev_fast";
+    bar(km);
+  }
+}
+
+function ChangeLineFromMap(e)
+{
+  const map_ev_km_kwh = document.getElementById("text_EV_km_kWh");
+  if (e.id == "slowMenu") {
+    declaredLine("ev_low");
+    map_ev_km_kwh.innerText = low_1kwh;
+    // 5f9cf1
+  } else if (e.id == "fastMenu") {
+    declaredLine("ev_fast");
+    
+  }
+}
