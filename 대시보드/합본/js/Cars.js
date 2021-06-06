@@ -13,6 +13,21 @@ num_back = [];
   (car_width = 325),
   (car_height = 640);
 
+  let tooltip = d3
+    .select("body")
+    .append("div")
+    .attr("class", "carscss")
+    .attr("class", "toolTip")
+    .style("display", "none")
+    .style("position", "absolute")
+    .style("border", "solid")
+    .style("border-radius", "4px 4px 4px 4px")
+    .style("text-align", "center")
+    .style("padding", "5px")
+    .style("font-size", "15px")
+    .style("background-color", "rgb(253, 253, 253)");
+
+
 Chart = function (data) {
   this.chart = d3
     .select("#my_dataviz")
@@ -161,7 +176,7 @@ function changeLangSelect() {
   let CarSelect = document.getElementById("name2");
   CarValue = CarSelect.options[CarSelect.selectedIndex].value;
   CarText = CarSelect.options[CarSelect.selectedIndex].text;
-
+  tooltip.style.visibility = "hidden";
   setValue();
   update_color();
 }
@@ -509,19 +524,6 @@ function drawChart(value) {
   }
   bargraph = testV.line();
 
-  let tooltip = d3
-    .select("body")
-    .append("div")
-    .attr("class", "carscss")
-    .attr("class", "toolTip")
-    .style("display", "none")
-    .style("position", "absolute")
-    .style("border", "solid")
-    .style("border-radius", "4px 4px 4px 4px")
-    .style("text-align", "center")
-    .style("padding", "5px")
-    .style("font-size", "15px")
-    .style("background-color", "rgb(253, 253, 253)");
 
 
   let Unit;
