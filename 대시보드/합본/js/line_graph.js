@@ -517,7 +517,11 @@ function declaredLine(line) {
     ev_ice_border.style.border = "solid 1px #A9C9F7";
     tittle.style.color = '#A9C9F7';
     hr_tittle.color = '#A9C9F7';
-    EV_title_img.src="image/EV.png"
+    EV_title_img.src="image/EV.png";
+    
+    ev_vs_ice.draw('#A9C9F7');
+    compared_ev.draw('#A9C9F7');
+    map_ev.draw('#A9C9F7');
 
   } else if (line == "ev_fast") {
     console.log("fast")
@@ -532,7 +536,10 @@ function declaredLine(line) {
     ev_ice_border.style.border = "solid 1px #F4A8A8";
     tittle.style.color = '#F4A8A8';
     hr_tittle.color = '#F4A8A8';
-    EV_title_img.src="image/EV_FAST.png"
+    EV_title_img.src="image/EV_FAST.png";
+    ev_vs_ice.draw('#F4A8A8');
+    compared_ev.draw('#F4A8A8');
+    map_ev.draw('#F4A8A8');
     
   }
 }

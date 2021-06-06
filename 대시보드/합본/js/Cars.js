@@ -42,6 +42,7 @@ Chart = function (data) {
     .attr("y", car_height + car_margin.bottom +45)
     .style("text-anchor", "middle");
     }else{
+    
     d3
     .select("#my_dataviz")
     .append("text")

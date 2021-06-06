@@ -53,6 +53,8 @@ var height = 150 - TOP - BOTTOM;
 var svg1 = d3.select("#test");
 svg1.attr("class","test");
 
+
+
 // svg 요소의 너비와 높이가 화면을 꽉 채우도록 수정
 svg1.attr("width", 700);
 svg1.attr("height", 200);
@@ -148,7 +150,15 @@ function bar(num) {
     var xAxis = d3.axisBottom().ticks(6);
     xAxis.scale(xScale);
     axisGroup.call(xAxis);
-
+    
+    svg1
+    .append("text")
+    .text("연료비")
+    .attr("x", width / 2 + 80)
+    .attr("y", height +30)
+    .attr("font-size","10px")
+    .style("font-weight",100).style("fill", "gray");
+    
     // 막대 그리기
     var barUpdate = barGroup.selectAll("rect").data(dataset);
     barUpdate
