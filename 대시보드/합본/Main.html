@@ -24,7 +24,7 @@
 
 
         .carscss .bar:hover {
-            fill: rgb(135, 198, 240);
+            fill: rgb(141, 140, 140);
         }
 
         .carscss .toolTip {
@@ -123,8 +123,7 @@
             <svg class="carscss" style="left:100px;" id="my_dataviz"></svg>
         </div>
     </div>
-    <!-- 선 -->
-    <!-- <hr size="10px" color="#A9C9F7" style=" margin-left:50px; width : 0.1px; height : 650px;  position: absolute; left : 500px; top : 170px;"> -->
+    
     <canvas id="Canvas_Map_Ev" width="500" height="70" style = "position: absolute; left : 850px; top : -10px;"> </canvas>
 
     <div id="Map_Area" class="mapcss" style="top: 60px; left: 880px; position: absolute" onmousewheel="wheelEvent()">
@@ -153,9 +152,9 @@
     </div>
 
     <div class = "selectradio" style="position : absolute; left:1170px; top:368px;">
-            <input type="radio" id="ev_low" name="comparedLine" style="vertical-align : middle" value="low" onclick="changeLine(event),changeBar(event),ChangeLowFast(this)" checked />
+            <input type="radio" id="ev_low" name="comparedLine" style="vertical-align : middle" value="low" onclick="changeLine(event),changeBar(event),ChangeLowFast(this),update_color()" checked />
             <label for="ev_low" style="vertical-align : middle">완속</label>
-            <input type="radio" id="ev_fast" style="vertical-align : middle" name="comparedLine" value="fast" onclick="changeLine(event),changeBar(event),ChangeLowFast(this)" />
+            <input type="radio" id="ev_fast" style="vertical-align : middle" name="comparedLine" value="fast" onclick="changeLine(event),changeBar(event),ChangeLowFast(this),update_color()" />
             <label for="ev_fast" style="vertical-align : middle">급속</label>   
         </div>
 
@@ -163,7 +162,6 @@
         <canvas id="Canvas_EV_vs_ICE" width="340" height="70" style = "position: absolute; left : -250px; top : -130px;"> </canvas>
         <div id="Bar_Area" class="barcss" style="left:700px;top:1200px;">
         
-            <!-- background-color: rgb(207, 207, 207) -->
             <div id = "ev_ice_border"style = "margin-top : 5px; margin-left :30px; box-sizing: border-box;  border: 1px solid #A9C9F7;  border-radius: 20px 20px 20px 20px; padding : 15px; position : absolute; left:-250px; top:-60px;">
             
                 <div style = "margin-top : 10px; " >
@@ -190,6 +188,7 @@
                         <text style = "font-size : 13px; vertical-align : middle;">1kWh </text>
                         <text id = "text_EV_km_kWh" style = "font-size : 15px; vertical-align : middle;font-weight : bold; color :#4382da"> 71.3</text>
                         <text style = "font-size : 13px; vertical-align : middle;">원 </text>
+                        <text style = "font-size : 10px; vertical-align : middle; "> * 2021년 4월 기준 연료값</text>
                     </div>
                     
                     <hr id = "ev_hr" style="width : 400px; border :solid 1px #A9C9F7; ">
@@ -216,6 +215,7 @@
                         <text style = "font-size : 13px; vertical-align : middle;">1L </text>
                         <text style = "font-size : 15px; vertical-align : middle; font-weight : bold; color :rgb(93, 93, 93);"> 1534.8 </text>
                         <text style = "font-size : 15px; vertical-align : middle; "> 원</text>
+                        <text style = "font-size : 10px; vertical-align : middle; "> * 2021년 4월 기준 연료값</text>
                     </div>
                     <hr style=" width : 400px;  border :solid 1px #CFCFCF;">
                     <div >
@@ -225,6 +225,7 @@
                         
                     </div>
                     
+                    
                    
                 </div>       
                 
@@ -233,16 +234,16 @@
            
 
             <div>
-                <span style="width : 150px; position:  absolute; left:-40px;top:230px; font-size : 17px; color:#7C868E">연료비 비교</span>
-                <svg id = "test"style="left:-250px;top:250px;" ></svg>
+                <span style="width : 150px; position:  absolute; left:-40px;top:210px; font-size : 17px; color:#7C868E">연료비 비교</span>
+                <svg id = "test"style="left:-250px;top:230px;" ></svg>
             </div>
 
            
         </div>
 
-        <div id="Line_Area" class="linecss" style="position: absolute; left:230px;top:-50px;" >
+        <div id="Line_Area" class="linecss" style="  height : 600px; position: absolute; left:230px;top:-80px;" >
             <svg id="line" width="540" height="480" ></svg>
-            <span style="width : 150px; position: absolute; left:230px;top:-20px; font-size : 20px; color:#7C868E">유지비 비교</span>
+            <span style="width : 150px; position: absolute; left:230px;top: -5px; font-size : 17px; color:#7C868E">유지비 비교</span>
             
             <div id="tooltip" style="
             position: absolute;
@@ -267,7 +268,7 @@
         <div id="container"></div>
         
         <form>
-            <!-- <button onclick="DeleteAll()" style=" font-size : 15px; width : 50px; height:30px;  position: absolute; left : 150px; top : -330px;">삭제</button> -->
+            <!-- <!-- onclick="DeleteAll()" style=" font-size : 15px; width : 50px; height:30px;  position: absolute; left : 150px; top : -330px;">삭제</!--> -->
         </form>
        
         <table>

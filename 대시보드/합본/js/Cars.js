@@ -46,7 +46,8 @@ Chart = function (data) {
     .attr("y", 0)
     .attr("dy", "1em")
     .style("text-anchor", "middle")
-    .attr("transform", "rotate(-90)");
+    .attr("transform", "rotate(-90)")
+    .attr("font-size","15px");
     
     if(ConditionText==="가격"||ConditionText==="보조금"){
     d3
@@ -55,7 +56,9 @@ Chart = function (data) {
     .text(ConditionText)
     .attr("x", car_width / 2 + 130)
     .attr("y", car_height + car_margin.bottom +45)
-    .style("text-anchor", "middle");
+    .style("text-anchor", "middle")
+    .attr("font-size","15px");
+
     }else{
     
     d3
@@ -64,7 +67,8 @@ Chart = function (data) {
     .text(ConditionText)
     .attr("x", car_width / 2 + 130)
     .attr("y", car_height + car_margin.bottom +30)
-    .style("text-anchor", "middle");
+    .style("text-anchor", "middle")
+    .attr("font-size","15px");
     }
 
 
@@ -185,7 +189,8 @@ function changeLangSelect() {
 function update_color() {
   d3.selectAll(".carscss .bar").style("fill", function (d, i) {
     if (d.key === CarText) {
-      return "#FBBD05";
+      if (document.getElementById("ev_low").checked) return '#A9C9F7';
+      else if (document.getElementById("ev_fast").checked) return '#F4A8A8';
     }
   });
 }

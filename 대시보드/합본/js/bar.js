@@ -111,7 +111,7 @@ function changeBar(event) {
 //막대그래프 실행 함수
 function bar(num) {
   
-  
+  km = num;
   d3.csv("json/EC.csv", function (error, data) {
     var dataset = [];
     if (radio == "ev_low") {

@@ -195,6 +195,7 @@ Cost.prototype.draw = function () {
   svg
     .append("text")
     .text("유지비")
+    .attr("font-size","10px")
     .attr("x", 0 - line_height / 2 - 20)
     .attr("y", 0)
     .attr("dy", "1em")
@@ -204,6 +205,7 @@ Cost.prototype.draw = function () {
   svg
     .append("text")
     .text("주행거리")
+    .attr("font-size","10px")
     .attr("x", line_width / 2 + 90)
     .attr("y", line_height + line_margin.bottom - 55)
     .style("text-anchor", "middle");
@@ -503,7 +505,7 @@ function declaredLine(line) {
     ev_low_line = new Cost(svg, Ev[selectValue][0], user_ice[0], low_1kwh, "#6A8EE4");
     ev_fast_line = new Cost(svg, Ev[selectValue][0], user_ice[0], fast_1kwh, "#F47378");
   }
-
+  update_color();
   if (line == "ev_low") {
     console.log("low")
     makeLine(ev_low_line)
@@ -518,7 +520,7 @@ function declaredLine(line) {
     tittle.style.color = '#A9C9F7';
     hr_tittle.color = '#A9C9F7';
     EV_title_img.src="image/EV.png";
-    
+
     ev_vs_ice.draw('#A9C9F7');
     compared_ev.draw('#A9C9F7');
     map_ev.draw('#A9C9F7');
@@ -569,6 +571,7 @@ function makeLine(Object) {
   Max_mileage = Object.ev_cost_data[Object.ev_cost_data.length - 1].mileage
   Diverse_value = Object.pickValue;
   bar(Diverse_value);
+  console.log("first");
   $("#line").empty();
 
   console.log(Object);
