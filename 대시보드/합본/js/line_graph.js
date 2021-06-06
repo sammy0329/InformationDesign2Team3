@@ -125,8 +125,8 @@ Cost.prototype.axis = function () {
     ])
     .range([0, line_width]);
 
-  let xAxis = d3.axisBottom(this.xScale).ticks(10).tickSize(-line_height);
-  let xAxis2 = d3.axisBottom(this.xScale2).ticks(10);
+  let xAxis = d3.axisBottom(this.xScale).ticks(6).tickSize(-line_height);
+  let xAxis2 = d3.axisBottom(this.xScale2).ticks(6);
 
   // y축
   let yScale = d3.scaleLinear().domain([domain_min, domain_max]).range([line_height, 0]);
@@ -411,11 +411,12 @@ function main() {
 
   });
 }
-
+ev_km_kwh.style.color = "F4A8A8";
 function changeLine(event) {
   if (event.target.id == "ev_low") {
     declaredLine("ev_low");
     ev_km_kwh.innerText = low_1kwh;
+    // 5f9cf1
   } else if (event.target.id == "ev_fast") {
     declaredLine("ev_fast");
     ev_km_kwh.innerText = fast_1kwh;
