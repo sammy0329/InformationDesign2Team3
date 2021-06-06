@@ -218,7 +218,7 @@ function bar(km) {
       .duration(0)
       .attr("x", 70)
       .attr("y", function (d, i) {
-        return yScale(i) + 30;
+        return yScale(i) + 20;
       })
       .text(function (d, i) {
         if (radio == "ev_low") {
@@ -229,6 +229,9 @@ function bar(km) {
       })
       .attr("text-anchor", "end")
       .attr("font-size", "15px");
+
+      console.log(dataset);
   });
+
 }
 

@@ -107,7 +107,7 @@ body {
 
 .barcss .axis text {
   fill: #888;
-  font-size: 11px;
+  font-size: 8px;
 }
 
 .barcss .axis line {
@@ -223,6 +223,7 @@ th {
 }
 
 .selectradio {
+  
   padding: 15px 10px;
 }
 .selectradio input[type=radio]{
@@ -252,3 +253,4 @@ th {
   background-color: #A9C9F7;
   color: #fff;
 }
+
