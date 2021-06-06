@@ -670,7 +670,7 @@ function makeLine(Object) {
     tooltip.html("주행거리 : " + kilometer.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "km")
       .style('display', 'block')
       .style("font-weight", "bold")
-      .style('left', (d3.event.pageX-1500) + "px")
+      .style('left', (d3.event.pageX-1520) + "px")
       .style('top', (d3.event.pageY-500 ) + "px")
       .append('div')
       .html(tooltip_cost[0].name)
