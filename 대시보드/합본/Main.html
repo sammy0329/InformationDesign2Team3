@@ -55,7 +55,7 @@
     </style>
 </head>
 <!-- style="overflow:hidden;" -->
-<body  oncontextmenu="return false" ondragstart="return false" onselectstart="return false" >
+<body  oncontextmenu="return false" ondragstart="return false" onselectstart="return false" style="overflow:hidden;" >
 
     <div width = "300px" style="margin-left:50px; margin-top:20px;">
         <img id="EV_title_img"src="image/EV.png"width="130" height="65" style = "vertical-align : middle;">
@@ -267,7 +267,7 @@
         <div id="container"></div>
         
         <form>
-            <button onclick="DeleteAll()" style=" font-size : 15px; width : 50px; height:30px;  position: absolute; left : 150px; top : -330px;">삭제</button>
+            <!-- <button onclick="DeleteAll()" style=" font-size : 15px; width : 50px; height:30px;  position: absolute; left : 150px; top : -330px;">삭제</button> -->
         </form>
        
         <table>
@@ -304,7 +304,7 @@
         </table>
     </div>
     <span style="position: absolute; left : 620px; top : 155px;font-size : 17px; color:#7C868E">해당 차종 스펙</span>
-
+    <form><input type="button" value="페이지 새로 고침" onClick="window.location.reload()" style="left:50px;top:0px;position:absolute;height:63px;width:121px;opacity:0;"></form>
     <script src="js/Cars.js"></script>
     <script src="JS/Map.js"></script>
     <script src="js/Rader.js" type="text/javascript"></script>
