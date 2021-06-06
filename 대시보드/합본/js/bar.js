@@ -243,12 +243,14 @@ function ChangeRadio(e)
   if (e.id == "slowMenu") {
     radio = "ev_low";
 
-    ev_low_map.select = true;
-    ev_low_map.select = true;
+    ev_low_map.checked = true;
+    ev_fast_map.checked = false;
     bar(km);
     
   } else if (e.id == "fastMenu") {
     radio = "ev_fast";
+    ev_low_map.checked = false;
+    ev_fast_map.checked = true;
     bar(km);
   }
 }
