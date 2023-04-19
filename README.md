@@ -18,7 +18,8 @@ https://9834mean.github.io/InformationDesign2Team3/%EB%8C%80%EC%8B%9C%EB%B3%B4%E
 해당 전기차를 구매하기 전에 가격, 연비, 보조금, 휘발유와 비교했을 때 주유비가 얼마나 절약되는가 등.. 사용자들이 구매전에 확인하고 싶은 요구사항들을 대시보드를 통해 한눈에 직관적으로 분석 가능.
 ## Persona
 <img width="1028" alt="Persona" src="https://user-images.githubusercontent.com/38906420/232963232-adc1b5e9-5caa-49bc-a960-6f9891e02fd1.png">
-<img width="1021" alt="사용자니즈" src="https://user-images.githubusercontent.com/38906420/232969933-4918f34c-30f1-42ee-aa88-c8c096307350.png">
+<img width="1021" alt="사용자니즈" src="https://user-images.githubusercontent.com/38906420/232969933-4918f34c-30f1-42ee-aa88-c8c096307350.png"><br />
+
 ## 대시보드 구성 및 역할
 <img width="1021" alt="1" src="https://user-images.githubusercontent.com/38906420/232964777-1b59eab1-fb6e-4b9a-9f37-86955c3544cb.png">
 <img width="1021" alt="2" src="https://user-images.githubusercontent.com/38906420/232964837-27639b75-d902-4e88-b631-1f60972d08c7.png">
